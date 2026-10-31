@@ -8,6 +8,7 @@ import { batchStoreUpdates, useBrowser, type BrowserState } from "../browser/sto
 import { engineProfile, isIncognitoProfile } from "../browser/model";
 import { DEFAULT_PROFILE_ID } from "../settings/settings";
 import { webviews } from "../../platform/webviews";
+import { changedPages, pagesWrittenSince, withPages, type PagesPair } from "./pagesWritten";
 
 type Icons = {
   pages: Record<string, string | null>;
@@ -59,29 +60,6 @@ function update(key: string, change: (icons: Icons) => Icons, now = false) {
     const after = change(before);
     return after === before ? f : { ...f, profiles: { ...f.profiles, [key]: after } };
   }, now);
-}
-
-type Pages = Icons["pages"];
-const pagesWritten = new WeakMap<Pages, { base: Pages; pages: string[] }>();
-const MAX_WRITE_HOPS = 16;
-
-function withPages(base: Pages, writes: [string, string | null][]): Pages {
-  const next = { ...base };
-  for (const [page, uri] of writes) next[page] = uri;
-  pagesWritten.set(next, { base, pages: writes.map(([page]) => page) });
-  return next;
-}
-
-function pagesWrittenSince(now: Pages, before: Pages): string[] | null {
-  const pages: string[] = [];
-  let at = now;
-  for (let hops = 0; at !== before; hops++) {
-    const write = pagesWritten.get(at);
-    if (!write || hops >= MAX_WRITE_HOPS) return null;
-    for (const page of write.pages) pages.push(page);
-    at = write.base;
-  }
-  return pages;
 }
 
 const capped = <T,>(map: Record<string, T>, key: string, value: T): Record<string, T> =>
@@ -282,19 +260,6 @@ function check(w: Watcher) {
   w.known = known;
   if (!known) for (const id of lookupOrder(w.profileId)) ask(cacheKey(id), withoutFragment(w.url));
   else if (w.src && w.profileId && !resolveFavicon(w.url, w.src, w.profileId)) fetchMissing(w.profileId, w.url, w.src);
-}
-
-type PagesPair = { now: Pages | undefined; before: Pages | undefined };
-
-function changedPages(f: Favicons, prev: Favicons): PagesPair[] {
-  const pairs: PagesPair[] = [];
-  for (const key in f.profiles) {
-    const now = f.profiles[key]!.pages;
-    const before = prev.profiles[key]?.pages;
-    if (now !== before) pairs.push({ now, before });
-  }
-  for (const key in prev.profiles) if (!(key in f.profiles)) pairs.push({ now: undefined, before: prev.profiles[key]!.pages });
-  return pairs;
 }
 
 function onFavicons(f: Favicons, prev: Favicons) {
