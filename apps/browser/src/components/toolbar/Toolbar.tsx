@@ -91,7 +91,12 @@ export function Toolbar({
 
   return (
     <View style={{ height: row.height }}>
-      {!bare && <Animated.View style={[StyleSheet.absoluteFill, { backgroundColor: band }]} />}
+      {!bare &&
+        (liquidGlass ? (
+          <GlassFill kind="panel" radius={0} fill={palette.background ?? palette.pill} dark={palette.background ? palette.text.startsWith(ink.white) : undefined} />
+        ) : (
+          <Animated.View style={[StyleSheet.absoluteFill, { backgroundColor: band }]} />
+        ))}
       <WindowDragRegion style={StyleSheet.absoluteFill} />
       <Animated.View style={[StyleSheet.absoluteFill, { opacity: dim }]} pointerEvents="box-none">
         {geometry.sidebarButton !== null && (
@@ -134,7 +139,11 @@ export function ToolbarBackdrop({ tabId }: { tabId: string }) {
   const row = useToolbarRow();
   return (
     <View pointerEvents="none" style={{ height: row.height }}>
-      <Animated.View style={[StyleSheet.absoluteFill, { backgroundColor: band }]} />
+      {liquidGlass ? (
+        <GlassFill kind="panel" radius={0} fill={palette.background ?? palette.pill} dark={palette.background ? palette.text.startsWith(ink.white) : undefined} />
+      ) : (
+        <Animated.View style={[StyleSheet.absoluteFill, { backgroundColor: band }]} />
+      )}
       {url ? <View style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: 1, borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: palette.divider }} /> : null}
     </View>
   );
