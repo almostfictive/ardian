@@ -20,4 +20,4 @@ from a release tag instead.
 
 ## Patches
 
-None yet.
+Bundle identifier: com.almostfictive.ardian
