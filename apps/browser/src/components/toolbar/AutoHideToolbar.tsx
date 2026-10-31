@@ -12,7 +12,7 @@ import { Toolbar } from "./Toolbar";
 import { curve } from "../ui/motion";
 import { font, ink, reduceMotion, weight } from "../ui";
 import { GlassFill, liquidGlass } from "../ui/Glass";
-import { TOOLBAR_MOTION } from "./tokens";
+import { TOOLBAR_MOTION, TOOLBAR_PILL } from "./tokens";
 import { motionStep, tallPage, type MotionValue, type TallPage } from "./toolbarMotion";
 import { useToolbarRow } from "./useToolbarRow";
 
@@ -144,12 +144,14 @@ export function AutoHideBackdrop({ tabId, mode, motion }: { tabId: string; mode:
         style={{ position: "absolute", left: 0, right: 0, top: 0, height: H, backgroundColor: liquidGlass ? undefined : theme.card, transform: anim ? [{ translateY: anim.bandLift }, { scaleY: anim.bandScale }] : undefined }}
       >
         {liquidGlass ? (
-          <GlassFill kind="panel" radius={0} fill={palette.background ?? palette.pill} dark={palette.background ? palette.text.startsWith(ink.white) : undefined} />
+          <View style={{ position: "absolute", top: TOOLBAR_PILL.top, left: TOOLBAR_PILL.side, right: TOOLBAR_PILL.side, bottom: TOOLBAR_PILL.bottom, borderRadius: TOOLBAR_PILL.radius, overflow: "hidden" }}>
+            <GlassFill kind="panel" radius={TOOLBAR_PILL.radius} fill={palette.background ?? palette.pill} dark={palette.background ? palette.text.startsWith(ink.white) : undefined} />
+          </View>
         ) : (
           <Animated.View style={[StyleSheet.absoluteFill, { backgroundColor: band }]} />
         )}
       </Animated.View>
-      {url ? (
+      {url && !liquidGlass ? (
         <Animated.View
           style={{ position: "absolute", left: 0, right: 0, top: H - 1, height: 1, borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: palette.divider, transform: anim ? [{ translateY: anim.dividerTop }] : undefined }}
         />
