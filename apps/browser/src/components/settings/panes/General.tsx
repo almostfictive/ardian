@@ -17,7 +17,7 @@ import { ExportBookmarksRow } from "./ExportBookmarksRow";
 import { SetupCodeRow } from "./SetupCodeRow";
 import { UI_LOCALE } from "../../../lib/uiLocale";
 
-const APP = "Ardia";
+const APP = "Ardian";
 
 export function GeneralPane() {
   const openLinksInLittleArdia = useSettings((s) => s.openLinksInLittleArdia);
@@ -46,14 +46,14 @@ export function GeneralPane() {
           anchor="general.openLinksFrom"
           description={
             openLinksInLittleArdia
-              ? `A link from Discord, Slack or Mail opens in Little Ardia, a small window of its own. ⌘O moves it into ${APP}; closing it throws it away.`
+              ? `A link from Discord, Slack or Mail opens in Little Ardian, a small window of its own. ⌘O moves it into ${APP}; closing it throws it away.`
               : `A link from Discord, Slack or Mail opens as a new tab in the ${APP} window you used last.`
           }
         >
           <PopUp
             value={openLinksInLittleArdia ? "small" : "tab"}
             options={[
-              { value: "small", title: "Little Ardia" },
+              { value: "small", title: "Little Ardian" },
               { value: "tab", title: "A new tab" },
             ]}
             onChange={(v) => updateSettings({ openLinksInLittleArdia: v === "small" })}

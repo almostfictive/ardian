@@ -16,8 +16,8 @@ import { Group, Row, SectionHeader, SettingToggle, SheetActions, SheetTitle } fr
 import { engineVersion, widevine as widevineComponent } from "../../../state/settings/paneData";
 import { useResource } from "../../../state/settings/resources";
 
-const REPOSITORY = "https://github.com/mantrakp04/ardia";
-const SOURCE_NOTICE = "Ardia is free software under the GNU General Public License v3, with no warranty.";
+const REPOSITORY = "https://github.com/almostfictive/Ardian";
+const SOURCE_NOTICE = "Ardian is free software under the GNU General Public License v3, with no warranty.";
 
 const BATTERY_SAVER_DESCRIPTIONS: Record<BatterySaverWhen, string> = {
   lowBattery: "At 20% battery or less, or in Low Power Mode, busy background tabs pause and animations slow down.",
