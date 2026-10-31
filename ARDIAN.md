@@ -22,3 +22,4 @@ from a release tag instead.
 
 Bundle identifier: com.almostfictive.ardian
 Toolbar band: GlassFill
+Toolbar: floating glass pill

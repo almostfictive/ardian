@@ -28,7 +28,7 @@ import { useShortcutHint, withShortcut } from "../../state/commands/commandShort
 import { curve } from "../ui/motion";
 import { HistoryButton, ReloadButton } from "./NavButtons";
 import { ProgressBar, TabProgressBar } from "./ProgressBar";
-import { GLYPH, TOOLBAR_MOTION } from "./tokens";
+import { GLYPH, TOOLBAR_MOTION, TOOLBAR_PILL } from "./tokens";
 import { useToolbarRow } from "./useToolbarRow";
 
 type ToolbarTab = Pick<Tab, "id" | "url" | "title" | "windowId" | "zoom">;
@@ -93,7 +93,9 @@ export function Toolbar({
     <View style={{ height: row.height }}>
       {!bare &&
         (liquidGlass ? (
-          <GlassFill kind="panel" radius={0} fill={palette.background ?? palette.pill} dark={palette.background ? palette.text.startsWith(ink.white) : undefined} />
+          <View style={{ position: "absolute", top: TOOLBAR_PILL.top, left: TOOLBAR_PILL.side, right: TOOLBAR_PILL.side, bottom: TOOLBAR_PILL.bottom, borderRadius: TOOLBAR_PILL.radius, overflow: "hidden" }}>
+            <GlassFill kind="panel" radius={TOOLBAR_PILL.radius} fill={palette.background ?? palette.pill} dark={palette.background ? palette.text.startsWith(ink.white) : undefined} />
+          </View>
         ) : (
           <Animated.View style={[StyleSheet.absoluteFill, { backgroundColor: band }]} />
         ))}
@@ -126,7 +128,7 @@ export function Toolbar({
         )}
       </Animated.View>
 
-      {tab.url && !bare ? <View style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: 1, borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: palette.divider }} /> : null}
+      {tab.url && !bare && !liquidGlass ? <View style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: 1, borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: palette.divider }} /> : null}
       {isLoading && <TabProgressBar key={tabId} tabId={tabId} color={palette.background ? palette.icon : theme.accent} />}
     </View>
   );
@@ -140,11 +142,13 @@ export function ToolbarBackdrop({ tabId }: { tabId: string }) {
   return (
     <View pointerEvents="none" style={{ height: row.height }}>
       {liquidGlass ? (
-        <GlassFill kind="panel" radius={0} fill={palette.background ?? palette.pill} dark={palette.background ? palette.text.startsWith(ink.white) : undefined} />
+        <View style={{ position: "absolute", top: TOOLBAR_PILL.top, left: TOOLBAR_PILL.side, right: TOOLBAR_PILL.side, bottom: TOOLBAR_PILL.bottom, borderRadius: TOOLBAR_PILL.radius, overflow: "hidden" }}>
+          <GlassFill kind="panel" radius={TOOLBAR_PILL.radius} fill={palette.background ?? palette.pill} dark={palette.background ? palette.text.startsWith(ink.white) : undefined} />
+        </View>
       ) : (
         <Animated.View style={[StyleSheet.absoluteFill, { backgroundColor: band }]} />
       )}
-      {url ? <View style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: 1, borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: palette.divider }} /> : null}
+      {url && !liquidGlass ? <View style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: 1, borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: palette.divider }} /> : null}
     </View>
   );
 }
