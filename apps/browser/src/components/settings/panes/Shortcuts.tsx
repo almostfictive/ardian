@@ -169,7 +169,7 @@ function ShortcutField({
   return (
     <View {...hoverProps} style={KEY_FIELD}>
       <Pressable onPress={onRecord}>
-        <KeyCap keys={[text || "None"]} editing={recording} />
+        <KeyCap keys={[text || "None"]} editing={recording} empty={!text} hovered={hovered} />
       </Pressable>
       {hovered && !recording && combo.key ? (
         <Pressable onPress={onClear} tooltip="Remove Shortcut" style={CLEAR}>
