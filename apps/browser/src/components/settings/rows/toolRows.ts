@@ -134,7 +134,7 @@ export const toolRows = {
         passkeys: {
           advanced: true,
           title: "Passkeys",
-          description: "WebKit pages can't use passkeys until Apple grants Ardia its browser passkey entitlement. Sign in with a passkey in Chromium meanwhile.",
+          description: "WebKit pages can't use passkeys until Apple grants Ardian its browser passkey entitlement. Sign in with a passkey in Chromium meanwhile.",
           keywords: ["passkey", "webauthn", "icloud keychain", "passwords app", "security key"],
         },
       },
@@ -155,7 +155,7 @@ export const toolRows = {
         memorySaver: {
           advanced: true,
           title: "Memory Saver",
-          description: "Ardia frees up memory from inactive tabs. This gives active tabs and other apps more computer resources and keeps Ardia fast. Your inactive tabs automatically become active again when you go back to them.",
+          description: "Ardian frees up memory from inactive tabs. This gives active tabs and other apps more computer resources and keeps Ardian fast. Your inactive tabs automatically become active again when you go back to them.",
           keywords: ["sleep", "sleeping tabs", "tab sleeping", "discard", "hibernate", "memory", "ram", "inactive tabs", "unload", "suspend", "performance"],
         },
         memorySaverMode: {
@@ -188,8 +188,8 @@ export const toolRows = {
     {
       section: "Command line",
       rows: {
-        cliControl: { advanced: true, title: "Let the ardia command control Ardia", keywords: ["cli", "terminal", "devtools", "automation", "remote debugging"] },
-        cliInstall: { advanced: true, title: "The ardia command", keywords: ["cli", "terminal", "install"] },
+        cliControl: { advanced: true, title: "Let the ardian command control Ardian", keywords: ["cli", "terminal", "devtools", "automation", "remote debugging"] },
+        cliInstall: { advanced: true, title: "The ardian command", keywords: ["cli", "terminal", "install"] },
       },
     },
     {
@@ -202,7 +202,7 @@ export const toolRows = {
     {
       section: "Source and licenses",
       rows: {
-        source: { advanced: true, title: "Source code", description: "Ardia is open source under the Apache License 2.0.", keywords: ["github", "open source"] },
+        source: { advanced: true, title: "Source code", description: "Ardian is open source under the Apache License 2.0.", keywords: ["github", "open source"] },
         licenses: { advanced: true, title: "Licenses", description: "Every open-source part of the engine, with its copyright and license.", keywords: ["credits", "legal"] },
       },
     },
