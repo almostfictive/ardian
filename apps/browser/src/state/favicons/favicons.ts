@@ -264,12 +264,31 @@ function check(w: Watcher) {
   else if (w.src && w.profileId && !resolveFavicon(w.url, w.src, w.profileId)) fetchMissing(w.profileId, w.url, w.src);
 }
 
+type PagesPair = { now: Icons["pages"] | undefined; before: Icons["pages"] | undefined };
+
+function changedPages(f: Favicons, prev: Favicons): PagesPair[] {
+  const pairs: PagesPair[] = [];
+  for (const key in f.profiles) {
+    const now = f.profiles[key]!.pages;
+    const before = prev.profiles[key]?.pages;
+    if (now !== before) pairs.push({ now, before });
+  }
+  for (const key in prev.profiles) if (!(key in f.profiles)) pairs.push({ now: undefined, before: prev.profiles[key]!.pages });
+  return pairs;
+}
+
 function onFavicons(f: Favicons, prev: Favicons) {
-  if (f.profiles === prev.profiles) return;
-  const keys = [...new Set([...Object.keys(f.profiles), ...Object.keys(prev.profiles)])].filter((key) => f.profiles[key]?.pages !== prev.profiles[key]?.pages);
-  if (!keys.length) return;
-  for (const [page, set] of [...watchers])
-    if (keys.some((key) => f.profiles[key]?.pages[page] !== prev.profiles[key]?.pages[page])) for (const w of [...set]) check(w);
+  if (f.profiles === prev.profiles || !watchers.size) return;
+  const pairs = changedPages(f, prev);
+  if (!pairs.length) return;
+  const due: Set<Watcher>[] = [];
+  for (const [page, set] of watchers)
+    for (const { now, before } of pairs)
+      if (now?.[page] !== before?.[page]) {
+        due.push(set);
+        break;
+      }
+  for (const set of due) for (const w of [...set]) check(w);
 }
 
 function watch(w: Watcher) {
