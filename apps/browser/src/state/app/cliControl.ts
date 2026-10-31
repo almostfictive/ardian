@@ -22,7 +22,7 @@ import { parseSaved, unchanged, versionedJson, type Migrations } from "../../lib
 import { errorText } from "../../lib/errors";
 import { focusedWindowOf } from "../windows/ui";
 
-const DOC = "ardia-cli.json";
+const DOC = "ardian-cli.json";
 const DOC_VERSION = 1;
 const DOC_MIGRATIONS: Migrations = { 0: unchanged };
 const SCHEMA_FIELD = "schemaVersion";

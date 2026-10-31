@@ -42,7 +42,7 @@ export function CastPicker({ tabId, paneWidth }: { tabId: string; paneWidth: num
 
         {dialog.permissionRejected ? (
           <Message
-            text="Ardia needs Local Network access to find Cast devices."
+            text="Ardian needs Local Network access to find Cast devices."
             link="Open Local Network Settings"
             onLink={() => void openExternalURL("x-apple.systempreferences:com.apple.preference.security?Privacy_LocalNetwork")}
           />

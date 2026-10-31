@@ -33,7 +33,7 @@ export function CalendarPane() {
               : connected
                 ? `Connected · ${calendars.length === 1 ? "1 calendar" : `${calendars.length} calendars`}`
                 : denied
-                  ? "Ardia isn't allowed to read your calendars. Allow it in System Settings › Privacy & Security › Calendars."
+                  ? "Ardian isn't allowed to read your calendars. Allow it in System Settings › Privacy & Security › Calendars."
                   : "Not connected"
           }
         >

@@ -73,7 +73,7 @@ export function DeviceChooser({ tabId, left, top }: { tabId: string; left: numbe
     body = (
       <Notice
         icon="lock"
-        text="Ardia needs access to Bluetooth to find devices."
+        text="Ardian needs access to Bluetooth to find devices."
         link="Open Bluetooth Settings"
         onLink={() => openChooserBluetoothSettings(chooser.id)}
       />

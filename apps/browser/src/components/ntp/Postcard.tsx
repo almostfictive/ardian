@@ -111,7 +111,7 @@ export function ReleaseNotesPostcard({ notes, size, onOpen, onDismiss }: { notes
             transform: [{ rotate: `${CARD.tilt}deg` }, { scale }],
           }}
         >
-          <Pressable onPress={onOpen} accessibilityRole="button" accessibilityLabel="What's new in Ardia" style={FILL}>
+          <Pressable onPress={onOpen} accessibilityRole="button" accessibilityLabel="What's new in Ardian" style={FILL}>
             <Surface
               style={StyleSheet.absoluteFill}
               cornerRadius={CARD.radius}

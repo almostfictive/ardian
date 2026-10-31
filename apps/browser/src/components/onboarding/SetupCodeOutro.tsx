@@ -30,7 +30,7 @@ export function SetupCodeOutro() {
   return (
     <StepLayout
       title="Your setup code"
-      subtitle="Paste it into Ardia after you download it, on its first screen or in Settings › General. Ardia sets itself up just like this."
+      subtitle="Paste it into Ardian after you download it, on its first screen or in Settings › General. Ardian sets itself up just like this."
       actions={
         <>
           <StepActions icon="arrow.right" continueTitle="Done" onContinue={() => finishOnboarding()} />

@@ -17,7 +17,7 @@ export const generalRows = {
           description: "Asks before ⇧⌘W or the close button closes its tabs.",
           keywords: ["close window", "confirm"],
         },
-        openLinksFrom: { title: "Open links from other apps in", keywords: ["little ardia", "external links", "mini window", "discord", "slack", "mail"] },
+        openLinksFrom: { title: "Open links from other apps in", keywords: ["little ardian", "external links", "mini window", "discord", "slack", "mail"] },
       },
     },
     {

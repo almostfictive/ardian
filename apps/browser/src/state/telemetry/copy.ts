@@ -5,14 +5,14 @@ export const SHARING_COPY = {
   footnote:
     "Sent to ardia.dev with a random ID made on this Mac, and kept on our own servers. No third parties. Turning this off stops it at once and deletes anything waiting to be sent. This setting doesn't sync.",
   ask: {
-    title: "Help fix Ardia?",
+    title: "Help fix Ardian?",
     body: "Share anonymous crash reports and usage stats. No sites, searches or typing. Ever.",
     share: "Share",
     notNow: "Not now",
   },
   dailyCount:
     "One anonymous “opened today” count a day: app version, update channel, macOS version, chip, and whether it's this copy's first day, week or month. No persistent ID.",
-  dailyCountShort: "Either way, Ardia sends one anonymous “opened today” count a day, with its version and macOS version and no persistent ID.",
+  dailyCountShort: "Either way, Ardian sends one anonymous “opened today” count a day, with its version and macOS version and no persistent ID.",
   updateChecks: "ardia.dev counts update checks by version and day, and whether it's this copy's first. Nothing else.",
   switchFile:
     "While update checks are on, each launch also reads ardia.dev/switches.json: one small file, the same for everyone, that lets us turn off a speed-up that misbehaves. It sends no ID, no cookies and nothing about you.",
@@ -20,7 +20,7 @@ export const SHARING_COPY = {
     title: "Help us fix what breaks",
     row: "Crashes, errors, feature counts and speed. Never your sites, typing or tabs.",
     subtitle:
-      "Off unless you turn it on; change it any time in Settings › Privacy & Security. Either way, Ardia sends one anonymous “opened today” count a day, with its version and macOS version and no persistent ID.",
+      "Off unless you turn it on; change it any time in Settings › Privacy & Security. Either way, Ardian sends one anonymous “opened today” count a day, with its version and macOS version and no persistent ID.",
   },
 } as const;
 

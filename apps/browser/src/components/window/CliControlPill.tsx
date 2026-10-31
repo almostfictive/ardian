@@ -26,7 +26,7 @@ export function CliControlPill({ style }: { style?: Animated.WithAnimatedValue<V
           <Panel fill={theme.panel} radius={PILL_HEIGHT / 2} border={theme.panelBorder} shadow={SHADOWS.cliPill}>
             <View
               accessibilityRole="alert"
-              accessibilityLabel="The ardia command is controlling Ardia"
+              accessibilityLabel="The ardian command is controlling Ardian"
               style={{ height: PILL_HEIGHT, flexDirection: "row", alignItems: "center", gap: space.m, paddingLeft: space.s, paddingRight: space.xs }}
             >
               <View style={{ width: 20, height: 20, borderRadius: 10, backgroundColor: theme.textPrimary, alignItems: "center", justifyContent: "center" }}>
@@ -34,7 +34,7 @@ export function CliControlPill({ style }: { style?: Animated.WithAnimatedValue<V
               </View>
               <Text numberOfLines={1} style={{ flexShrink: 1, ...font.small, color: theme.textSecondary }}>
                 <Text style={{ fontWeight: weight.semibold, color: theme.textPrimary }}>ardia</Text>
-                {" is controlling Ardia"}
+                {" is controlling Ardian"}
               </Text>
               <StopButton />
             </View>

@@ -11,7 +11,7 @@ import { IMPORT_KINDS } from "../../state/import/flow";
 
 export type { BrowserProfile, BrowserSource, DiaTabsResult, ImportedExtension, ImportKind, ImportResult, SpaceSummary };
 
-export const APP = "Ardia";
+export const APP = "Ardian";
 
 const KIND_LOOK: Record<ImportKind, { title: string; icon: string }> = {
   bookmarks: { title: "Bookmarks", icon: "bookmark" },
