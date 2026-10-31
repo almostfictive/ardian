@@ -10,7 +10,6 @@ import { DIA_OFFSET, MARK_ABOVE_BAR, newTabBarTop } from "./newTabLayout";
 import { useOnboarding } from "../../state/onboarding/onboarding";
 import { Omnibox } from "../omnibox/Omnibox";
 import { NTP_BAR } from "./tokens";
-import { GlassFill, useGlass } from "../ui/Glass";
 
 const BAR_HEIGHT = 112;
 const MARKS = {
@@ -50,7 +49,6 @@ export function barWidth(viewWidth: number) {
 
 export function NewTabPage({ tabId, toolbar = true }: { tabId: string; toolbar?: boolean }) {
   const theme = useTheme();
-  const glass = useGlass("panes");
   const windowId = useWindowId();
   const incognito = useWindow(windowId, (w) => w?.kind === "private");
   const onboarding = useOnboarding((s) => s.windowId === windowId);
@@ -143,10 +141,9 @@ export function NewTabPage({ tabId, toolbar = true }: { tabId: string; toolbar?:
             shadowOffset={level.offset}
           />
         ))}
-        <Surface fill={glass ? ink.clear : hex(theme.ntpBarSolid)} cornerRadius={NTP_BAR.radius} style={{ padding: NTP_BAR.contentInset }}>
-          {glass ? <GlassFill panelFill={theme.panel} radius={NTP_BAR.radius} /> : null}
+        <Surface fill={hex(theme.ntpBarSolid)} cornerRadius={NTP_BAR.radius} style={{ padding: NTP_BAR.contentInset }}>
           {onboarding ? <View style={{ height: BAR_HEIGHT - 2 * NTP_BAR.contentInset }} /> : <Omnibox variant="hero" tabId={tabId} />}
-          {glass ? null : <View pointerEvents="none" style={{ ...StyleSheet.absoluteFillObject, borderRadius: NTP_BAR.radius, borderWidth: NTP_BAR.border, borderColor: theme.ntpBarBorder }} />}
+          <View pointerEvents="none" style={{ ...StyleSheet.absoluteFillObject, borderRadius: NTP_BAR.radius, borderWidth: NTP_BAR.border, borderColor: theme.ntpBarBorder }} />
         </Surface>
       </View>
       <NewTabExtras size={size} bar={bar} />

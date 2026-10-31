@@ -1,5 +1,4 @@
-import { ink, OutsidePressArea, reduceMotion, Surface } from "../ui";
-import { GlassFill, useGlass } from "../ui/Glass";
+import { OutsidePressArea, reduceMotion, Surface } from "../ui";
 import { useEffect, useRef, useState, type ComponentProps, type ReactNode } from "react";
 import { Animated, StyleSheet, View, type LayoutChangeEvent } from "react-native";
 import { hex, useTheme } from "../ui/theme";
@@ -152,8 +151,6 @@ function Grow({
   surface: Omit<ComponentProps<typeof Surface>, "style">;
   children: ReactNode;
 }) {
-  const theme = useTheme();
-  const glass = useGlass("panes");
   const fade = !!from && !!reduceMotion();
   const [progress] = useState(() => new Animated.Value(from ? 0 : 1));
   const start = useRef(fade ? null : from);
@@ -189,14 +186,7 @@ function Grow({
   }
   return (
     <Animated.View onLayout={onLayout} style={[{ position: "absolute", ...frame }, outer]}>
-      {glass ? (
-        <>
-          <Surface {...surface} fill={ink.clear} borderWidth={0} style={StyleSheet.absoluteFill} />
-          <GlassFill panelFill={theme.panel} radius={radius} />
-        </>
-      ) : (
-        <Surface {...surface} style={StyleSheet.absoluteFill} />
-      )}
+      <Surface {...surface} style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0 }} />
       <View style={box ? { overflow: "hidden", borderRadius: radius } : undefined}>
         <Animated.View style={inner}>{children}</Animated.View>
       </View>
