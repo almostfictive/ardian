@@ -29,9 +29,9 @@ export function DropdownFrame({ rootRef, onContextMenu, leadingIcon, scope, fiel
           {onSiteControls ? (
             <Button variant="icon"
               icon="info.circle"
-              size={BAR.siteControls.icon}
-              box={BAR.siteControls.box}
-              radius={BAR.siteControls.radius}
+              size="l"
+              glyph={BAR.siteControls.glyph}
+              capsule
               color={theme.textSecondary}
               tooltip="Site Controls"
               onPress={onSiteControls}
@@ -84,7 +84,7 @@ export function BottomRow({ hero, addChip, onDictate, label, enabled, onGo }: { 
     >
       {addChip}
       <View style={{ flex: 1 }} />
-      <Button variant="icon" icon="mic" size={BAR.bottom.mic} color={theme.textTertiary} tooltip="Dictate" onPress={onDictate} />
+      <Button variant="icon" icon="mic" glyph={BAR.bottom.mic} color={theme.textTertiary} tooltip="Dictate" onPress={onDictate} />
       <GoButton label={label} enabled={enabled} onPress={onGo} />
     </View>
   );
