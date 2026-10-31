@@ -170,7 +170,7 @@ export function LookStep() {
   const name = customTheme ? "Custom" : color ? PROFILE_COLORS[color]?.name : null;
   return (
     <Page id="color" title="Pick a color" subtitle="It tints the sidebar and the window." patch={{}} picked={name ? [`${name} theme`] : []} preview={preview}>
-      <ThemeColorPicker windowId={windowId} size={32} onPick={(c) => previewColor(c)} onTheme={previewTheme} />
+      <ThemeColorPicker windowId={windowId} size={32} gap="xs" onPick={(c) => previewColor(c)} onTheme={previewTheme} />
     </Page>
   );
 }

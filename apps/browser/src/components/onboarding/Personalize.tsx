@@ -13,7 +13,7 @@ import { MiniWindow } from "../settings/MiniWindow";
 import { OptionCard } from "./OptionCard";
 import { useOnboardingColors } from "./Parts";
 import { curve } from "../ui/motion";
-import { radius, space } from "../ui/tokens";
+import { radius, space, type Space } from "../ui/tokens";
 import { onboardingMotion } from "./tokens";
 
 export const PERSONALIZE_COPY = {
@@ -27,11 +27,13 @@ const COLORS = Object.keys(PROFILE_COLORS) as ProfileColor[];
 export function ThemeColorPicker({
   windowId,
   size = 28,
+  gap = "s",
   onPick,
   onTheme,
 }: {
   windowId: string;
   size?: number;
+  gap?: Space;
   onPick?: (color: ProfileColor) => void;
   onTheme?: (theme: ProfileTheme) => void;
 }) {
@@ -42,7 +44,7 @@ export function ThemeColorPicker({
   const { custom } = look;
   return (
     <View style={{ gap: space.xxxl }}>
-      <View style={{ flexDirection: "row", flexWrap: "wrap", gap: space.s }} accessibilityRole="radiogroup" accessibilityLabel="Theme color">
+      <View style={{ flexDirection: "row", flexWrap: "wrap", gap: space[gap] }} accessibilityRole="radiogroup" accessibilityLabel="Theme color">
         {COLORS.map((c) => (
           <ColorButton
             key={c}
