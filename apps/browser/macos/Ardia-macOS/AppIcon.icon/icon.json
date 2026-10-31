@@ -1,66 +1,75 @@
 {
-  "fill": {
-    "solid": "srgb:0.97647,0.96078,0.89020,1.00000"
-  },
-  "groups": [
+  "fill-specializations" : [
     {
-      "layers": [
-        {
-          "glass": false,
-          "image-name": "sun.png",
-          "name": "sun"
-        }
-      ],
-      "shadow": {
-        "kind": "neutral",
-        "opacity": 0.5
-      },
-      "specular": false,
-      "translucency": {
-        "enabled": false,
-        "value": 0.5
+      "value" : {
+        "solid" : "display-p3:0.88721,0.89209,0.83887,1.00000"
       }
     },
     {
-      "layers": [
-        {
-          "glass": false,
-          "image-name": "front.png",
-          "name": "front"
-        }
-      ],
-      "shadow": {
-        "kind": "neutral",
-        "opacity": 0.5
-      },
-      "specular": false,
-      "translucency": {
-        "enabled": false,
-        "value": 0.5
-      }
-    },
-    {
-      "layers": [
-        {
-          "glass": false,
-          "image-name": "back.png",
-          "name": "back"
-        }
-      ],
-      "shadow": {
-        "kind": "neutral",
-        "opacity": 0.5
-      },
-      "specular": false,
-      "translucency": {
-        "enabled": false,
-        "value": 0.5
+      "appearance" : "dark",
+      "value" : {
+        "solid" : "display-p3:0.00000,0.00000,0.00000,1.00000"
       }
     }
   ],
-  "supported-platforms": {
-    "squares": [
-      "macOS"
-    ]
+  "groups" : [
+    {
+      "hidden" : false,
+      "layers" : [
+        {
+          "blend-mode-specializations" : [
+            {
+              "appearance" : "dark",
+              "value" : "hard-light"
+            },
+            {
+              "appearance" : "tinted",
+              "value" : "normal"
+            }
+          ],
+          "fill-specializations" : [
+            {
+              "appearance" : "dark",
+              "value" : {
+                "solid" : "display-p3:0.91792,1.00000,0.95033,1.00000"
+              }
+            },
+            {
+              "appearance" : "tinted",
+              "value" : {
+                "solid" : "display-p3:0.24442,0.56870,1.05747,1.00000"
+              }
+            }
+          ],
+          "glass" : false,
+          "image-name" : "Minimalist Black Line Bird Illustration.png",
+          "name" : "Minimalist Black Line Bird Illustration",
+          "opacity-specializations" : [
+            {
+              "appearance" : "dark",
+              "value" : 1
+            }
+          ],
+          "position" : {
+            "scale" : 0.65,
+            "translation-in-points" : [
+              -16,
+              -50
+            ]
+          }
+        }
+      ],
+      "shadow" : {
+        "kind" : "neutral",
+        "opacity" : 0.5
+      },
+      "translucency" : {
+        "enabled" : true,
+        "value" : 0.3
+      }
+    }
+  ],
+  "supported-platforms" : {
+    "squares" : "shared"
   }
 }
