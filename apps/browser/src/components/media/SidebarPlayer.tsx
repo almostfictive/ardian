@@ -11,6 +11,7 @@ import { useMuteState } from "../../state/tabs/hooks";
 import { muteTitle } from "../../state/tabs/mute";
 import { Favicon } from "../favicon/Favicon";
 import { useSidebarTokens } from "../sidebar/tokens";
+import { GlassFill, useGlass } from "../ui/Glass";
 import { useArtwork } from "../../state/media/artwork";
 import {
   dismissPlayer,
@@ -160,21 +161,35 @@ export function SidebarPlayer({ tabId }: { tabId: string }) {
   const [seeking, setSeeking] = useState(false);
   const { expanded, mounted, reveal } = useExpanded(hovered, seeking);
   const height = useMemo(() => reveal.interpolate({ inputRange: [0, 1], outputRange: [ROW_HEIGHT, EXPANDED_HEIGHT] }), [reveal]);
+  const glass = useGlass();
   if (!session || !shown) return null;
+
+  const body = (
+    <>
+      <View style={{ height: ROW_HEIGHT, flexDirection: "row", alignItems: "center", paddingLeft: ROW_INSET, paddingRight: TRAILING_INSET }}>
+        <PlayerRow tabId={tabId} mounted={mounted} hovered={hovered} reveal={reveal} />
+        {expanded ? (
+          <Button variant="icon" icon="xmark" size="m" tooltip="Close Player" onPress={() => dismissPlayer(tabId)} />
+        ) : (
+          <PlayButton tabId={tabId} playing={playing} size="m" />
+        )}
+      </View>
+      {mounted ? <PlayerControls tabId={tabId} reveal={reveal} onSeeking={setSeeking} /> : null}
+    </>
+  );
 
   return (
     <Animated.View {...hoverProps} style={{ height }}>
-      <Panel fill={tokens.groupFill} radius={radius.panel} border={tokens.groupStroke} style={{ flex: 1, overflow: "hidden" }}>
-        <View style={{ height: ROW_HEIGHT, flexDirection: "row", alignItems: "center", paddingLeft: ROW_INSET, paddingRight: TRAILING_INSET }}>
-          <PlayerRow tabId={tabId} mounted={mounted} hovered={hovered} reveal={reveal} />
-          {expanded ? (
-            <Button variant="icon" icon="xmark" size="m" tooltip="Close Player" onPress={() => dismissPlayer(tabId)} />
-          ) : (
-            <PlayButton tabId={tabId} playing={playing} size="m" />
-          )}
+      {glass ? (
+        <View style={{ flex: 1, overflow: "hidden", borderRadius: radius.panel }}>
+          <GlassFill radius={radius.panel} state={hovered ? "lit" : "rest"} />
+          {body}
         </View>
-        {mounted ? <PlayerControls tabId={tabId} reveal={reveal} onSeeking={setSeeking} /> : null}
-      </Panel>
+      ) : (
+        <Panel fill={tokens.groupFill} radius={radius.panel} border={tokens.groupStroke} style={{ flex: 1, overflow: "hidden" }}>
+          {body}
+        </Panel>
+      )}
     </Animated.View>
   );
 }
