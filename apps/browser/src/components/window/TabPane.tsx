@@ -27,7 +27,7 @@ import { paneBar, type CardChrome } from "./paneChrome";
 import { PageOverlays } from "./PageOverlays";
 import { useProfileTheme } from "./ThemeScope";
 
-const LINGERING_PANE = "ardia.lingeringPane";
+const LINGERING_PANE = "ardian.lingeringPane";
 
 export const TabPane = memo(function TabPane({
   tabId,
