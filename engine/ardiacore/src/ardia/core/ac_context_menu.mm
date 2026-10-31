@@ -179,8 +179,7 @@ class ACContextMenu : public RenderViewContextMenuMacCocoa {
     const std::u16string& selection = params().selection_text;
     ArdiaCoreTab* tab = TabOf(source_web_contents_);
     id<ArdiaCoreTabDelegate> delegate = tab.delegate;
-    if (selection.empty() || params().is_editable ||
-        ![delegate respondsToSelector:@selector(tab:contextMenuItemsForSelection:)]) {
+    if (![delegate respondsToSelector:@selector(tab:contextMenuItemsForSelection:)]) {
       return;
     }
     NSArray<NSDictionary*>* items =
@@ -190,6 +189,7 @@ class ACContextMenu : public RenderViewContextMenuMacCocoa {
         menu_model_.GetIndexOfCommandId(IDC_CONTENT_CONTEXT_COPY);
     size_t at = copy ? *copy + 1 : menu_model_.GetItemCount();
     for (NSDictionary* item in items) {
+      if ([item[@"id"] isEqual:@"search"] && (selection.empty() || params().is_editable)) continue;
       NSString* item_id = [item[@"id"] isKindOfClass:NSString.class] ? item[@"id"] : nil;
       NSString* title = [item[@"title"] isKindOfClass:NSString.class] ? item[@"title"] : nil;
       const int command = kHostFirst + static_cast<int>(host_items_.size());

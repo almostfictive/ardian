@@ -85,7 +85,6 @@ enum CommandTable {
     case returnToPinnedUrl
     case tabSwitcher
     case share
-    case sendFeedback
     case keyboardShortcuts
     case copyDiagnostics
     case recordPerformanceIssue
@@ -115,7 +114,7 @@ enum CommandTable {
     "newTab": "New Tab",
     "newWindow": "New Window",
     "newIncognitoWindow": "New Incognito Window",
-    "newLittleArdia": "New Little Ardia Window",
+    "newLittleArdia": "New Little Ardian Window",
     "toggleOpenLinksInLittleArdia": "Open Links from Other Apps in Main Window",
     "reopenClosedTab": "Reopen Closed Tab",
     "reopenClosedWindow": "Reopen Closed Window",
@@ -165,6 +164,7 @@ enum CommandTable {
     "selectTab:6": "Select Tab 6",
     "selectTab:7": "Select Tab 7",
     "selectTab:8": "Select Tab 8",
+    "selectTab:9": "Select Tab 9",
     "selectLastTab": "Select Last Tab",
     "togglePin": "Move to Top Apps",
     "togglePin:tile": "Move Pinned Tab to Top Apps",
@@ -185,7 +185,6 @@ enum CommandTable {
     "manageBookmarks": "Manage Bookmarks",
     "exportBookmarks": "Export Bookmarks…",
     "bookmarkAllTabs": "Bookmark All Tabs…",
-    "setBookmarksBar:always": "Always",
     "setBookmarksBar:newTab": "On New Tab Only",
     "setBookmarksBar:never": "Never",
     "toggleBookmarksBar": "Toggle Bookmarks Bar",
@@ -200,7 +199,6 @@ enum CommandTable {
     "tabSwitcher:forward": "Tab Switcher (forward)",
     "tabSwitcher:backward": "Tab Switcher (backward)",
     "share": "Share",
-    "sendFeedback": "Send Feedback…",
     "keyboardShortcuts": "Keyboard Shortcuts",
     "copyDiagnostics": "Copy Diagnostics",
     "recordPerformanceIssue": "Record Performance Issue…",
@@ -272,7 +270,7 @@ enum CommandTable {
     "selectTab:6": [("6", [.command])],
     "selectTab:7": [("7", [.command])],
     "selectTab:8": [("8", [.command])],
-    "selectLastTab": [("9", [.command])],
+    "selectTab:9": [("9", [.command])],
     "togglePinnedRow": [("d", [.option, .shift, .command])],
     "bookmarkPage": [("d", [.command])],
     "downloads": [("j", [.shift, .command]), ("l", [.option, .command])],
@@ -289,7 +287,6 @@ enum CommandTable {
     "returnToPinnedUrl": [("\u{D}", [.command])],
     "tabSwitcher:forward": [("\u{9}", [.control])],
     "tabSwitcher:backward": [("\u{9}", [.control, .shift])],
-    "sendFeedback": [("i", [.option, .shift, .command])],
     "openFile": [("o", [.command])],
     "emailPageLocation": [("i", [.shift, .command])],
     "printWithSystemDialog": [("p", [.option, .command])],

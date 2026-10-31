@@ -76,6 +76,12 @@ export function startDevHarness() {
     get sidebarRows(): typeof import("../../state/sidebar/sidebarUi") {
       return require("../../state/sidebar/sidebarUi");
     },
+    get miniApps(): typeof import("../../state/sidebar/miniApps") {
+      return require("../../state/sidebar/miniApps");
+    },
+    get screenshots(): typeof import("../../state/screenshots/actions") {
+      return require("../../state/screenshots/actions");
+    },
     get sidebarHover(): typeof import("../../state/sidebar/hover") & typeof import("../sidebar/hoverMotion") {
       return { ...require("../../state/sidebar/hover"), ...require("../sidebar/hoverMotion") };
     },

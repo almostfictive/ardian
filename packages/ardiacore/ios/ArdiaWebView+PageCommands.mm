@@ -108,7 +108,7 @@ using namespace ardia_runtime;
   [_tab evaluate:code completion:completion];
 }
 
-- (void)capturePicture:(double)scale completion:(void (^)(NSDictionary<NSString *, id> *))completion {
+- (void)capturePicture:(double)scale fullPage:(BOOL)fullPage completion:(void (^)(NSDictionary<NSString *, id> *))completion {
   NSWindow *window = self.window;
   if (!_tab || !window || self.hidden) return completion(nil);
   NSRect inWindow = [self convertRect:self.bounds toView:nil];
@@ -120,13 +120,29 @@ using namespace ardia_runtime;
     answered = YES;
     completion(result);
   };
-  NSDictionary *params = @{@"format" : @"jpeg", @"quality" : @(scale < 0.5 ? 55 : 75), @"optimizeForSpeed" : @YES};
-  void (^done)(NSDictionary *, NSString *) = ^(NSDictionary *shot, NSString *error) {
-    NSString *data = shot[@"data"];
-    answer([data isKindOfClass:NSString.class] ? @{@"data" : data, @"frame" : frame} : nil);
+  NSDictionary *base = @{@"format" : @"jpeg", @"quality" : @(scale < 0.5 ? 55 : 75), @"optimizeForSpeed" : @YES};
+  void (^capture)(NSDictionary *) = ^(NSDictionary *params) {
+    [_tab devToolsCall:@"Page.captureScreenshot" params:params timeout:fullPage ? 15.0 : 1.0 completion:^(NSDictionary *shot, NSString *error) {
+      NSString *data = shot[@"data"];
+      answer([data isKindOfClass:NSString.class] ? @{@"data" : data, @"frame" : frame} : nil);
+    }];
   };
-  [_tab devToolsCall:@"Page.captureScreenshot" params:params timeout:1.0 completion:done];
-  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC), dispatch_get_main_queue(), ^{ answer(nil); });
+  if (fullPage) {
+    [_tab devToolsCall:@"Page.getLayoutMetrics" params:@{} timeout:3.0 completion:^(NSDictionary *metrics, NSString *error) {
+      NSDictionary *size = [metrics[@"cssContentSize"] isKindOfClass:NSDictionary.class] ? metrics[@"cssContentSize"] : metrics[@"contentSize"];
+      double width = [size[@"width"] doubleValue];
+      double height = [size[@"height"] doubleValue];
+      if (width <= 0 || height <= 0 || width > 20000 || height > 20000 || width * height > 50000000) return answer(nil);
+      NSDictionary *clip = @{@"x" : @0, @"y" : @0, @"width" : @(width), @"height" : @(height), @"scale" : @1};
+      NSMutableDictionary *params = [base mutableCopy];
+      params[@"clip"] = clip;
+      params[@"captureBeyondViewport"] = @YES;
+      capture(params);
+    }];
+  } else {
+    capture(base);
+  }
+  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (fullPage ? 20 : 1) * NSEC_PER_SEC), dispatch_get_main_queue(), ^{ answer(nil); });
 }
 
 - (void)navigationEntries:(void (^)(NSArray<NSDictionary<NSString *, id> *> *))completion {

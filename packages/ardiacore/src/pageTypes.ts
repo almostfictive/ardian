@@ -51,7 +51,7 @@ export type BlockedPopup = { id: string; url: string; origin: string };
 
 export type FindResult = { count: number; active: number; final: boolean };
 export type PageCommand = {
-  command: "search" | "ask" | "copyLinkToHighlight" | "escape";
+  command: "settings" | "search" | "ask" | "copyLinkToHighlight" | "escape";
   text: string;
   modifiers?: { metaKey?: boolean; shiftKey?: boolean; altKey?: boolean; middle?: boolean };
 };
@@ -220,7 +220,7 @@ export type WebViewHandle = {
   executeJavaScript(code: string): Promise<void>;
   evaluate<T = unknown>(code: string): Promise<T | null>;
   navigationEntries(): Promise<NavigationEntry[]>;
-  capturePicture(scale: number): Promise<{ data: string; frame: [number, number, number, number] } | null>;
+  capturePicture(scale: number, fullPage?: boolean): Promise<{ data: string; frame: [number, number, number, number] } | null>;
   downloadFavicon(url: string): Promise<FaviconImage | null>;
   downloadImage(url: string, maxPixels: number): Promise<FaviconImage | null>;
 

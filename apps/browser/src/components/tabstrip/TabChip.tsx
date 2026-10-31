@@ -19,11 +19,11 @@ import { tabIn, tileHold } from "./dockCross";
 import { FadeIn } from "./FadeIn";
 import { dropAt, useOnto, type GroupOut, type StripDrag } from "./model";
 import { PinnedFace } from "./PinnedFace";
-import { SelectedTab } from "./SelectedTab";
 import { CELL_STEP, dragRange, leaveIndex, type DragGeometry } from "./stripGroups";
 import { CHIP_LABEL_GAP, CHIP_PAD, DROP_RING_WIDTH, GAP, ITEM_HEIGHT, ITEM_TOP, PINNED_CELL, TAB_RADIUS, TOP_STRIP_HEIGHT } from "./tokens";
 import { useStripDrag } from "./useStripDrag";
 import { TabPressArea } from "../sidebar/TabPressArea";
+import { TabNumber } from "../sidebar/TabNumber";
 import { tabTitle, tabTooltip } from "../../state/browser/model";
 
 export function DraggableChip({
@@ -113,15 +113,12 @@ export function TabChip({ tabId, width, tuck, dragged }: { tabId: string; width:
   const floating = useContext(FloatingStrip);
   const playing = useTabLive(tabId, (l) => l.playingAudio);
   const mute = useMuteState(tabId);
-  const { palette, band } = useWebsiteBand(tabId);
   const closeControl = useTabCloseControl(tabId);
   const { hovered, hoverProps } = useHover();
   if (!tab) return null;
   const title = tabTitle(tab);
-  const onBand = active && !floating && !!palette.background;
   return (
     <View {...hoverProps} tooltip={tabTooltip(tab)} style={{ width, height: TOP_STRIP_HEIGHT }}>
-      {active && <SelectedTab width={width} band={band} opaque={dragged} />}
       {dragged && !active && (
         <View pointerEvents="none" style={{ position: "absolute", left: 0, width, top: ITEM_TOP, height: ITEM_HEIGHT, borderRadius: TAB_RADIUS, backgroundColor: theme.windowTint[0] }} />
       )}
@@ -135,15 +132,16 @@ export function TabChip({ tabId, width, tuck, dragged }: { tabId: string; width:
             </View>
             {(playing || mute) && (
               <Pressable onPress={() => toggleMute(tab.id)} style={{ marginLeft: CHIP_LABEL_GAP }} tooltip={muteTitle(mute)}>
-                <Symbol name={mute ? "speaker.slash" : "speaker.wave.2"} size={11} color={onBand ? palette.icon : theme.textTab} style={{ width: 16, height: 16 }} />
+                <Symbol name={mute ? "speaker.slash" : "speaker.wave.2"} size={11} color={theme.textTab} style={{ width: 16, height: 16 }} />
               </Pressable>
             )}
             <FadeLabel
               text={title}
               fontSize={font.small.fontSize}
-              color={onBand ? palette.text : active ? theme.tabSelectedText : theme.textTab}
+              color={active ? theme.tabSelectedText : theme.textTab}
               style={{ flex: 1, height: 16, marginLeft: CHIP_LABEL_GAP }}
             />
+            <TabNumber tabId={tab.id} />
             <HoverSlot
               hovered={hovered}
               width={20}
@@ -154,7 +152,7 @@ export function TabChip({ tabId, width, tuck, dragged }: { tabId: string; width:
                   weight="semibold"
                   box={20}
                   radius={5}
-                  color={onBand ? palette.icon : undefined}
+                  color={undefined}
                   onPress={tuck ?? (() => pressTabClose(tab.id))}
                   tooltip={tuck ? "Hide in Group" : closeControl.tooltip}
                 />

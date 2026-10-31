@@ -8,6 +8,7 @@ import { GlassFill, liquidGlass } from "../ui/Glass";
 import { SLIDE } from "../tabstrip/stripReorder";
 import { TabBadges } from "../media/TabBadges";
 import { TabIcon } from "./TabIcon";
+import { TabNumber } from "./TabNumber";
 import { sidebarTokens, TILE_GLOW, useSidebarTokens } from "./tokens";
 
 const SELECTION_STROKE = 3;
@@ -26,6 +27,7 @@ export function TileFace({ tabId, badge, ...state }: FaceState & { tabId: string
     <View>
       <TabIcon tabId={tab.id} url={tab.url} favicon={tab.favicon} icon={tab.customIcon} />
       <TabBadges tabId={tabId} />
+      <View pointerEvents="none" style={{ position: "absolute", right: -14, top: -8 }}><TabNumber tabId={tabId} /></View>
     </View>
   );
   if (liquidGlass)

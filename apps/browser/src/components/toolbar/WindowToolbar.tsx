@@ -4,6 +4,10 @@ import { AutoHideToolbar } from "./AutoHideToolbar";
 import type { ToolbarGeometry } from "../window/geometry";
 import type { ToolbarMode } from "../../state/windows/toolbarAutoHide";
 import { Toolbar } from "./Toolbar";
+import { useTab } from "../../state/browser/hooks";
+import { useBookmarksBarHasItems, useBookmarksBarMode } from "../../state/bookmarks/hooks";
+import { bookmarksBarShown } from "../bookmarks/BookmarksBar";
+import { useBookmarksBarHeight } from "../bookmarks/barSize";
 import { useToolbarRow } from "./useToolbarRow";
 
 type PaneChrome = { tabId: string; mode: ToolbarMode; bar: Animated.Value; fade: Animated.Value };
@@ -25,9 +29,15 @@ export function publishPaneChrome(windowId: string, chrome: PaneChrome) {
 export function WindowToolbar({ windowId, tabId, geometry, autoHide }: { windowId: string; tabId: string; geometry: ToolbarGeometry; autoHide: boolean }) {
   const chrome = useSyncExternalStore(subscribe, () => chromes.get(windowId));
   useEffect(() => () => void chromes.delete(windowId), [windowId]);
+  const url = useTab(tabId, (t) => t?.url);
+  const mode = useBookmarksBarMode(windowId);
+  const hasItems = useBookmarksBarHasItems(windowId);
+  const barHeight = useBookmarksBarHeight();
+  const top = bookmarksBarShown(mode, url === undefined ? undefined : { url }, hasItems) ? barHeight : 0;
+  const hide = autoHide && !!url;
   const height = useToolbarRow().height;
-  const frame = useMemo(() => ({ position: "absolute" as const, left: 0, top: 0, right: 0, height }), [height]);
-  if (!autoHide) {
+  const frame = useMemo(() => ({ position: "absolute" as const, left: 0, top, right: 0, height }), [height, top]);
+  if (!hide) {
     return (
       <View pointerEvents="box-none" style={frame}>
         <Toolbar tabId={tabId} geometry={geometry} windowId={windowId} inSplit={false} focused bare />

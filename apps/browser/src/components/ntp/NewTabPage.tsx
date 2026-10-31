@@ -1,38 +1,19 @@
-import { PowerUp, hex, ink, reduceMotion, spring as springOf, Surface, useTheme } from "../ui";
+import { PowerUp, hex, ink, Surface, useTheme } from "../ui";
 import { TOOLBAR_ROWS } from "../../lib/toolbarRow";
 import { useEffect, useState } from "react";
-import { Animated, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { useWindow, useWindowId } from "../../state/browser/hooks";
 import { useCardAnchors } from "../../state/windows/layout";
 import { NewTabExtras } from "./NewTabExtras";
 import { IncognitoHeading } from "./IncognitoHeading";
-import { DIA_OFFSET, MARK_ABOVE_BAR, newTabBarTop } from "./newTabLayout";
+import { DIA_OFFSET, newTabBarTop } from "./newTabLayout";
 import { useOnboarding } from "../../state/onboarding/onboarding";
 import { Omnibox } from "../omnibox/Omnibox";
+import { ContextMenuArea } from "../ui";
+import { openPageMenu } from "../../state/pages/contextMenu";
 import { NTP_BAR } from "./tokens";
 
 const BAR_HEIGHT = 112;
-const MARKS = {
-  green: { back: require("../../../assets/ntp-mark-back.png"), front: require("../../../assets/ntp-mark-front.png"), sun: require("../../../assets/ntp-mark-sun.png") },
-  plum: { back: require("../../../assets/ntp-mark-plum-back.png"), front: require("../../../assets/ntp-mark-plum-front.png"), sun: require("../../../assets/ntp-mark-plum-sun.png") },
-  blue: { back: require("../../../assets/ntp-mark-blue-back.png"), front: require("../../../assets/ntp-mark-blue-front.png"), sun: require("../../../assets/ntp-mark-blue-sun.png") },
-  purple: { back: require("../../../assets/ntp-mark-purple-back.png"), front: require("../../../assets/ntp-mark-purple-front.png"), sun: require("../../../assets/ntp-mark-purple-sun.png") },
-  pink: { back: require("../../../assets/ntp-mark-pink-back.png"), front: require("../../../assets/ntp-mark-pink-front.png"), sun: require("../../../assets/ntp-mark-pink-sun.png") },
-  red: { back: require("../../../assets/ntp-mark-red-back.png"), front: require("../../../assets/ntp-mark-red-front.png"), sun: require("../../../assets/ntp-mark-red-sun.png") },
-  orange: { back: require("../../../assets/ntp-mark-orange-back.png"), front: require("../../../assets/ntp-mark-orange-front.png"), sun: require("../../../assets/ntp-mark-orange-sun.png") },
-  yellow: { back: require("../../../assets/ntp-mark-yellow-back.png"), front: require("../../../assets/ntp-mark-yellow-front.png"), sun: require("../../../assets/ntp-mark-yellow-sun.png") },
-  neutral: { back: require("../../../assets/ntp-mark-neutral-back.png"), front: require("../../../assets/ntp-mark-neutral-front.png"), sun: require("../../../assets/ntp-mark-neutral-sun.png") },
-};
-const MARK_SIZE = 100;
-const SUN_DELAY = 250;
-const MARK_LAYERS = [
-  { name: "sun", hidden: 56, delay: SUN_DELAY, spring: springOf({ response: 0.56, damping: 0.9 }) },
-  { name: "back", hidden: 40.5, delay: 170, spring: springOf({ response: 0.46, damping: 0.84 }) },
-  { name: "front", hidden: 34, delay: 80, spring: springOf({ response: 0.42, damping: 0.76 }) },
-] as const;
-const SUN_DRIFT = 6;
-const SUN_DRIFT_SPRING = springOf({ response: 0.6, damping: 1 });
-
 type Size = { width: number; height: number };
 let lastSize: { card: Size; size: Size } | null = null;
 const introPlayed = new Set<string>();
@@ -62,25 +43,9 @@ export function NewTabPage({ tabId, toolbar = true }: { tabId: string; toolbar?:
   const [headingHeight, setHeadingHeight] = useState(0);
   const heading = !onboarding && incognito;
   const [playIntro] = useState(() => !introPlayed.has(tabId));
-  const [rise] = useState(() => {
-    const intro = playIntro && !reduceMotion();
-    const layers = MARK_LAYERS.map((l) => ({ ...l, y: new Animated.Value(intro ? l.hidden : 0) }));
-    return { layers, drift: new Animated.Value(intro ? SUN_DRIFT : 0) };
-  });
   useEffect(() => {
     introPlayed.add(tabId);
   }, [tabId]);
-  useEffect(() => {
-    if (!playIntro || reduceMotion()) return;
-    const spring = (value: Animated.Value, delay: number, params: ReturnType<typeof springOf>) =>
-      Animated.spring(value, { toValue: 0, delay, ...params, useNativeDriver: true });
-    const intro = Animated.parallel([
-      ...rise.layers.map((l) => spring(l.y, l.delay, l.spring)),
-      spring(rise.drift, SUN_DELAY, SUN_DRIFT_SPRING),
-    ]);
-    intro.start();
-    return () => intro.stop();
-  }, [playIntro, rise]);
 
   if (!size) return <View style={{ flex: 1 }} onLayout={(e) => setSize(e.nativeEvent.layout)} />;
 
@@ -92,6 +57,7 @@ export function NewTabPage({ tabId, toolbar = true }: { tabId: string; toolbar?:
   const bar = { x, y: top, width, height: panelHeight };
 
   return (
+    <ContextMenuArea style={{ flex: 1 }} onContextMenu={() => void openPageMenu()}>
     <View style={{ flex: 1 }} onLayout={(e) => setSize(e.nativeEvent.layout)}>
       {playIntro && theme.powerUpPalette && (
         <PowerUp
@@ -104,30 +70,6 @@ export function NewTabPage({ tabId, toolbar = true }: { tabId: string; toolbar?:
         />
       )}
       {heading && <IncognitoHeading left={x} barTop={top} width={width} onHeight={setHeadingHeight} />}
-      <View
-        pointerEvents="none"
-        style={{
-          position: "absolute",
-          left: size.width / 2 + DIA_OFFSET - MARK_SIZE / 2,
-          top: top - MARK_ABOVE_BAR,
-          width: MARK_SIZE,
-          height: MARK_ABOVE_BAR,
-          overflow: "hidden",
-        }}
-      >
-        {rise.layers.map((l) => (
-          <Animated.Image
-            key={l.name}
-            source={(MARKS[theme.profileColor === "incognito" ? "neutral" : theme.profileColor] ?? MARKS.green)[l.name]}
-            style={{
-              position: "absolute",
-              width: MARK_SIZE,
-              height: MARK_SIZE,
-              transform: [{ translateX: l.name === "sun" ? rise.drift : 0 }, { translateY: l.y }],
-            }}
-          />
-        ))}
-      </View>
       <View onLayout={(e) => setPanelHeight(e.nativeEvent.layout.height)} style={{ position: "absolute", left: x, top, width }}>
         {NTP_BAR.shadows.map((level, i) => (
           <Surface
@@ -148,5 +90,6 @@ export function NewTabPage({ tabId, toolbar = true }: { tabId: string; toolbar?:
       </View>
       <NewTabExtras size={size} bar={bar} />
     </View>
+    </ContextMenuArea>
   );
 }

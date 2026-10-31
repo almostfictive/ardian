@@ -44,3 +44,19 @@ let installScrollViewInsetFix: Void = {
     method_setImplementation(method, imp)
   }
 }()
+
+let installTextSettingsMenu: Void = {
+  let selector = #selector(NSView.menu(for:))
+  guard let method = class_getInstanceMethod(NSTextView.self, selector) else { return }
+  typealias MenuForEvent = @convention(c) (NSTextView, Selector, NSEvent) -> NSMenu?
+  let original = unsafeBitCast(method_getImplementation(method), to: MenuForEvent.self)
+  let block: @convention(block) (NSTextView, NSEvent) -> NSMenu? = { view, event in
+    let menu = original(view, selector, event)?.copy() as? NSMenu ?? NSMenu()
+    if menu.items.contains(where: { ($0 as? CommandItem)?.command == "openSettings" }) { return menu }
+    if !menu.items.isEmpty { menu.addItem(.separator()) }
+    menu.addItem(CommandItem(.openSettings, title: "Settings"))
+    return menu
+  }
+  let imp = imp_implementationWithBlock(block)
+  if !class_addMethod(NSTextView.self, selector, imp, method_getTypeEncoding(method)) { method_setImplementation(method, imp) }
+}()

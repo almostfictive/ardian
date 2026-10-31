@@ -10,6 +10,8 @@ import { dismissHover } from "../sidebar/hover";
 import { sidebarUi } from "../sidebar/sidebarUi";
 import { cancelSwitcher, commitSwitcher, moveSwitcher } from "../sidebar/switcher";
 
+import { setTabNumberWindow } from "./tabNumbers";
+
 let started = false;
 
 export function startSidebarEffects() {
@@ -31,6 +33,8 @@ export function startSidebarEffects() {
   });
 
   onAppEvent((e) => {
+    if (e.type === "tabNumbers") setTabNumberWindow(e.shown ? e.windowId : null);
+    if (e.type === "resignActive" || e.type === "lockedOrAsleep") setTabNumberWindow(null);
     if (e.type === "resignActive" || e.type === "screenLocked") {
       dismissHover();
       useBrowser.getState().closeAbandonedNewTabs();
@@ -41,6 +45,7 @@ export function startSidebarEffects() {
   });
 
   onWindowEvent((e) => {
+    if (e.type === "focus") setTabNumberWindow(null);
     const hover = sidebarUi().hover;
     if (e.type === "focus" && hover && hover.windowId !== e.id) dismissHover();
   });

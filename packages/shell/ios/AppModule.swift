@@ -6,7 +6,7 @@ import ExpoModulesCore
 public class AppModule: Module {
   public func definition() -> ModuleDefinition {
     Name("ArdiaApp")
-    Constant("apiVersion") { () -> Int in 35 }
+    Constant("apiVersion") { () -> Int in 36 }
 
     OnCreate {
       DispatchQueue.main.async { AppIcons.restore() }
@@ -76,6 +76,29 @@ public class AppModule: Module {
       guard let target = URL(string: url), target.scheme != nil else { return false }
       return NSWorkspace.shared.open(target)
     }.runOnQueue(.main)
+
+    AsyncFunction("saveScreenshot") { (data: String) throws -> String in
+      let encoded = data.contains(",") ? String(data.split(separator: ",", maxSplits: 1).last ?? "") : data
+      guard let image = Data(base64Encoded: encoded) else {
+        throw NSError(domain: "ArdiaApp", code: 1, userInfo: [NSLocalizedDescriptionKey: "The screenshot data is invalid."])
+      }
+      let manager = FileManager.default
+      guard let downloads = manager.urls(for: .downloadsDirectory, in: .userDomainMask).first else {
+        throw NSError(domain: "ArdiaApp", code: 2, userInfo: [NSLocalizedDescriptionKey: "The Downloads folder is unavailable."])
+      }
+      let formatter = DateFormatter()
+      formatter.locale = Locale(identifier: "en_US_POSIX")
+      formatter.dateFormat = "yyyy-MM-dd 'at' HH.mm.ss"
+      let base = "Ardian Screenshot \(formatter.string(from: Date()))"
+      var target = downloads.appendingPathComponent("\(base).jpg")
+      var suffix = 2
+      while manager.fileExists(atPath: target.path) {
+        target = downloads.appendingPathComponent("\(base) \(suffix).jpg")
+        suffix += 1
+      }
+      try image.write(to: target, options: .atomic)
+      return target.path
+    }
 
     AsyncFunction("playIntroMusic") { (cues: [String: Double], muted: Bool) in IntroMusic.shared.play(cues: cues, muted: muted) }.runOnQueue(.main)
     AsyncFunction("setIntroMusicMuted") { (muted: Bool) in IntroMusic.shared.setMuted(muted) }.runOnQueue(.main)

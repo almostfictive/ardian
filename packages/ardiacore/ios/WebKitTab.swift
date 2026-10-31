@@ -338,18 +338,30 @@ final class WebKitTab: NSView, WKNavigationDelegate, WKUIDelegate {
     }
   }
 
-  func capturePicture(_ scale: Double, completion: @escaping ([String: Any]?) -> Void) {
+  func capturePicture(_ scale: Double, fullPage: Bool, completion: @escaping ([String: Any]?) -> Void) {
     guard let view = webView, let window, !view.isHidden else { return completion(nil) }
     let inWindow = convert(bounds, to: nil)
     let top = window.contentView?.frame.height ?? 0
     let frame: [Double] = [inWindow.minX, top - inWindow.maxY, inWindow.width, inWindow.height]
-    let configuration = WKSnapshotConfiguration()
-    configuration.snapshotWidth = NSNumber(value: Double(view.bounds.width) * max(0.1, min(scale, 2)))
-    view.takeSnapshot(with: configuration) { image, _ in
-      guard let image, let tiff = image.tiffRepresentation, let bitmap = NSBitmapImageRep(data: tiff),
-        let jpeg = bitmap.representation(using: .jpeg, properties: [.compressionFactor: scale < 0.5 ? 0.55 : 0.75])
-      else { return completion(nil) }
-      completion(["data": jpeg.base64EncodedString(), "frame": frame])
+    let take: (Double, Double) -> Void = { width, height in
+      guard width > 0, height > 0, width <= 20000, height <= 20000, width * height <= 50000000 else { return completion(nil) }
+      let configuration = WKSnapshotConfiguration()
+      configuration.rect = CGRect(x: 0, y: 0, width: width, height: height)
+      configuration.snapshotWidth = NSNumber(value: width * max(0.1, min(scale, fullPage ? 1 : 2)))
+      view.takeSnapshot(with: configuration) { image, _ in
+        guard let image, let tiff = image.tiffRepresentation, let bitmap = NSBitmapImageRep(data: tiff),
+          let jpeg = bitmap.representation(using: .jpeg, properties: [.compressionFactor: scale < 0.5 ? 0.55 : 0.75])
+        else { return completion(nil) }
+        completion(["data": jpeg.base64EncodedString(), "frame": frame])
+      }
+    }
+    if fullPage {
+      view.evaluateJavaScript("({width:Math.max(document.documentElement.scrollWidth,document.body?.scrollWidth||0),height:Math.max(document.documentElement.scrollHeight,document.body?.scrollHeight||0)})") { result, _ in
+        guard let size = result as? [String: NSNumber] else { return completion(nil) }
+        take(size["width"]?.doubleValue ?? 0, size["height"]?.doubleValue ?? 0)
+      }
+    } else {
+      take(Double(view.bounds.width), Double(view.bounds.height))
     }
   }
 

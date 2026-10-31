@@ -9,12 +9,16 @@ public class ShellModule: Module {
   private var appearanceObservation: NSKeyValueObservation?
   private var sidebarObservers: [(NotificationCenter, NSObjectProtocol)] = []
   private var flagsMonitor: Any?
+  private var numberHintWork: DispatchWorkItem?
+  private var numberHintSuppressed = false
+  private var numberHintsShown = false
 
   public func definition() -> ModuleDefinition {
     Name("ArdiaShell")
     Events(ShellEvents.Channel.openURLs.rawValue, ShellEvents.Channel.app.rawValue)
 
     OnCreate {
+      _ = installTextSettingsMenu
       _ = installTextFieldSelectAll
       _ = installInputSourceKeys
       _ = installScrollViewInsetFix
@@ -27,6 +31,8 @@ public class ShellModule: Module {
         self.sidebarObservers = []
         if let monitor = self.flagsMonitor { NSEvent.removeMonitor(monitor) }
         self.flagsMonitor = nil
+        self.numberHintWork?.cancel()
+        self.numberHintWork = nil
         if Self.quitCancelledOwner == ObjectIdentifier(self) {
           Self.quitCancelledOwner = nil
           ArdiaHost.quitCancelledHandler = nil
@@ -84,6 +90,10 @@ public class ShellModule: Module {
     sidebarObservers.append((workspace, workspace.addObserver(forName: NSApplication.didResignActiveNotification, object: nil, queue: .main) { _ in
       if quiet() { emit("resignActive") }
     }))
+    sidebarObservers.append((workspace, workspace.addObserver(forName: NSWindow.didResignKeyNotification, object: nil, queue: .main) { [weak self] _ in
+      self?.hideTabNumbers()
+      self?.numberHintSuppressed = true
+    }))
     let distributed = DistributedNotificationCenter.default()
     sidebarObservers.append((distributed, distributed.addObserver(forName: .init("com.apple.screenIsLocked"), object: nil, queue: .main) { _ in
       emit("lockedOrAsleep")
@@ -93,9 +103,35 @@ public class ShellModule: Module {
     for name in [NSWorkspace.willSleepNotification, NSWorkspace.screensDidSleepNotification, NSWorkspace.sessionDidResignActiveNotification] {
       sidebarObservers.append((session, session.addObserver(forName: name, object: nil, queue: .main) { _ in emit("lockedOrAsleep") }))
     }
-    flagsMonitor = NSEvent.addLocalMonitorForEvents(matching: .flagsChanged) { event in
+    flagsMonitor = NSEvent.addLocalMonitorForEvents(matching: [.flagsChanged, .keyDown]) { [weak self] event in
+      guard let self else { return event }
+      self.hideTabNumbers()
+      if event.type == .keyDown {
+        self.numberHintSuppressed = event.modifierFlags.contains(.command)
+        return event
+      }
       if SwitcherHold.released(by: event.modifierFlags) { emit("switcherReleased") }
+      let flags = event.modifierFlags.intersection([.command, .shift, .option, .control])
+      if !flags.contains(.command) { self.numberHintSuppressed = false }
+      if flags == .command, !self.numberHintSuppressed, let windowId = WindowManager.shared.keyWindowId {
+        let work = DispatchWorkItem { [weak self] in
+          guard let self, NSApp.isActive, WindowManager.shared.keyWindowId == windowId else { return }
+          self.numberHintsShown = true
+          ShellEvents.send(.app, ["type": "tabNumbers", "windowId": windowId, "shown": true])
+        }
+        self.numberHintWork = work
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(200), execute: work)
+      }
       return event
+    }
+  }
+
+  private func hideTabNumbers() {
+    numberHintWork?.cancel()
+    numberHintWork = nil
+    if numberHintsShown {
+      numberHintsShown = false
+      ShellEvents.send(.app, ["type": "tabNumbers", "windowId": "", "shown": false])
     }
   }
 

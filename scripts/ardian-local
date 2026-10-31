@@ -1,0 +1,104 @@
+#!/bin/bash
+set -euo pipefail
+root=$(cd "$(dirname "$0")/.." && pwd)
+cd "$root"
+command=${1:-help}
+shift || true
+base=0
+if [[ "${1:-}" == --base-engine ]]; then base=1; shift; fi
+[[ $# -eq 0 ]] || { echo "Usage: scripts/ardian-local <setup|build|run|stop|status> [--base-engine]" >&2; exit 64; }
+checkout_key=$(printf %s "$root" | shasum -a 256 | cut -c1-12)
+local_cache="${ARDIAN_LOCAL_CACHE_DIR:-$HOME/Library/Caches/ArdianLocal/$checkout_key}"
+cache="$root/apps/browser/build-local-engine"
+app="$root/apps/browser/build-local-preview/Build/Products/Release/Ardian.app"
+profile="$root/apps/browser/build-local-preview/profile"
+framework="$cache/Chromium Framework.framework"
+case "$command" in
+  setup)
+    mkdir -p "$local_cache"
+    for name in build-local-engine build-local-preview; do
+      link="$root/apps/browser/$name"
+      target="$local_cache/$name"
+      if [[ -L "$link" ]]; then
+        [[ "$(readlink "$link")" == "$target" ]] || { echo "Unexpected cache link at $link" >&2; exit 1; }
+      else
+        if [[ -e "$link" ]]; then
+          [[ ! -e "$target" ]] || { echo "Both $link and $target exist; resolve the cache conflict first." >&2; exit 1; }
+          mv "$link" "$target"
+        else
+          mkdir -p "$target"
+        fi
+        ln -s "$target" "$link"
+      fi
+      mkdir -p "$target"
+    done
+    "$root/scripts/agent/locked" pod --wait 60 -- pnpm install --frozen-lockfile
+    (cd "$root/apps/browser/macos" && "$root/scripts/agent/locked" pod --wait 60 -- pod install)
+    if [[ -n "$(git status --porcelain -- engine)" && $base -ne 1 ]]; then
+      echo "Local engine edits require a Chromium source build. Use --base-engine for a limited preview without those engine edits." >&2
+      exit 1
+    fi
+    tree=$(git rev-parse HEAD:engine)
+    entry=$(awk -v tree="$tree" '$1 == tree {print; exit}' packages/ardiacore/prebuilt-engines.tsv)
+    [[ -n "$entry" ]] || { echo "No published base engine matches this checkout." >&2; exit 1; }
+    read -r tree version checksum <<< "$entry"
+    short=${tree:0:12}
+    tag="$version"
+    [[ "$tag" == engine-* ]] || tag="v$version"
+    mkdir -p "$cache"
+    archive="$cache/ArdiaCore-$short.tar.xz"
+    if [[ ! -f "$cache/.verified-$short" || ! -f "$framework/Versions/Current/Chromium Framework" ]]; then
+      if [[ ! -f "$archive" ]]; then
+        curl -fL --retry 3 --connect-timeout 20 --max-time 900 -o "$archive" "https://github.com/mantrakp04/ardia/releases/download/$tag/ArdiaCore-$short.tar.xz"
+      fi
+      actual=$(shasum -a 256 "$archive" | awk '{print $1}')
+      [[ "$actual" == "$checksum" ]] || { echo "Engine checksum mismatch; remove $archive and retry." >&2; exit 1; }
+      tar -xJf "$archive" -C "$cache"
+      [[ -f "$framework/Versions/Current/Chromium Framework" ]] || { echo "Engine archive did not contain the framework." >&2; exit 1; }
+      printf '%s\n' "$checksum" > "$cache/.verified-$short"
+    fi
+    xattr -dr com.apple.FinderInfo "$framework"
+    xattr -dr com.apple.ResourceFork "$framework"
+    echo "Local dependencies and the checksum-verified base engine are ready."
+    ;;
+  build)
+    if [[ -n "$(git status --porcelain -- engine)" ]]; then
+      [[ $base -eq 1 ]] || { echo "Local engine edits need a source build. Pass --base-engine for a preview that excludes them." >&2; exit 1; }
+      echo "LIMITED PREVIEW: uses the published base engine. Local engine edits, including the web-page Settings menu change, are not included."
+    fi
+    tree=$(git rev-parse HEAD:engine)
+    [[ -f "$cache/.verified-${tree:0:12}" && -f "$framework/Versions/Current/Chromium Framework" ]] || { echo "Run scripts/ardian-local setup --base-engine first." >&2; exit 1; }
+    ARDIACORE_STAGE_CACHE="$local_cache/staged" ARDIACORE_FRAMEWORK="$framework" "$root/scripts/agent/build-app" --as local-preview --config Release --ad-hoc --wait 60
+    if [[ -n "$(git status --porcelain -- engine)" ]]; then
+      git diff --binary HEAD -- engine > "$root/apps/browser/build-local-preview/excluded-engine.patch"
+    else
+      rm -f "$root/apps/browser/build-local-preview/excluded-engine.patch"
+    fi
+    ;;
+  run)
+    [[ -x "$app/Contents/MacOS/Ardian" && -f "$app/Contents/Info.plist" ]] || { echo "Run scripts/ardian-local build --base-engine first." >&2; exit 1; }
+    if [[ -f "$root/apps/browser/build-local-preview/excluded-engine.patch" ]]; then
+      echo "LIMITED PREVIEW: this app excludes the local engine changes recorded in apps/browser/build-local-preview/excluded-engine.patch."
+    fi
+    mkdir -p "$profile"
+    "$root/scripts/agent/ac" launch "$app" --data "$profile" --port 9357 --js none --no-wait
+    echo "Started the preview in the background with its own data at $profile"
+    ;;
+  stop)
+    "$root/scripts/agent/ac" quit "$profile" --kill
+    ;;
+  status)
+    echo "App: $app"
+    echo "Preview data: $root/apps/browser/build-local-preview/manual-profile"
+    echo "Diagnostic data: $profile"
+    echo "Base engine: $framework"
+    if [[ -f "$app/Contents/Info.plist" ]]; then
+      /usr/libexec/PlistBuddy -c 'Print CFBundleIdentifier' "$app/Contents/Info.plist"
+    else
+      echo "Build has not finished yet."
+    fi
+    ;;
+  *)
+    echo "Usage: scripts/ardian-local <setup|build|run|stop|status> [--base-engine]"
+    ;;
+esac

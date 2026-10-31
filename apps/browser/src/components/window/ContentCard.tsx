@@ -3,9 +3,10 @@ import { View } from "react-native";
 import { startChromeTabs } from "../../state/tabs/chromeTabs";
 import { useIsSmallWindow, useSplitOf } from "../../state/windows/card";
 import { usePeeks } from "../../state/peek/hooks";
-import { useActiveTabId, useSettings, useWindowId } from "../../state/browser/hooks";
+import { useActiveTabId, useSettings, useTab, useWindowId } from "../../state/browser/hooks";
+import { bookmarksBarShown } from "../bookmarks/BookmarksBar";
 import { useBookmarksBarHeight } from "../bookmarks/barSize";
-import { useBookmarksBarMode } from "../../state/bookmarks/hooks";
+import { useBookmarksBarHasItems, useBookmarksBarMode } from "../../state/bookmarks/hooks";
 import { POPOVER_MARGIN } from "../ui";
 import { NO_TOOLBAR, toolbarGeometry, type Rect, type ToolbarGeometry } from "./geometry";
 import { startPermissionPrompts } from "../../state/site/permissions";
@@ -39,8 +40,11 @@ export function ContentCard() {
   const hideWhileScrolling = useSettings((st) => st.hideToolbarWhileScrolling);
   const showSidebarButton = useSettings((st) => st.showSidebarButton !== false);
   const barMode = useBookmarksBarMode(windowId);
+  const bookmarksBarHasItems = useBookmarksBarHasItems(windowId);
   const toolbarRow = useToolbarRow();
   const barHeight = useBookmarksBarHeight();
+  const activeUrl = useTab(activeId, (t) => t?.url);
+  const bookmarkTop = bookmarksBarShown(barMode, activeUrl === undefined ? undefined : { url: activeUrl }, bookmarksBarHasItems) && !small && !fullscreenTab ? barHeight : 0;
   const [size, setSize] = useState({ width: 0, height: 0 });
   const [origin, setOrigin] = useState<{ x: number; y: number } | null>(null);
   const container = useRef<View>(null);
@@ -71,14 +75,16 @@ export function ContentCard() {
   useEffect(() => {
     if (!origin || !focusedRect || chrome.kind === "none") return;
     const g = geometryFor(focusedRect);
-    const place = (extensionsWidth = 0) =>
+    const place = (extensionsWidth = 0) => {
+      const inset = Math.max(g.urlLeft, urlFieldRight(!!split, extensionsWidth, toolbarRow));
       setUrlAnchor(windowId, {
-        left: origin.x + focusedRect.x + g.urlLeft,
-        top: origin.y + focusedRect.y,
-        width: focusedRect.width - g.urlLeft - urlFieldRight(!!split, extensionsWidth, toolbarRow),
+        left: origin.x + focusedRect.x + inset,
+        top: origin.y + focusedRect.y + bookmarkTop,
+        width: Math.max(0, focusedRect.width - 2 * inset),
       });
+    };
     return watchToolbarExtensionsWidth(windowId, place);
-  }, [origin, focusedRect?.x, focusedRect?.y, focusedRect?.width, tabLayout, chrome.kind, !!split, showSidebarButton, toolbarRow]);
+  }, [origin, focusedRect?.x, focusedRect?.y, focusedRect?.width, tabLayout, chrome.kind, !!split, showSidebarButton, toolbarRow, bookmarkTop]);
 
   useEffect(() => {
     if (origin && size.width > 0) setCardAnchor(windowId, { left: origin.x, top: origin.y, width: size.width, height: size.height });
@@ -148,7 +154,7 @@ export function ContentCard() {
         <WindowToolbar windowId={windowId} tabId={activeId} geometry={geometryFor(panes[activeId])} autoHide={chrome.autoHide} />
       )}
       {size.width > 0 && !split && !fullscreenTab && (
-        <FrozenPage windowId={windowId} tabId={activeId} top={(chrome.kind !== "none" && !chrome.autoHide ? toolbarRow.height : 0) + (barMode === "always" && !small && !hideWhileScrolling ? barHeight : 0)} />
+        <FrozenPage windowId={windowId} tabId={activeId} top={(chrome.kind !== "none" && !chrome.autoHide ? toolbarRow.height : 0) + bookmarkTop} />
       )}
       {split && !fullscreenTab && <SplitDividers split={split} dividers={dividers} width={size.width} height={size.height} />}
       {size.width > 0 && popoversOverCard && origin && activeRect && peekEdge !== undefined && (

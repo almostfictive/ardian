@@ -12,9 +12,8 @@ export function BookmarksBarSection() {
       <Group>
         <Row anchor="appearance.bookmarksBar">
           <PopUp
-            value={mode}
+            value={mode === "always" ? "newTab" : mode}
             options={[
-              { value: "always", title: "Always" },
               { value: "newTab", title: "On New Tab Only" },
               { value: "never", title: "Never" },
             ]}

@@ -10,6 +10,7 @@ export type AppEvent =
   | { type: "resignActive" }
   | { type: "screenLocked" }
   | { type: "lockedOrAsleep" }
+  | { type: "tabNumbers"; windowId: string; shown: boolean }
   | { type: "switcherReleased" }
   | { type: "switcherKey"; key: "escape" | "next" | "previous" }
   | { type: "switcherMouseUp" }

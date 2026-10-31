@@ -13,6 +13,13 @@ export const useBookmarkEngine = (windowId: string): string => useBrowser((s) =>
 
 export const useBookmarkRoots = (profileId: string) => useBrowser(useShallow((s) => bookmarkRoots(s, profileId)));
 
+export const useBookmarksBarHasItems = (windowId: string): boolean =>
+  useBrowser((s) => {
+    const roots = bookmarkRoots(s, bookmarkProfileId(s, s.windows[windowId]));
+    const bar = roots ? s.bookmarks.nodes[roots.bar] : undefined;
+    return bar?.kind === "folder" && bar.children.length > 0;
+  });
+
 export const useBookmarksBarMode = (windowId: string): Settings["bookmarksBar"] =>
   useBrowser((s) => (s.windows[windowId]?.kind === "private" ? "never" : s.settings.bookmarksBar));
 

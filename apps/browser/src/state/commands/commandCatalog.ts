@@ -78,9 +78,9 @@ export const COMMANDS = {
   previousTab: { title: "Previous Tab", keys: ["⇧⌘[", "⌘{", "⌥⌘←", "⌃⇞", "⌥⌘↑"], ...windowOffInLittleArdia },
   selectTab: {
     ...windowOffInLittleArdia,
-    variants: Object.fromEntries([1, 2, 3, 4, 5, 6, 7, 8].map((n) => [String(n), { title: `Select Tab ${n}`, keys: [`⌘${n}`] }])),
+    variants: Object.fromEntries([1, 2, 3, 4, 5, 6, 7, 8, 9].map((n) => [String(n), { title: `Select Tab ${n}`, keys: [`⌘${n}`] }])),
   },
-  selectLastTab: { title: "Select Last Tab", keys: ["⌘9"], ...windowOffInLittleArdia },
+  selectLastTab: { title: "Select Last Tab", keys: [], ...windowOffInLittleArdia },
   togglePin: {
     title: "Move to Top Apps",
     symbol: "pin",
@@ -111,7 +111,7 @@ export const COMMANDS = {
   manageBookmarks: { title: "Manage Bookmarks", barTitle: "Bookmarks", symbol: "book", keys: ["⌥⌘B"] },
   exportBookmarks: { title: "Export Bookmarks…", symbol: "square.and.arrow.up" },
   bookmarkAllTabs: { title: "Bookmark All Tabs…", keys: ["⇧⌘D"], ...offInLittleArdia },
-  setBookmarksBar: { chooses: "bookmarksBar", variants: { always: { title: "Always" }, newTab: { title: "On New Tab Only" }, never: { title: "Never" } } },
+  setBookmarksBar: { chooses: "bookmarksBar", variants: { newTab: { title: "On New Tab Only" }, never: { title: "Never" } } },
   toggleBookmarksBar: { title: "Toggle Bookmarks Bar", symbol: "menubar.rectangle", keys: ["⇧⌘B"] },
   newTabInGroup: { title: "New Tab in Group", keys: ["⌥⌘T", "⌃⌘C"], ...windowOffInLittleArdia },
   newGroupWithTabs: { title: "New Group with Tab", symbol: "folder.badge.plus", keys: ["⌃⌘N", "⌃⌘P"], ...windowOffInLittleArdia },
@@ -129,7 +129,6 @@ export const COMMANDS = {
     },
   },
   share: { title: "Share", symbol: "square.and.arrow.up", ...pageInLittleArdia },
-  sendFeedback: { title: "Send Feedback…", keys: ["⌥⇧⌘I"], ...appWide },
   keyboardShortcuts: { title: "Keyboard Shortcuts", symbol: "keyboard" },
   copyDiagnostics: { title: "Copy Diagnostics", ...appWide },
   recordPerformanceIssue: { title: "Record Performance Issue…", ...appWide },

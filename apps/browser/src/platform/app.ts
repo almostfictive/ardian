@@ -33,6 +33,7 @@ export const onOpenURLs = (listener: (urls: string[], pointer?: [number, number]
 export const systemInfo = () => App.systemInfo();
 export const crashReports = (since: number) => App.crashReports(since);
 export const openExternalURL = (url: string) => App.openExternalURL(url);
+export const saveScreenshot = (data: string) => App.saveScreenshot(data);
 export const appIcons = (size = 64) => App.appIcons(size);
 export const currentAppIcon = () => App.appIcon();
 export const setAppIcon = (id: string) => App.setAppIcon(id);

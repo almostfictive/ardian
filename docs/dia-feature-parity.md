@@ -819,3 +819,9 @@ reproduced.
     ACFavicons, Move to Window, Alloy screen-sharing, import-Keychain and `Menus.swift` comments; the README (it still
     described WebKit). The `ArdiaSwipe.mm` responder-delegate comment went with Findings 3 (R1).
 14. No `TODO`/`FIXME`/`XXX` markers in the code paths audited.
+
+## Ardian basic needs — implementation and local verification (2026-10-31)
+
+The owner authorized PRD items 1, 3, 4, 6, 7, 8 and 9. This fork intentionally diverges from the Dia parity rows above: silent onboarding, bookmarks above the toolbar on new tabs, a centred pill address field, persistent sidebar shortcuts, Command-held tab numbers, flat active tab rows and Settings in context menus. The new-tab palette button is removed. Source changes are present; these are not marked shipped. See `ardian-basic-needs-implementation.md` for checks and remaining build requirements.
+
+The follow-up batch removes unsolicited feedback, telemetry and release-note cards from the new tab; hides the bookmarks bar when its folder is empty; removes the new-tab mark; adds native page screenshots saved to Downloads; and adds WhatsApp, Slack and Telegram as embedded sidebar web apps that open in a resizable panel instead of a tab. These are intentional fork differences from the Dia-specific Help and new-tab rows above. Runtime checks are recorded in the same implementation note.

@@ -48,6 +48,7 @@ cat > "$plugin/Contents/Info.plist" <<PLIST
 </dict>
 </plist>
 PLIST
+xattr -cr "$plugin"
 case "${EXPANDED_CODE_SIGN_IDENTITY_NAME:-}" in
   "Developer ID"*) timestamp=--timestamp ;;
   *) timestamp=--timestamp=none ;;

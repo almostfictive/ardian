@@ -85,7 +85,9 @@ NSDictionary *FindMenuItem(NSArray *items, NSString *label) {
 
 - (NSArray<NSDictionary<NSString *, NSString *> *> *)tab:(ArdiaCoreTab *)tab
                            contextMenuItemsForSelection:(NSString *)text {
-  return @[ @{
+  NSDictionary *settings = @{@"id" : @"settings", @"title" : @"Settings"};
+  if (!text.length) return @[settings];
+  return @[ settings, @{
     @"id" : @"search",
     @"title" : [NSString stringWithFormat:@"Search %@ for “%@”", gSearchEngineName, SelectionLabel(text)],
     @"replaces" : @"search",
@@ -96,7 +98,9 @@ NSDictionary *FindMenuItem(NSArray *items, NSString *label) {
     contextMenuCommand:(NSString *)itemId
                   text:(NSString *)selection
              modifiers:(NSDictionary<NSString *, NSNumber *> *)modifiers {
-  if ([itemId isEqualToString:@"search"])
+  if ([itemId isEqualToString:@"settings"])
+    [self emit:@"command" payload:@{@"command" : @"settings", @"text" : @""}];
+  else if ([itemId isEqualToString:@"search"])
     [self emit:@"command" payload:@{@"command" : @"search", @"text" : selection ?: @"", @"modifiers" : modifiers ?: @{}}];
 }
 

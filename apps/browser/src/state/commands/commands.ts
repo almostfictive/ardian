@@ -106,7 +106,7 @@ export function runCommand({ command, arg, windowId: requested }: CommandEvent) 
       const target = resolveWindowId(s, requested);
       const active = target ? activeTabId(s, target) : undefined;
       const shown = mode === "always" || (mode === "newTab" && !(active && s.tabs[active]?.url));
-      return s.updateSettings({ bookmarksBar: shown ? "never" : "always" });
+      return s.updateSettings({ bookmarksBar: shown ? "never" : "newTab" });
     }
   }
 

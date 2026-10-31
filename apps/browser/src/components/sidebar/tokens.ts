@@ -91,6 +91,8 @@ export const TABULAR_NUMS: ("tabular-nums")[] = ["tabular-nums"];
 
 export const SIDEBAR_TYPE = { divider: 10, count: 10, cardAction: 10.5, compact: 12.5, searchField: 16, emoji: 18 } as const;
 
+export const MINI_APP_BRANDS = { whatsapp: "#25D366", telegram: "#24A1DE" } as const;
+
 export function groupTint(color: GroupColor | null | undefined): string | null {
   return color && color !== "none" ? (GROUP_COLORS[color]?.hex ?? null) : null;
 }

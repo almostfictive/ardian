@@ -11,7 +11,6 @@ import { openReleaseNotesPage } from "../releaseNotes/releaseNotesPage";
 import type { AppCommand } from "./commandCatalog";
 
 export const APP_COMMAND_HANDLERS: Readonly<Record<AppCommand, (windowId: string | null) => void>> = {
-  sendFeedback: (windowId) => void sendFeedback(windowId),
   copyDiagnostics: () => void diagnostics().then(copyText),
   recordPerformanceIssue: () => void recordPerformanceIssue(),
   showOnboarding: (windowId) => startOnboarding(windowId),

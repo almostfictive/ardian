@@ -180,7 +180,6 @@ enum MainMenu {
       cmd(.focusPreviousPane),
       .separator(),
       sub("Show Bookmarks Bar", [
-        cmd(.setBookmarksBar, arg: "always"),
         cmd(.setBookmarksBar, arg: "newTab"),
         cmd(.setBookmarksBar, arg: "never"),
         .separator(),
@@ -221,7 +220,7 @@ enum MainMenu {
       hidden(.tabSwitcher, arg: "forward"),
       hidden(.tabSwitcher, arg: "backward"),
       hidden(.returnToPinnedUrl),
-    ] + (1...8).map { hidden(.selectTab, arg: "\($0)") } + [
+    ] + (1...9).map { hidden(.selectTab, arg: "\($0)") } + [
       hidden(.selectLastTab),
       .separator(),
       cmd(.togglePin),
@@ -325,7 +324,6 @@ enum MainMenu {
 
   private static func helpItems() -> [NSMenuItem] {
     var items: [NSMenuItem] = [
-      CommandItem(.sendFeedback),
       CommandItem(.keyboardShortcuts),
       CommandItem(.toolTour),
       videoTourItem(),

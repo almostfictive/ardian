@@ -41,7 +41,7 @@ protocol PageTab: NSView {
   func executeJavaScript(_ code: String)
   func evaluate(_ code: String, completion: @escaping (String?) -> Void)
   func navigationEntries(_ completion: @escaping ([[String: Any]]) -> Void)
-  func capturePicture(_ scale: Double, completion: @escaping ([String: Any]?) -> Void)
+  func capturePicture(_ scale: Double, fullPage: Bool, completion: @escaping ([String: Any]?) -> Void)
   func downloadFavicon(_ url: String, completion: @escaping ([String: Any]?) -> Void)
   func downloadImage(_ url: String, maxPixels: Int, completion: @escaping ([String: Any]?) -> Void)
 

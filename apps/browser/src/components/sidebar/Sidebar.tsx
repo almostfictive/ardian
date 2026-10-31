@@ -25,6 +25,8 @@ import { openSidebarMenu } from "../../state/sidebar/menus";
 import { GLOW_ROOM, ROW_PITCH, type SidebarGeometry } from "./pageLayout";
 import { SidebarPage } from "./SidebarPage";
 import { SidebarRowLookContext, useSidebarRowLookSource } from "./rowLook";
+import { SidebarFooter } from "./SidebarFooter";
+import { FOOTER_HEIGHT } from "../../state/sidebar/footer";
 import { useRevealTabs } from "./useRevealTabs";
 
 export function Sidebar({ width }: { width: number }) {
@@ -43,7 +45,8 @@ export function Sidebar({ width }: { width: number }) {
   const hasDownloads = useHasDownloads(windowId);
   const dots = useProfileDotsShown();
   const footerDownloads = addressBar && hasDownloads;
-  const footer = dots || footerDownloads ? PROFILE_DOTS_HEIGHT : 0;
+  const profileFooter = dots || footerDownloads ? PROFILE_DOTS_HEIGHT : 0;
+  const footer = profileFooter + FOOTER_HEIGHT;
   const nothingPinned = useNoTiles(windowId, current);
   const rowLook = useSidebarRowLookSource();
 
@@ -104,8 +107,9 @@ export function Sidebar({ width }: { width: number }) {
               </SidebarRowLookContext.Provider>
             </View>
 
-            {footer ? (
-              <View style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: footer }}>
+            <View style={{ position: "absolute", left: 0, right: 0, bottom: 0 }}><SidebarFooter /></View>
+            {profileFooter ? (
+              <View style={{ position: "absolute", left: 0, right: 0, bottom: FOOTER_HEIGHT, height: profileFooter }}>
                 <ContextMenuArea style={StyleSheet.absoluteFill} onContextMenu={() => void openSidebarMenu(windowId)} />
                 {dots ? <ProfileDots windowId={windowId} width={width} besideDownloads={footerDownloads} /> : null}
                 {footerDownloads ? (

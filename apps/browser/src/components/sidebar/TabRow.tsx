@@ -20,11 +20,12 @@ import { ACTIVE, ICON_MARKS, LOADING, PLAYING, SELECTED, useRowState } from "../
 import { registerRow, useSidebarUi } from "../../state/sidebar/sidebarUi";
 import { TabIcon } from "./TabIcon";
 import { TabBadges } from "../media/TabBadges";
-import { SELECTED_ROW_SHADOW_OFFSET, useSidebarTokens } from "./tokens";
-import { useSelectedTabGlow, useSidebarRowLook } from "./rowLook";
+import { useSidebarTokens } from "./tokens";
+import { useSidebarRowLook } from "./rowLook";
 import { withShortcut } from "../../state/commands/commandShortcuts";
 import { TabPressArea } from "./TabPressArea";
 import { entryKey } from "../../state/sidebar/entryKey";
+import { TabNumber } from "./TabNumber";
 import type { RowSection } from "./dragModel";
 
 export const TabRowItem = memo(function TabRowItem({
@@ -49,7 +50,6 @@ export const TabRowItem = memo(function TabRowItem({
 
 export const TabRow = memo(function TabRow({ tabId, onto = false, shift = null }: { tabId: string; onto?: boolean; shift?: Animated.Value | null }) {
   const theme = useTheme();
-  const glow = useSelectedTabGlow();
   const tokens = useSidebarTokens();
   const windowId = useWindowId();
   const { tab, flags } = useRowState(tabId, windowId);
@@ -68,8 +68,8 @@ export const TabRow = memo(function TabRow({ tabId, onto = false, shift = null }
   const resettable = (isPinnedRow(tab) || !tab.pin) && awayFromPin(tab);
   const resetting = resettable && backToPin.hovered && !renaming;
   const title = resetting ? "Back to Pinned URL" : tabTitle(tab);
-  const fill = active ? theme.tabSelected : selected ? tokens.multiSelected : hovered ? theme.tabHover : ink.clear;
-  const border = active || selected ? 0.5 : 0;
+  const fill = selected && !active ? tokens.multiSelected : hovered && !active ? theme.tabHover : ink.clear;
+  const border = selected && !active ? 0.5 : 0;
 
   return (
     <View
@@ -86,11 +86,6 @@ export const TabRow = memo(function TabRow({ tabId, onto = false, shift = null }
             cornerRadius={radius.card}
             borderWidth={border}
             borderColor={selected && !active ? hex(tokens.multiSelectedStroke) : undefined}
-            borderColors={active ? theme.tabSelectedBorder.map(hex) : undefined}
-            shadowColor={active ? glow.shadowColor : undefined}
-            shadowOpacity={active ? glow.shadowOpacity : 0}
-            shadowRadius={glow.shadowRadius}
-            shadowOffset={SELECTED_ROW_SHADOW_OFFSET}
             style={{ height: layout.rowHeight, flexDirection: "row", alignItems: "center", paddingLeft: 9 - border, paddingRight: 6 - border }}
           >
             {resettable ? (
@@ -129,6 +124,7 @@ export const TabRow = memo(function TabRow({ tabId, onto = false, shift = null }
             ) : (
               <FadeLabel text={title} fontSize={font.body.fontSize} color={active ? theme.tabSelectedText : theme.textTab} style={{ flex: 1, height: 18, marginLeft: 5 }} />
             )}
+            <TabNumber tabId={tab.id} />
             <HoverSlot
               hovered={hovered && !renaming}
               width={22}
@@ -208,7 +204,6 @@ export const SplitRowItem = memo(function SplitRowItem({
   const tabIds = useSplitRowPanes(splitId);
   const { wrapper, handle } = useDragItem(entryKey("split", splitId), { kind: "split", tabIds, section, parentGroup }, motion?.clip);
   const theme = useTheme();
-  const glow = useSelectedTabGlow();
   const profileId = usePageProfileId();
   const active = useWindow(windowId, (w) => tabIds.includes(w?.activeTabIds[profileId] ?? ""));
   const { hovered, hoverProps } = useRowHover(windowId, null);
@@ -218,15 +213,9 @@ export const SplitRowItem = memo(function SplitRowItem({
     <Animated.View ref={wrapper.ref} style={wrapper.style} {...handle}>
       <View {...moved} ref={movedRef} {...hoverProps} style={moved.style as object}>
         <Surface
-          fill={hex(active ? theme.tabSelected : hovered ? theme.tabHover : ink.clear)}
+          fill={hex(!active && hovered ? theme.tabHover : ink.clear)}
           cornerRadius={radius.card}
-          borderWidth={active ? 1 : 0}
-          borderColors={active ? theme.tabSelectedBorder.map(hex) : undefined}
-          shadowColor={active ? glow.shadowColor : undefined}
-          shadowOpacity={active ? glow.shadowOpacity : 0}
-          shadowRadius={glow.shadowRadius}
-          shadowOffset={SELECTED_ROW_SHADOW_OFFSET}
-          style={{ height: layout.rowHeight, flexDirection: "row", alignItems: "center", paddingHorizontal: active ? 2 : 3 }}
+          style={{ height: layout.rowHeight, flexDirection: "row", alignItems: "center", paddingHorizontal: 3 }}
         >
           {tabIds.map((id, i) => (
             <View key={id} style={{ flex: 1, flexDirection: "row", alignItems: "center", minWidth: 0 }}>
@@ -262,6 +251,7 @@ function SplitPane({ tabId, windowId }: { tabId: string; windowId: string }) {
           >
             <TabIcon tabId={tab.id} url={tab.url} favicon={tab.favicon} icon={tab.customIcon} size={14} />
             <FadeLabel text={tabTitle(tab)} fontSize={font.small.fontSize} color={active ? theme.tabSelectedText : theme.textTab} style={{ flex: 1, height: 16, marginLeft: 5 }} />
+            <TabNumber tabId={tab.id} />
           </View>
         )}
       </TabPressArea>

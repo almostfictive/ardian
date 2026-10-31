@@ -18,6 +18,7 @@ import { webviewRef, webviews } from "../../state/tabs/webviewHandles";
 import { noteIssued, takeStartedNavigation } from "../../state/tabs/earlyNavigate";
 import { currentEngineProfile, currentTab, isTabSilenced } from "../../state/browser/current";
 import { closeTabNow, updateLive, updateTab } from "../../state/tabs/actions";
+import { openSettings } from "../../state/settings/settingsWindows";
 import { setFind } from "../../state/windows/actions";
 import { activateFocusedPane, currentTabEngine, downloadNavigated, useTabEngine } from "../../state/windows/card";
 import { setPageProgress } from "../../state/tabs/pageProgress";
@@ -215,7 +216,8 @@ function EngineWebView({ tabId, visible, warm, peekOf, engine }: TabWebViewProps
       onWindowClose={() => !isQuitting() && closeTabNow(tabId)}
       onNotification={(notification) => showWebNotification(tabId, notification)}
       onCommand={({ command, text, modifiers }) => {
-        if (command === "search") searchSelection(tabId, text, modifiers);
+        if (command === "settings") openSettings();
+        else if (command === "search") searchSelection(tabId, text, modifiers);
         else if (command === "copyLinkToHighlight") void copyLinkToSelection(tabId);
         else if (command === "escape" && popoverOf(tabId)) setPopover(tabId, null);
         else if (command === "escape" && !closeFolderPanelIn(tab()?.windowId) && !closePeekOnEscape(tabId)) closeLittleArdiaOnEscape(tabId);

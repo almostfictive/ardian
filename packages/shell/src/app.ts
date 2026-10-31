@@ -75,6 +75,7 @@ export type AppNative = {
   setAppIcon(id: string): Promise<void>;
   systemInfo(): SystemInfo;
   openExternalURL(url: string): Promise<boolean>;
+  saveScreenshot(data: string): Promise<string>;
   launchConfig(): LaunchConfig;
   playIntroMusic(cues: IntroMusicCues, muted: boolean): Promise<void>;
   setIntroMusicMuted(muted: boolean): Promise<void>;

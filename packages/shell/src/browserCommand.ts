@@ -82,7 +82,6 @@ export type BrowserCommand =
   | "returnToPinnedUrl"
   | "tabSwitcher"
   | "share"
-  | "sendFeedback"
   | "keyboardShortcuts"
   | "copyDiagnostics"
   | "recordPerformanceIssue"

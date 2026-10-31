@@ -1,17 +1,10 @@
 import { DIA_SPECTRUM, Meadow, meadowTextStyle, PowerUp, type MeadowTone } from "../ui";
-import {
-  playIntroMusic,
-  setIntroMusicMuted,
-  stopIntroMusic,
-  type IntroMusicCues,
-  introMusicMuted,
-  saveIntroMusicMuted,
-} from "../../state/onboarding/onboarding";
+import type { IntroMusicCues } from "../../state/onboarding/onboarding";
 import { isWebDemo } from "../../state/onboarding/demoSteps";
 import { useEffect, useRef, useState } from "react";
 import { Animated, Image, StyleSheet, Text, View } from "react-native";
 import { useTheme } from "../ui/theme";
-import { CircleButton, SecondaryButton } from "./Buttons";
+import { SecondaryButton } from "./Buttons";
 import { useOnboardingColors } from "./Parts";
 import { curve } from "../ui/motion";
 import { onboardingMotion, onboardingType } from "./tokens";
@@ -43,7 +36,6 @@ export function Intro({ onDone }: { onDone: () => void }) {
   const tagline = useRef(new Animated.Value(0)).current;
   const exit = useRef(new Animated.Value(0)).current;
   const done = useRef(false);
-  const [muted, setMuted] = useState(introMusicMuted);
   const [tone, setTone] = useState(() => OPENING_TONE[dark ? "night" : "day"]);
   const ink = isWebDemo ? null : meadowTextStyle(tone);
 
@@ -64,24 +56,14 @@ export function Intro({ onDone }: { onDone: () => void }) {
       Animated.timing(tagline, { toValue: 1, duration: ms(TAGLINE), easing: ease, ...at(CUES.tagline) }),
       Animated.timing(exit, { toValue: 1, duration: ms(EXIT), easing: curve.inOutCubic, ...at(CUES.exit) }),
     ]);
-    playIntroMusic(CUES, introMusicMuted());
     sequence.start(({ finished }) => finished && finish());
     return () => sequence.stop();
   }, []);
 
   const skip = () => {
-    stopIntroMusic(0.35);
     Animated.timing(exit, { toValue: 1, duration: onboardingMotion.introSkip, easing: curve.outQuad, useNativeDriver: true }).start(finish);
   };
 
-  const toggleMute = () => {
-    const next = !muted;
-    setMuted(next);
-    setIntroMusicMuted(next);
-    saveIntroMusicMuted(next);
-  };
-
-  const muteLabel = muted ? "Unmute intro music" : "Mute intro music";
   return (
     <Animated.View
       style={[
@@ -134,17 +116,6 @@ export function Intro({ onDone }: { onDone: () => void }) {
           <Text style={{ ...onboardingType.tagline, color: colors.subtitle, ...ink }}>Your new home on the internet</Text>
         </Animated.View>
       </Animated.View>
-      <View style={{ position: "absolute", left: 28, bottom: 28 }}>
-        <CircleButton
-          title={muteLabel}
-          tooltip={muteLabel}
-          icon={muted ? "speaker.slash.fill" : "speaker.wave.3.fill"}
-          size={13}
-          symbolWeight="medium"
-          box={20}
-          onPress={toggleMute}
-        />
-      </View>
       <View style={{ position: "absolute", right: 28, bottom: 28 }} accessibilityHint="Button that skips the onboarding intro animation">
         <SecondaryButton title="Skip" onPress={skip} />
       </View>

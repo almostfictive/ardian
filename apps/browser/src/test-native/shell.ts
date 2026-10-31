@@ -153,6 +153,7 @@ const app: Modules["ArdiaApp"] = {
   setAppIcon: () => Promise.resolve(),
   systemInfo: () => ({ ...appInfo }) as SystemInfo,
   openExternalURL: () => Promise.resolve(false),
+  saveScreenshot: () => Promise.resolve(""),
   launchConfig: () => structuredClone(launch),
   playIntroMusic: () => Promise.resolve(),
   setIntroMusicMuted: () => Promise.resolve(),

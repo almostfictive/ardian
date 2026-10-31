@@ -64,7 +64,13 @@ export function numberedTabs(s: BrowserState, windowId: string): string[] {
   const active = activeTabId(s, windowId);
   const rowTab = (entry: string): string[] => {
     const { kind, id } = parseEntry(entry);
-    if (kind === "group") return groupEntries(s, id).flatMap(rowTab);
+    if (kind === "group") {
+      const group = s.groups[id];
+      const entries = groupEntries(s, id);
+      if (!group?.collapsed) return entries.flatMap(rowTab);
+      const kept = keptEntry(s, windowId, group.profileId, entries);
+      return kept ? rowTab(kept) : [];
+    }
     if (kind !== "split") return [id];
     const panes = splitRowPanes(s, s.splits[id]);
     if (active && panes.includes(active)) return [active];

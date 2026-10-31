@@ -75,7 +75,7 @@ export const WebView = forwardRef<WebViewHandle, WebViewProps>(function WebView(
         }
       },
       navigationEntries: async () => (await call([], (n) => n.navigationEntries())).map((e) => ({ ...e, url: toAppUrl(e.url) })),
-      capturePicture: (scale) => call(null, (n) => n.capturePicture(scale)),
+      capturePicture: (scale, fullPage) => call(null, (n) => n.capturePicture(scale, fullPage)),
       downloadImage: (url, maxPixels) => call(null, (n) => n.downloadImage(url, maxPixels)),
       downloadFavicon: (url) => call(null, (n) => n.downloadFavicon(url)),
       mediaCommand: (action, seconds) => call(undefined, (n) => n.mediaCommand(action, seconds)),

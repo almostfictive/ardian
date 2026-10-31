@@ -27,6 +27,8 @@ import { useBrowser } from "./state/browser/store";
 import { useWindowId, WindowContext } from "./state/browser/hooks";
 import { provideProfileLooks } from "./state/profiles/looks";
 import { focusedWindowOf } from "./state/windows/ui";
+import { MiniAppsPanel } from "./components/sidebar/MiniAppsPanel";
+import { useMiniApps } from "./state/sidebar/miniApps";
 
 provideProfileLooks({ accent: profileAccent, theme: profileTheme });
 
@@ -57,11 +59,13 @@ function BrowserWindow() {
   const windowId = useWindowId();
   const topTabs = useTabLayout() === "top";
   const fullscreen = !!useFullscreenTab(windowId);
+  const miniApp = useMiniApps((state) => state.active[windowId]);
   const [width, setWidth] = useState(0);
   const card = (
     <>
       <ContentCard />
-      {!fullscreen && <ExtensionSidePanel />}
+      {!fullscreen && !miniApp && <ExtensionSidePanel />}
+      {!fullscreen && <MiniAppsPanel />}
     </>
   );
 

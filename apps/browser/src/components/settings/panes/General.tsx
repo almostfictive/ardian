@@ -1,4 +1,5 @@
 import type { DownloadSettings } from "../../../state/downloads/actions";
+import type { Settings } from "../../../state/settings/settings";
 import { checkForUpdates, setLaunchAtLogin } from "../../../state/app/appSettings";
 import { pickFolder } from "../../../state/app/system";
 import { Symbol, Button, font, PopUp, Toggle } from "../../ui";
@@ -23,6 +24,8 @@ export function GeneralPane() {
   const openLinksInLittleArdia = useSettings((s) => s.openLinksInLittleArdia);
   const restoreSession = useSettings((s) => s.restoreSession);
   const commandBarPreference = useSettings((s) => s.commandBarPreference);
+  const markerColor = useSettings((s) => s.screenshotMarkerColor);
+  const highlighterColor = useSettings((s) => s.screenshotHighlighterColor);
   const [loginStatus = "notRegistered", refreshLogin] = useResource(loginItem);
 
   return (
@@ -92,6 +95,23 @@ export function GeneralPane() {
         </Row>
       </Group>
 
+      <SectionHeader title="Sidebar mini apps" description="Choose which web apps stay within reach at the bottom of the sidebar." />
+      <Group>
+        <MiniAppToggle id="whatsapp" title="WhatsApp" />
+        <MiniAppToggle id="slack" title="Slack" />
+        <MiniAppToggle id="telegram" title="Telegram" />
+      </Group>
+
+      <SectionHeader title="Screenshot tools" description="Set the starting colors for annotations in the screenshot editor." />
+      <Group>
+        <Row title="Marker color">
+          <PopUp value={markerColor} options={MARKER_COLORS} onChange={(screenshotMarkerColor) => updateSettings({ screenshotMarkerColor })} minWidth={140} />
+        </Row>
+        <Row title="Highlighter color">
+          <PopUp value={highlighterColor} options={HIGHLIGHTER_COLORS} onChange={(screenshotHighlighterColor) => updateSettings({ screenshotHighlighterColor })} minWidth={140} />
+        </Row>
+      </Group>
+
       <DownloadsSection />
 
       <UpdatesSection />
@@ -105,6 +125,37 @@ export function GeneralPane() {
         <SetupCodeRow />
       </Group>
     </View>
+  );
+}
+
+const MARKER_COLORS: { value: Settings["screenshotMarkerColor"]; title: string }[] = [
+  { value: "red", title: "Red" },
+  { value: "blue", title: "Blue" },
+  { value: "black", title: "Black" },
+  { value: "purple", title: "Purple" },
+  { value: "green", title: "Green" },
+];
+
+const HIGHLIGHTER_COLORS: { value: Settings["screenshotHighlighterColor"]; title: string }[] = [
+  { value: "yellow", title: "Yellow" },
+  { value: "lightgreen", title: "Green" },
+  { value: "cyan", title: "Cyan" },
+  { value: "orange", title: "Orange" },
+  { value: "pink", title: "Pink" },
+];
+
+function MiniAppToggle({ id, title }: { id: "whatsapp" | "slack" | "telegram"; title: string }) {
+  const apps = useSettings((settings) => settings.sidebarMiniApps);
+  const enabled = apps.includes(id);
+  return (
+    <Row title={title}>
+      <Toggle
+        value={enabled}
+        onChange={(on) => {
+          updateSettings({ sidebarMiniApps: on ? [...apps, id] : apps.filter((app) => app !== id) });
+        }}
+      />
+    </Row>
   );
 }
 

@@ -1,6 +1,7 @@
 import { extensionSidePanelUrl } from "../../platform/extensions";
 import { useBrowser } from "../browser/store";
 import { shownReadyTab, extensionPageUrl, extensionProfile, isPrivate, pageProfile, shownIn, useExtensions } from "./store";
+import { closeMiniApp } from "../sidebar/miniApps";
 
 const wanted = new Map<string, string>();
 const fetches = new Map<string, number>();
@@ -15,6 +16,7 @@ export const wantedSidePanels = () => [...wanted];
 
 export function openSidePanel(windowId: string, extensionId: string): Promise<void> {
   if (!shownIn(windowId, extensionId)) return Promise.resolve();
+  closeMiniApp(windowId);
   wanted.set(windowId, extensionId);
   return syncSidePanel(windowId);
 }
