@@ -1,7 +1,7 @@
 # Ardian
 
 <p align="center">
-  <img src="apps/site/src/assets/Ardian.png" alt="Ardian icon" width="200">
+  <img src="apps/site/src/assets/Ardian-icon.png" alt="Ardian icon" width="200">
 </p>
 
 Ardian is a fork of Ardia, for personal use and preferences. Thank you to x.com/barre_of_lube for the work on Ardia.
