@@ -77,9 +77,9 @@ const CHECK_SPACE = 36 ** CHECK_DIGITS;
 export const SETUP_CODE_ERRORS = {
   empty: "Paste a setup code first.",
   shape: `That doesn't look like a setup code. It starts with ${SETUP_CODE_PREFIX}`,
-  newer: "That code is from a newer Ardia. Update Ardia, then paste it again.",
+  newer: "That code is from a newer Ardian. Update Ardian, then paste it again.",
   damaged: "That code looks cut off or mistyped. Copy it again from ardia.dev.",
-  nothing: "That code has nothing this version of Ardia can apply.",
+  nothing: "That code has nothing this version of Ardian can apply.",
 } as const;
 
 function checksum(body: string): string {

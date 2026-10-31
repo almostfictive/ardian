@@ -13,7 +13,7 @@ export const PRESET_NAMES: Record<Preset, string> = {
   zen: "Zen",
   brave: "Brave",
   edge: "Edge",
-  fresh: "Ardia",
+  fresh: "Ardian",
 };
 
 const CLASSIC_TABS: Partial<Settings> = {
