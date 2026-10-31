@@ -40,7 +40,7 @@ export async function importSafariDirect() {
     patchImport({
       step: {
         name: "safari",
-        error: code === "locked" ? "Ardia still doesn't have Full Disk Access. Grant it above, or use the export file below." : "Couldn't read Safari's data. Try the export file below.",
+        error: code === "locked" ? "Ardian still doesn't have Full Disk Access. Grant it above, or use the export file below." : "Couldn't read Safari's data. Try the export file below.",
       },
       fullDiskAccess: api.safariHasFullDiskAccess(),
     });

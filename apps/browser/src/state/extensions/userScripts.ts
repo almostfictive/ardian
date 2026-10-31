@@ -39,7 +39,7 @@ const targetsKey = (targets: Map<string, string[]>) => JSON.stringify([...target
 const withoutPrivate = (path: string) => path.replace(/^\/private(?=\/(tmp|var|etc)\/)/, "");
 const loadedFrom = (ext: InstalledExtension, path: string) => !!ext.path && withoutPrivate(ext.path) === withoutPrivate(path);
 
-const BLOCKED = "Ardia Scripts can only hold content scripts, and the engine blocked this copy.";
+const BLOCKED = "Ardian Scripts can only hold content scripts, and the engine blocked this copy.";
 
 async function load(profile: string, path: string): Promise<ScriptsOutcome> {
   try {
@@ -142,7 +142,7 @@ const schedule = singleFlight(async (flight) => {
   try {
     await reconcile(flight);
   } catch (error) {
-    console.warn("[scripts] couldn't apply the ardia scripts", error);
+    console.warn("[scripts] couldn't apply the ardian scripts", error);
   }
 }, enabled);
 
