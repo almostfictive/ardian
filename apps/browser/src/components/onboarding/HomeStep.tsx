@@ -23,7 +23,7 @@ const ICON = require("../../../assets/app-icon.png");
 type SystemState = { isDefault: boolean; inDock: boolean; loginEnabled: boolean };
 
 const LINK_CHOICES: ChoiceOption<boolean>[] = [
-  { value: true, preview: "links-little", title: "Little Ardia", subtitle: "A small window that's gone when you're done" },
+  { value: true, preview: "links-little", title: "Little Ardian", subtitle: "A small window that's gone when you're done" },
   { value: false, preview: "links-tab", title: "A new tab", subtitle: "Right in your main window" },
 ];
 
@@ -55,7 +55,7 @@ function DefaultBrowserQuestion() {
     try {
       if (!system.isDefault && (setDefault || trial) && (await setAsDefaultBrowser())) {
         if (!setDefault) recordDefaultBrowserTrial();
-        picked.push(setDefault ? "Ardia is your default browser" : "A week as your default browser");
+        picked.push(setDefault ? "Ardian is your default browser" : "A week as your default browser");
       }
       if (login !== system.loginEnabled) await setLaunchAtLogin(login).catch(() => {});
       if (dock && !system.inDock) await addToDock();
@@ -70,7 +70,7 @@ function DefaultBrowserQuestion() {
   return (
     <StepLayout
       pageKey="default"
-      title="Make Ardia your default?"
+      title="Make Ardian your default?"
       subtitle="Links from everywhere open here."
       actions={
         <StepActions
@@ -85,8 +85,8 @@ function DefaultBrowserQuestion() {
       <View style={{ gap: 8 }}>
         <CheckRow
           icon="globe"
-          title="Set Ardia as default browser"
-          subtitle={system?.isDefault ? "Ardia is already your default browser" : "Open links and web pages in Ardia"}
+          title="Set Ardian as default browser"
+          subtitle={system?.isDefault ? "Ardian is already your default browser" : "Open links and web pages in Ardian"}
           value={!!defaultOn}
           disabled={!system || system.isDefault}
           onChange={(v) => setExtras(v ? { setDefault: true } : { setDefault: false, trial: true })}
@@ -95,9 +95,9 @@ function DefaultBrowserQuestion() {
           <CheckRow icon="calendar" title="Try it for seven days" subtitle="We'll check in to make sure you love it." value={trial} onChange={(v) => setExtras({ trial: v })} />
         ) : null}
         {system && !system.inDock ? (
-          <CheckRow icon="dock.rectangle" title="Add Ardia to Dock" subtitle="Quick access whenever you need it" value={dock} onChange={(v) => setExtras({ dock: v })} />
+          <CheckRow icon="dock.rectangle" title="Add Ardian to Dock" subtitle="Quick access whenever you need it" value={dock} onChange={(v) => setExtras({ dock: v })} />
         ) : null}
-        <CheckRow icon="power" title="Open Ardia at login" subtitle="Ready when you sign in" value={login} onChange={(v) => setExtras({ login: v })} />
+        <CheckRow icon="power" title="Open Ardian at login" subtitle="Ready when you sign in" value={login} onChange={(v) => setExtras({ login: v })} />
       </View>
     </StepLayout>
   );
@@ -115,7 +115,7 @@ function LinksQuestion() {
       actions={
         <StepActions
           onContinue={() =>
-            confirmAnswer("links", { openLinksInLittleArdia: little }, [little ? "Links from other apps open in Little Ardia" : "Links from other apps open in a tab"])
+            confirmAnswer("links", { openLinksInLittleArdia: little }, [little ? "Links from other apps open in Little Ardian" : "Links from other apps open in a tab"])
           }
           onSkip={() => skipStep()}
         />

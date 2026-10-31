@@ -16,7 +16,7 @@ import { useOnboardingColors } from "./Parts";
 import { curve } from "../ui/motion";
 import { onboardingMotion, onboardingType } from "./tokens";
 
-const WORDMARK = "Ardia";
+const WORDMARK = "Ardian";
 const ICON = require("../../../assets/app-icon.png");
 
 const LETTER = 0.52;

@@ -15,7 +15,7 @@ export function SafariBody({ flow }: { flow: ImportFlow }) {
   if (fullDiskAccess)
     return (
       <>
-        <Title title="Import from Safari" subtitle={`Ardia can read Safari directly. Bring your bookmarks, history, Reading List, open tabs and sign-ins into ${APP}.`} />
+        <Title title="Import from Safari" subtitle={`Ardian can read Safari directly. Bring your bookmarks, history, Reading List, open tabs and sign-ins into ${APP}.`} />
         <View style={{ flexDirection: "row", alignItems: "center", gap: space.l, marginBottom: space.xlx }}>
           {source?.iconPath ? <Image source={{ uri: `file://${source.iconPath}` }} style={{ width: importLayout.safariIcon, height: importLayout.safariIcon }} /> : null}
           <View style={{ flex: 1 }}>
@@ -38,7 +38,7 @@ export function SafariBody({ flow }: { flow: ImportFlow }) {
     );
   return (
     <>
-      <Title title="Give Ardia access to Safari" subtitle={`To import Safari's bookmarks, history and tabs directly, ${APP} needs Full Disk Access.`} />
+      <Title title="Give Ardian access to Safari" subtitle={`To import Safari's bookmarks, history and tabs directly, ${APP} needs Full Disk Access.`} />
       <FullDiskAccessSteps onOpen={openFullDiskAccessSettings} onRecheck={() => void recheckAccess()} />
       <Text size="small" weight="semibold" tone="textSecondary" style={{ marginBottom: space.m }}>
         Or import everything (including passwords) from an export file:
