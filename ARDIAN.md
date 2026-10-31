@@ -18,6 +18,14 @@ pnpm macos
 If the main branch engine is newer than the last prebuilt engine, work
 from a release tag instead.
 
+## Release
+
+GitHub Actions workflow: .github/workflows/release-ardian.yml
+Trigger: tag vX.Y.Z, or manual run with a version.
+Output: Release app zip in GitHub Releases.
+Signing: ad-hoc only.
+Update: manual download from GitHub Releases. No automatic in-app update.
+
 ## Patches
 
 Bundle identifier: com.almostfictive.ardian
