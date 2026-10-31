@@ -53,7 +53,7 @@ jobs:
 
       - name: Verify Release app and bundle identifier
         run: |
-          APP="apps/browser/build/Build/Products/Release/Ardia.app"
+          APP="apps/browser/build/Build/Products/Release/Ardian.app"
           test -d "$APP" || { echo "Release app not found at $APP"; exit 1; }
           BUNDLE_ID=$(/usr/libexec/PlistBuddy -c "Print CFBundleIdentifier" "$APP/Contents/Info.plist")
           echo "Bundle identifier: $BUNDLE_ID"
@@ -64,7 +64,7 @@ jobs:
           if [ -n "${{ inputs.version }}" ]; then TAG="${{ inputs.version }}";
           elif [[ "${GITHUB_REF}" == refs/tags/v* ]]; then TAG="${GITHUB_REF_NAME}";
           else TAG="manual"; fi
-          ditto -c -k --sequesterRsrc --keepParent apps/browser/build/Build/Products/Release/Ardia.app "Ardian-${TAG}.zip"
+          ditto -c -k --sequesterRsrc --keepParent apps/browser/build/Build/Products/Release/Ardian.app "Ardian-${TAG}.zip"
           ls -lh "Ardian-${TAG}.zip"
 
       - name: Publish GitHub Release (tag push)
@@ -74,7 +74,7 @@ jobs:
         run: |
           gh release create "${GITHUB_REF_NAME}" "Ardian-${GITHUB_REF_NAME}.zip" \
             --title "Ardian ${GITHUB_REF_NAME}" \
-            --notes "Unsigned, ad-hoc Release build. Unzip, move Ardia.app to Applications, right-click and choose Open the first time. No automatic in-app update. See VERSIONS.md for the version log."
+            --notes "Unsigned, ad-hoc Release build. Unzip, move Ardian.app to Applications, right-click and choose Open the first time. No automatic in-app update. See VERSIONS.md for the version log."
 
       - name: Upload app as workflow artifact (manual run)
         if: ${{ !startsWith(github.ref, 'refs/tags/v') }}
