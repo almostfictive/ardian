@@ -10,7 +10,8 @@ import { useToolbarHeld } from "../../state/app/transientUi";
 import { revealToolbar, setToolbarPeek, STRIP_HEIGHT, toolbarMode, useToolbarAutoHide, type ToolbarMode } from "../../state/windows/toolbarAutoHide";
 import { Toolbar } from "./Toolbar";
 import { curve } from "../ui/motion";
-import { font, reduceMotion, weight } from "../ui";
+import { font, ink, reduceMotion, weight } from "../ui";
+import { GlassFill, liquidGlass } from "../ui/Glass";
 import { TOOLBAR_MOTION } from "./tokens";
 import { motionStep, tallPage, type MotionValue, type TallPage } from "./toolbarMotion";
 import { useToolbarRow } from "./useToolbarRow";
@@ -140,9 +141,13 @@ export function AutoHideBackdrop({ tabId, mode, motion }: { tabId: string; mode:
   return (
     <View pointerEvents="none" style={{ position: "absolute", left: 0, right: 0, top: 0, height: H }}>
       <Animated.View
-        style={{ position: "absolute", left: 0, right: 0, top: 0, height: H, backgroundColor: theme.card, transform: anim ? [{ translateY: anim.bandLift }, { scaleY: anim.bandScale }] : undefined }}
+        style={{ position: "absolute", left: 0, right: 0, top: 0, height: H, backgroundColor: liquidGlass ? undefined : theme.card, transform: anim ? [{ translateY: anim.bandLift }, { scaleY: anim.bandScale }] : undefined }}
       >
-        <Animated.View style={[StyleSheet.absoluteFill, { backgroundColor: band }]} />
+        {liquidGlass ? (
+          <GlassFill kind="panel" radius={0} fill={palette.background ?? palette.pill} dark={palette.background ? palette.text.startsWith(ink.white) : undefined} />
+        ) : (
+          <Animated.View style={[StyleSheet.absoluteFill, { backgroundColor: band }]} />
+        )}
       </Animated.View>
       {url ? (
         <Animated.View

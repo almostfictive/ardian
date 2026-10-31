@@ -21,3 +21,4 @@ from a release tag instead.
 ## Patches
 
 Bundle identifier: com.almostfictive.ardian
+Toolbar band: GlassFill
