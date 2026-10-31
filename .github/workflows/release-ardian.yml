@@ -1,0 +1,87 @@
+name: Ardian Release (ad-hoc)
+
+# Ardian-only release. This does NOT replace .github/workflows/release.yml,
+# which is the upstream signed/notarised release flow. That flow needs a
+# Developer ID identity, notary credentials, and a Sparkle key, none of which
+# Ardian uses. This workflow builds an unsigned, ad-hoc Release app only.
+# No automatic in-app update is produced by this workflow.
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version tag for a manual run, for example v0.1.0"
+        type: string
+        required: false
+        default: ""
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Build Release app (ad-hoc)
+    runs-on: macos-26
+    timeout-minutes: 180
+    steps:
+      - name: Check out
+        uses: actions/checkout@v4
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Install CocoaPods dependencies
+        working-directory: apps/browser
+        run: pnpm pods
+
+      - name: Build Release (ad-hoc, no Metro server at runtime)
+        working-directory: apps/browser
+        run: |
+          xcodebuild -workspace macos/Ardia.xcworkspace -scheme Ardia-macOS -derivedDataPath build -destination 'platform=macOS,arch=arm64' -configuration Release CODE_SIGN_STYLE=Manual CODE_SIGN_IDENTITY=- DEVELOPMENT_TEAM= CODE_SIGN_ENTITLEMENTS= ENABLE_HARDENED_RUNTIME=NO
+
+      - name: Verify Release app and bundle identifier
+        run: |
+          APP="apps/browser/build/Build/Products/Release/Ardia.app"
+          test -d "$APP" || { echo "Release app not found at $APP"; exit 1; }
+          BUNDLE_ID=$(/usr/libexec/PlistBuddy -c "Print CFBundleIdentifier" "$APP/Contents/Info.plist")
+          echo "Bundle identifier: $BUNDLE_ID"
+          test "$BUNDLE_ID" = "com.almostfictive.ardian"
+
+      - name: Zip Release app
+        run: |
+          if [ -n "${{ inputs.version }}" ]; then TAG="${{ inputs.version }}";
+          elif [[ "${GITHUB_REF}" == refs/tags/v* ]]; then TAG="${GITHUB_REF_NAME}";
+          else TAG="manual"; fi
+          ditto -c -k --sequesterRsrc --keepParent apps/browser/build/Build/Products/Release/Ardia.app "Ardian-${TAG}.zip"
+          ls -lh "Ardian-${TAG}.zip"
+
+      - name: Publish GitHub Release (tag push)
+        if: startsWith(github.ref, 'refs/tags/v')
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "${GITHUB_REF_NAME}" "Ardian-${GITHUB_REF_NAME}.zip" \
+            --title "Ardian ${GITHUB_REF_NAME}" \
+            --notes "Unsigned, ad-hoc Release build. Unzip, move Ardia.app to Applications, right-click and choose Open the first time. No automatic in-app update. See VERSIONS.md for the version log."
+
+      - name: Upload app as workflow artifact (manual run)
+        if: ${{ !startsWith(github.ref, 'refs/tags/v') }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: Ardian-app
+          path: Ardian-*.zip
+          if-no-files-found: error
