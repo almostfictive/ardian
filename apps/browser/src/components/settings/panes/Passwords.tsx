@@ -27,8 +27,8 @@ import { closeSettingsSheet, showSettingsSheet } from "../../../state/settings/s
 function passwordManagerAppsNote() {
   const apps = "1Password, Bitwarden, KeePassXC and Proton Pass extensions connect to their Mac apps.";
   return systemInfo().inApplicationsFolder === false
-    ? `${apps} For 1Password, move Ardia to your Applications folder and reopen it (1Password only connects to browsers there), then in the 1Password app open Settings › Browser › Add Browser and choose it.`
-    : `${apps} For 1Password, add Ardia once: in the 1Password app, open Settings › Browser › Add Browser and choose Ardia.`;
+    ? `${apps} For 1Password, move Ardian to your Applications folder and reopen it (1Password only connects to browsers there), then in the 1Password app open Settings › Browser › Add Browser and choose it.`
+    : `${apps} For 1Password, add Ardian once: in the 1Password app, open Settings › Browser › Add Browser and choose Ardian.`;
 }
 
 export function PasswordsPane({ profileId: initial }: { profileId?: string | null }) {
