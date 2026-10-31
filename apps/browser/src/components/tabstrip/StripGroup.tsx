@@ -142,7 +142,7 @@ export function StripGroup({
       ))}
       <Animated.View pointerEvents={expanded ? "box-none" : "none"} mouseDownCanMoveWindow={false} style={{ position: "absolute", top: ITEM_TOP, height: ITEM_HEIGHT, left: tail, flexDirection: "row", alignItems: "center", opacity: fade }}>
         <Divider vertical length={GROUP_DIVIDER_LENGTH} color={divider} />
-        {groupClose && <Button variant="icon" icon={groupClose.icon} size="m" weight="semibold" onPress={() => pressGroupClose(entry.id)} tooltip={groupClose.tooltip} />}
+        {groupClose && <Button variant="icon" icon={groupClose.icon} size="m" glyph={font.badge.fontSize} weight="semibold" onPress={() => pressGroupClose(entry.id)} tooltip={groupClose.tooltip} />}
       </Animated.View>
       <View
         {...hoverProps}

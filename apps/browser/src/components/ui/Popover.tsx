@@ -16,6 +16,7 @@ const INSET = space.xl;
 const ROW_INSET = space.s;
 const RADIUS = radius.panel;
 const ROW_HEIGHT = 32;
+const SEPARATOR_GAP = 5;
 const ICON_SLOT = 20;
 const ICON_GAP = space.ml;
 export const PANEL = {
@@ -31,7 +32,7 @@ export const PANEL = {
   textColumn: INSET + ICON_SLOT + ICON_GAP,
   listPadding: INSET - (ROW_HEIGHT - ICON_SLOT) / 2,
   headerGap: space.m,
-  separatorGap: space.xs,
+  separatorGap: SEPARATOR_GAP,
   titleSize: typeScale.body.fontSize,
   titleLine: lineHeight.body,
   subtitleSize: typeScale.caption.fontSize,
