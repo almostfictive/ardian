@@ -37,7 +37,6 @@ function ProfilePopoverContent({ windowId }: { windowId: string }) {
     ...profiles.map((p) => ({ key: p.id, title: p.name, icon: "person.crop.circle", checked: p.id === profileId, disabled: privateWindow, run: () => { closeProfilePopover(); switchProfile(windowId, p.id); } })),
     { key: "add-profile", title: "Add Profile", icon: "person.badge.plus", run: () => { closeProfilePopover(); void requestCreateProfile(windowId); } },
     { key: "history", title: "History", icon: "clock", run: () => command("showHistory") },
-    { key: "release-notes", title: "What’s New", icon: "sparkles", run: () => command("releaseNotes") },
     { key: "settings", title: "Settings", icon: "gearshape", run: () => command("openSettings") },
   ];
   return <View style={StyleSheet.absoluteFill}>

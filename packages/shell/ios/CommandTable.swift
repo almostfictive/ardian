@@ -203,8 +203,6 @@ enum CommandTable {
     "copyDiagnostics": "Copy Diagnostics",
     "recordPerformanceIssue": "Record Performance Issue…",
     "toolTour": "Tool Tour",
-    "videoTour": "Video Tour",
-    "releaseNotes": "Release Notes",
     "showOnboarding": "Show Onboarding",
     "taskManager": "Task Manager",
     "addExtension": "Add Extension…",

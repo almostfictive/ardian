@@ -307,26 +307,10 @@ enum MainMenu {
     return item
   }
 
-  private static func videoTourItem() -> NSMenuItem {
-    let item = CommandItem(.videoTour)
-    let url = Bundle.main.object(forInfoDictionaryKey: "ACVideoTourURL") as? String ?? ""
-    item.isHidden = URL(string: url)?.scheme?.hasPrefix("http") != true
-    return item
-  }
-
-  private static func releaseNotesItem() -> NSMenuItem {
-    let item = CommandItem(.releaseNotes)
-    let url = Bundle.main.object(forInfoDictionaryKey: "ACReleaseNotesURL") as? String ?? ""
-    item.isHidden = URL(string: url)?.scheme?.hasPrefix("http") != true
-    return item
-  }
-
   private static func helpItems() -> [NSMenuItem] {
     var items: [NSMenuItem] = [
       CommandItem(.keyboardShortcuts),
       CommandItem(.toolTour),
-      videoTourItem(),
-      releaseNotesItem(),
       .separator(),
       CommandItem(.copyDiagnostics),
       CommandItem(.recordPerformanceIssue),
