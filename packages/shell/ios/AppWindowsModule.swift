@@ -33,8 +33,8 @@ public class AppWindowsModule: Module {
     AsyncFunction("animateWindowClose") { (id: String, after: String?, promise: Promise) in
       WindowManager.shared.animateClose(id: id, after: after) { promise.resolve(nil) }
     }.runOnQueue(.main)
-    AsyncFunction("setTrafficLightsCenter") { (id: String, center: CGPoint?) in
-      WindowManager.shared.setTrafficLightsCenter(id: id, center: center)
+    AsyncFunction("setTrafficLightsCenter") { (id: String, center: CGPoint?, vertical: Bool?) in
+      WindowManager.shared.setTrafficLightsCenter(id: id, center: center, vertical: vertical ?? false)
     }.runOnQueue(.main)
     AsyncFunction("watchLeftEdge") { (id: String, on: Bool, hold: Double) in
       LeftEdgeWatcher.shared.watch(id: id, on: on, hold: CGFloat(hold))

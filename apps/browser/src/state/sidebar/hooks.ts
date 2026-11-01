@@ -1,3 +1,4 @@
+import { COLLAPSED_SIDEBAR_WIDTH } from "../../lib/windowLayout";
 import { useMemo } from "react";
 import { useShallow } from "zustand/react/shallow";
 import { useBrowser } from "../browser/store";
@@ -18,7 +19,7 @@ import { pinnedCollapsed, pinnedKept } from "./pinnedFold";
 import { useSidebarUi, type Hover } from "./sidebarUi";
 
 export function useSidebarWidth(windowId: string): number {
-  return useBrowser((s) => s.windows[windowId]?.sidebarOpen === false ? 64 : 164);
+  return useBrowser((s) => s.windows[windowId]?.sidebarOpen === false ? COLLAPSED_SIDEBAR_WIDTH : 164);
 }
 
 export const useIsInSplit = (tabId: string) => useBrowser((s) => !!splitOf(s, tabId));
@@ -130,3 +131,5 @@ export function useTabGroupIndicators(windowId: string): TabGroupIndicator[] {
   });
   return useMemo(() => JSON.parse(json) as TabGroupIndicator[], [json]);
 }
+
+export const useRailTabs = (windowId: string) => useBrowser(useShallow((s) => viewTabIds(s, windowId)));

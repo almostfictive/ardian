@@ -14,9 +14,9 @@ export function DockedLayout({ fullscreen, inset, children }: { fullscreen: bool
   const open = useWindow(windowId, (window) => window?.sidebarOpen ?? true);
   const width = open ? PAGE3.expanded : PAGE3.collapsed;
   useLayoutEffect(() => {
-    void setTrafficLightsCenter(windowId, fullscreen ? null : [32, 24]);
-    return () => { void setTrafficLightsCenter(windowId, null); };
-  }, [windowId, fullscreen]);
+    void setTrafficLightsCenter(windowId, fullscreen ? null : [open ? 32 : PAGE3.collapsed / 2, 24], !open);
+    return () => { void setTrafficLightsCenter(windowId, null, false); };
+  }, [windowId, fullscreen, open]);
   return <>
     <View style={fullscreen ? { flex: 1 } : { flex: 1, paddingLeft: width + layout.sidebarCardGap, paddingTop: inset.top, paddingRight: inset.right, paddingBottom: inset.bottom }}>
       {!fullscreen && <WindowDragRegion style={StyleSheet.absoluteFill} />}

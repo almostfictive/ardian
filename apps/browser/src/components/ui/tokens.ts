@@ -1,3 +1,4 @@
+import { COLLAPSED_SIDEBAR_WIDTH } from "../../lib/windowLayout";
 import type { AreaLightPalette } from "@ardia/shaders";
 import type { ProfileColor } from "../../lib/profileLook";
 import { parseColor } from "../../lib/color";
@@ -393,7 +394,7 @@ export type SheetSize = keyof typeof sheetWidth;
 export const toastLayout = { bottom: space.xxxl, maxWidth: 420, rise: 10 } as const;
 export const POPOVER_WIDTH = { s: 300, m: 340, l: 360 } as const;
 
-export const PAGE3 = {   expanded: 164, collapsed: 64, pageRadius: radius.chrome, panelRadius: radius.panel, panelWidth: POPOVER_WIDTH.m, rowHeight: 48, blur: 24, dockHeight: 32, dockIcon: iconButton.toolbar.glyph, dockGap: space.s, dockRadius: radius.tile,
+export const PAGE3 = {   expanded: 164, collapsed: COLLAPSED_SIDEBAR_WIDTH, pageRadius: radius.chrome, panelRadius: radius.panel, panelWidth: POPOVER_WIDTH.m, rowHeight: 48, blur: 24, dockHeight: 32, dockIcon: iconButton.toolbar.glyph, dockGap: space.s, dockRadius: radius.tile,
   light: { canvas: "#F5F5F7", surface: "#FFFFFF", primary: "#1D1D1F", secondary: "#6E6E73", border: "#D2D2D7", glass: "rgba(255,255,255,0.8)", subtle: "rgba(29,29,31,0.07)" },   dark: { canvas: "#000000", surface: "#1C1C1E", primary: "#F5F5F7", secondary: "#A1A1A6", border: "#3A3A3C", glass: "rgba(28,28,30,0.82)", subtle: "rgba(255,255,255,0.08)" },
   rail: "#171717", railText: "#F5F5F7", selected: "#0A66D9", selection: "#0A84FF", dim: "rgba(0,0,0,0.45)",   marker: ["#FF3B30", "#007AFF", "#34C759", "#1D1D1F"], highlighter: ["#FFCC00", "#FF9500", "#AF52DE", "#34C759"],
   type: { display: { ...display.large, lineHeight: lineHeight.display }, heading: { ...font.large, lineHeight: lineHeight.large }, body: { ...font.title, lineHeight: lineHeight.title }, label: { ...font.body, lineHeight: proseLineHeight.body }, caption: { ...font.small, lineHeight: lineHeight.small } }, } as const;

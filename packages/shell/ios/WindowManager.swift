@@ -12,6 +12,7 @@ final class WindowManager: NSObject, NSWindowDelegate {
   private var managed: [String: ManagedWindow] = [:]
   private var pending: [PendingOpen] = []
   private var lightsCenters: [String: NSPoint] = [:]
+  private var verticalLights: [String: Bool] = [:]
   private weak var lastPlaced: NSWindow?
   private static let lastFrameKey = "ArdiaLastWindowFrame"
   private var lastFrame = UserDefaults.standard.string(forKey: WindowManager.lastFrameKey) ?? UserDefaults.standard.string(forKey: "NSWindow Frame BrowserWindow")
@@ -126,7 +127,7 @@ final class WindowManager: NSObject, NSWindowDelegate {
     behind: String? = nil
   ) {
     let window = entry.window, id = entry.id
-    if let center = lightsCenters[id] { ChromeWindows.setTrafficLightsCenter(center, in: window) }
+    if let center = lightsCenters[id] { ChromeWindows.setTrafficLightsCenter(center, vertical: verticalLights[id] ?? false, in: window) }
     window.title = title
     if small, frame == nil { placeSmall(window, size: smallSize, pointer: smallPointer) } else if frame != nil || !window.isVisible { place(window, frame: frame) }
     relayoutRoot(window)
@@ -216,10 +217,11 @@ final class WindowManager: NSObject, NSWindowDelegate {
     }
   }
 
-  func setTrafficLightsCenter(id: String, center: NSPoint?) {
+  func setTrafficLightsCenter(id: String, center: NSPoint?, vertical: Bool = false) {
     lightsCenters[id] = center
+    verticalLights[id] = vertical
     guard let window = window(id) else { return }
-    ChromeWindows.setTrafficLightsCenter(center, in: window)
+    ChromeWindows.setTrafficLightsCenter(center, vertical: vertical, in: window)
   }
 
   private func adopt(from: NSWindow, to: NSWindow) {
@@ -370,6 +372,7 @@ final class WindowManager: NSObject, NSWindowDelegate {
   private func forget(_ entry: ManagedWindow) {
     entry.stopWatchingContent()
     lightsCenters[entry.id] = nil
+    verticalLights[entry.id] = nil
     entry.takeReveal()?.then.forEach { $0() }
     entry.takeExit()?.forEach { $0() }
   }

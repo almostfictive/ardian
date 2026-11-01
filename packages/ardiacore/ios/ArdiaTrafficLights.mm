@@ -15,6 +15,8 @@ namespace ardia_window {
 
 const void *kLightsCenterKey = &kLightsCenterKey;
 
+const void *kLightsVerticalKey = &kLightsVerticalKey;
+
 const void *kLightsShownKey = &kLightsShownKey;
 
 const void *kLightsMoveKey = &kLightsMoveKey;
@@ -163,6 +165,13 @@ void InstallTrafficLightsOrigin(Class frameClass) {
   static NSMutableSet<Class> *installed = [NSMutableSet set];
   if (!frameClass || [installed containsObject:frameClass]) return;
   [installed addObject:frameClass];
+  const SEL positions = NSSelectorFromString(@"_updateButtonPositions");
+  ReplaceMethod(frameClass, positions, ^id(IMP standard) {
+    return ^(NSView *frameView) {
+      ((void (*)(id, SEL))standard)(frameView, positions);
+      LayoutVerticalTrafficLights(frameView.window);
+    };
+  });
   const SEL sel = NSSelectorFromString(@"_closeButtonOrigin");
   ReplaceMethod(frameClass, sel, ^id(IMP standard) {
     return ^NSPoint(NSView *frameView) {
@@ -276,12 +285,27 @@ constexpr int64_t kLightsSettle = 50 * NSEC_PER_MSEC;
 
 namespace ardia_window {
 
+void LayoutVerticalTrafficLights(NSWindow *window) {
+  if (![objc_getAssociatedObject(window, kLightsVerticalKey) boolValue] || (window.styleMask & NSWindowStyleMaskFullScreen)) return;
+  NSArray<NSButton *> *buttons = TrafficLightButtons(window);
+  NSButton *first = buttons.firstObject;
+  if (!first) return;
+  const NSPoint origin = first.frame.origin;
+  const CGFloat step = first.frame.size.height + 8;
+  for (NSUInteger index = 0; index < buttons.count; index++) {
+    NSButton *button = buttons[index];
+    const CGFloat direction = button.superview.isFlipped ? 1 : -1;
+    [button setFrameOrigin:NSMakePoint(origin.x, origin.y + direction * step * index)];
+  }
+}
+
 void RetileTrafficLights(NSWindow *window) {
   NSView *frameView = window.contentView.superview;
   for (NSString *name in @[ @"_updateButtonPositions", @"_positionSharingIndicator" ]) {
     const SEL sel = NSSelectorFromString(name);
     if ([frameView respondsToSelector:sel]) ((void (*)(id, SEL))objc_msgSend)(frameView, sel);
   }
+  LayoutVerticalTrafficLights(window);
   SyncSharingWindows(window);
 }
 
@@ -336,6 +360,7 @@ namespace ardia_window {
 
 bool MoveTrafficLights(NSWindow *window, NSValue *center) {
   NSArray<NSButton *> *buttons = TrafficLightButtons(window);
+  if ([objc_getAssociatedObject(window, kLightsVerticalKey) boolValue]) return false;
   if (!buttons.count || !objc_getAssociatedObject(window, kInsetLightsKey) || (window.styleMask & NSWindowStyleMaskFullScreen))
     return false;
   for (NSButton *button in buttons)

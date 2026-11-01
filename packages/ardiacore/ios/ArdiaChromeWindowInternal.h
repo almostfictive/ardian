@@ -41,6 +41,8 @@ extern const void *kLightsMoveKey;
 NSArray<NSButton *> *TrafficLightButtons(NSWindow *window);
 NSPoint LightsCenter(NSValue *center, NSSize size);
 void TranslateTrafficLights(NSWindow *window, CGFloat dx);
+extern const void *kLightsVerticalKey;
+void LayoutVerticalTrafficLights(NSWindow *window);
 void RetileTrafficLights(NSWindow *window);
 bool MoveTrafficLights(NSWindow *window, NSValue *center);
 

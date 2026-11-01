@@ -90,6 +90,13 @@ NSView *ArdiaWindowRootView(NSWindow *window) {
     });
 }
 
++ (void)setTrafficLightsVertical:(BOOL)vertical inWindow:(NSWindow *)window {
+  if ([objc_getAssociatedObject(window, kLightsVerticalKey) boolValue] == vertical) return;
+  objc_setAssociatedObject(window, kLightsVerticalKey, @(vertical), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+  RetileTrafficLights(window);
+  PlaceFullScreenLights(window);
+}
+
 + (void)setTrafficLightsCenter:(NSValue *)center inWindow:(NSWindow *)window {
   if (objc_getAssociatedObject(window, kLightsShownKey)) {
     objc_setAssociatedObject(window, kLightsShownKey, nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);

@@ -25,7 +25,8 @@ enum ChromeWindows {
 
   private static let drawnMoves = LaunchConfig.shared.switchOn("sidebarSlideLean")
 
-  static func setTrafficLightsCenter(_ center: NSPoint?, in window: NSWindow) {
+  static func setTrafficLightsCenter(_ center: NSPoint?, vertical: Bool = false, in window: NSWindow) {
+    ArdiaChromeWindowHost.setTrafficLightsVertical(vertical, in: window)
     let value = center.map { NSValue(point: $0) }
     if drawnMoves {
       ArdiaChromeWindowHost.moveTrafficLightsCenter(value, in: window)

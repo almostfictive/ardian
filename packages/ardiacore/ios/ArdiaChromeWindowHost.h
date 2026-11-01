@@ -22,6 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (void)removeRootViewOfWindow:(NSWindow *)window;
 
++ (void)setTrafficLightsVertical:(BOOL)vertical inWindow:(NSWindow *)window;
 + (void)setTrafficLightsCenter:(nullable NSValue *)center inWindow:(NSWindow *)window;
 + (void)moveTrafficLightsCenter:(nullable NSValue *)center inWindow:(NSWindow *)window;
 
