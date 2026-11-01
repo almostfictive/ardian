@@ -3,6 +3,7 @@ import ExpoModulesCore
 
 final class ScreenshotCanvas: ExpoView {
   let onStroke = EventDispatcher()
+  let onUndo = EventDispatcher()
   private let canvas = ScreenshotDrawingView(frame: .zero)
   var encoded = "" { didSet { canvas.encoded = encoded } }
   var strokes: [[String: Any]] = [] { didSet { canvas.strokes = strokes } }
@@ -11,6 +12,7 @@ final class ScreenshotCanvas: ExpoView {
 
   required init(appContext: AppContext? = nil) {
     super.init(appContext: appContext)
+    canvas.onUndo = { [weak self] in self?.onUndo([:]) }
     canvas.onStroke = { [weak self] stroke in self?.onStroke(stroke) }
     addSubview(canvas)
   }

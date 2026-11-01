@@ -40,7 +40,7 @@ export function ScreenshotEditor({ image, strokes, error }: { image: ScreenshotI
       </View>
       <View onLayout={(e) => setSize(e.nativeEvent.layout)} style={{ flex: 1, backgroundColor: theme.field }}>
         <ScrollView horizontal centerContent contentContainerStyle={{ flexGrow: 1 }}><ScrollView centerContent contentContainerStyle={{ flexGrow: 1, alignItems: "center", justifyContent: "center", padding: space.xxxl }}>
-          <ScreenshotCanvas image={image.data} strokes={strokes} color={color} highlighter={mode === "highlighter"} onStroke={(e) => setScreenshotStrokes([...strokes, e.nativeEvent])} style={{ width: image.width * scale, height: image.height * scale }} />
+          <ScreenshotCanvas image={image.data} strokes={strokes} color={color} highlighter={mode === "highlighter"} onUndo={() => setScreenshotStrokes(strokes.slice(0, -1))} onStroke={(e) => setScreenshotStrokes([...strokes, e.nativeEvent])} style={{ width: image.width * scale, height: image.height * scale }} />
         </ScrollView></ScrollView>
       </View>
       {error && <Text accessibilityRole="alert" style={{ ...PAGE3.type.caption, color: theme.destructive, padding: space.m }}>{error}</Text>}

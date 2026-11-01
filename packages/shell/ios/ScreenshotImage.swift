@@ -53,26 +53,46 @@ enum ScreenshotImage {
     guard strokes.count <= 1000 else { throw error("The screenshot has too many annotations.") }
     var pointCount = 0
     for stroke in strokes {
-      guard let points = stroke["points"] as? [[Double]], let color = stroke["color"] as? String, let highlighter = stroke["highlighter"] as? Bool,
+      guard let points = stroke["points"] as? [[Double]], let color = stroke["color"] as? String, stroke["highlighter"] is Bool,
             points.allSatisfy({ $0.count == 2 && $0.allSatisfy({ $0.isFinite && $0 >= 0 && $0 <= 1 }) }),
             color.range(of: "^#[0-9a-fA-F]{6}$", options: .regularExpression) != nil,
-            let hex = UInt32(color.dropFirst(), radix: 16) else { throw error("An annotation is invalid.") }
+            UInt32(color.dropFirst(), radix: 16) != nil else { throw error("An annotation is invalid.") }
       pointCount += points.count
       guard pointCount <= 100_000 else { throw error("The screenshot has too many annotation points.") }
-      guard let first = points.first else { continue }
-      let path = CGMutablePath()
-      path.move(to: CGPoint(x: first[0] * Double(image.width), y: first[1] * Double(image.height)))
-      for point in points.dropFirst() { path.addLine(to: CGPoint(x: point[0] * Double(image.width), y: point[1] * Double(image.height))) }
-      if points.count == 1 { path.addLine(to: CGPoint(x: first[0] * Double(image.width) + 0.1, y: first[1] * Double(image.height))) }
-      context.setStrokeColor(CGColor(red: CGFloat((hex >> 16) & 255) / 255, green: CGFloat((hex >> 8) & 255) / 255, blue: CGFloat(hex & 255) / 255, alpha: highlighter ? 0.28 : 1))
-      context.setLineWidth(highlighter ? 18 : 3)
-      context.setLineCap(.round)
-      context.setLineJoin(.round)
-      context.addPath(path)
-      context.strokePath()
     }
+    drawStrokes(strokes, in: context, size: NSSize(width: image.width, height: image.height))
     guard let result = context.makeImage() else { throw error("Couldn't render the screenshot.") }
     return result
+  }
+
+  static func drawStrokes(_ strokes: [[String: Any]], in context: CGContext, size: NSSize) {
+    context.saveGState()
+    for highlight in [true, false] {
+      for stroke in strokes where (stroke["highlighter"] as? Bool ?? false) == highlight {
+        guard let samples = stroke["points"] as? [[Double]],
+              let color = stroke["color"] as? String, let hex = UInt32(color.dropFirst(), radix: 16) else { continue }
+        let points = samples.filter { $0.count == 2 }.map { CGPoint(x: $0[0] * size.width, y: $0[1] * size.height) }
+        guard let first = points.first, let last = points.last else { continue }
+        let path = CGMutablePath()
+        path.move(to: first)
+        if points.count == 1 || points.allSatisfy({ $0 == first }) {
+          path.addLine(to: CGPoint(x: first.x + 0.1, y: first.y))
+        } else if points.count == 2 {
+          path.addLine(to: last)
+        } else {
+          for index in 1..<points.count {
+            let previous = points[index - 1]
+            let current = points[index]
+            path.addQuadCurve(to: CGPoint(x: (previous.x + current.x) / 2, y: (previous.y + current.y) / 2), control: previous)
+          }
+          path.addQuadCurve(to: last, control: last)
+        }
+        context.setFillColor(CGColor(red: CGFloat((hex >> 16) & 255) / 255, green: CGFloat((hex >> 8) & 255) / 255, blue: CGFloat(hex & 255) / 255, alpha: highlight ? 0.28 : 1))
+        context.addPath(path.copy(strokingWithWidth: highlight ? 18 : 3, lineCap: .round, lineJoin: .round, miterLimit: 10))
+        context.fillPath()
+      }
+    }
+    context.restoreGState()
   }
 
   static func stitch(_ tiles: [[String: Any]], width: Double, height: Double) throws -> [String: Any] {

@@ -161,5 +161,5 @@ export type DockSelectionProps = ViewProps & {
 
 export const DockSelection = requireNativeViewManager<DockSelectionProps>("ArdiaDockSelection");
 
-export const ScreenshotCanvas = requireNativeViewManager<ViewProps & { image: string; strokes: import("./app").ScreenshotStroke[]; color: string; highlighter: boolean; onStroke: (event: { nativeEvent: import("./app").ScreenshotStroke }) => void }>("ArdiaScreenshotCanvas");
+export const ScreenshotCanvas = requireNativeViewManager<ViewProps & { image: string; strokes: import("./app").ScreenshotStroke[]; color: string; highlighter: boolean; onUndo: () => void; onStroke: (event: { nativeEvent: import("./app").ScreenshotStroke }) => void }>("ArdiaScreenshotCanvas");
 export const ScreenshotColor = requireNativeViewManager<ViewProps & { color: string; onColor: (event: { nativeEvent: { color: string } }) => void }>("ArdiaScreenshotColor");
