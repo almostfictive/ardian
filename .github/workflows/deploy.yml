@@ -29,11 +29,12 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
       - id: filter
-        if: github.event_name == 'push'
+        if: github.event_name == 'push' || github.event_name == 'pull_request'
         uses: dorny/paths-filter@ceb8a2b8f2d89434be7ff52d3de7ec3738c5cc9d
         with:
           filters: |
             site:
+              - ".github/workflows/deploy.yml"
               - "infra/site/**"
               - "apps/site/**"
               - "apps/demo/**"
@@ -48,9 +49,11 @@ jobs:
               - "pnpm-workspace.yaml"
               - "patches/**"
             dashboard:
+              - ".github/workflows/deploy.yml"
               - "infra/dashboard/**"
               - "apps/dashboard/**"
             telemetry-group:
+              - ".github/workflows/deploy.yml"
               - "infra/telemetry/hexclave.deploy.ts"
             clickhouse:
               - "infra/telemetry/clickhouse/**"
@@ -81,9 +84,25 @@ jobs:
           path: infra/site/dist
           retention-days: 1
 
+  hexclave-key:
+    runs-on: ubuntu-latest
+    outputs:
+      present: ${{ steps.check.outputs.present }}
+    steps:
+      - id: check
+        env:
+          HEXCLAVE_SECRET_SERVER_KEY: ${{ secrets.HEXCLAVE_SECRET_SERVER_KEY }}
+        run: |
+          if [ -n "$HEXCLAVE_SECRET_SERVER_KEY" ]; then
+            echo "present=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "present=false" >> "$GITHUB_OUTPUT"
+            echo "skipping publish: no Hexclave key"
+          fi
+
   site:
-    needs: site-build
-    if: needs.site-build.result == 'success' && secrets.HEXCLAVE_SECRET_SERVER_KEY != ''
+    needs: [site-build, hexclave-key]
+    if: needs.site-build.result == 'success' && needs.hexclave-key.outputs.present == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 30
     concurrency:
@@ -104,8 +123,8 @@ jobs:
           HEXCLAVE_SECRET_SERVER_KEY: ${{ secrets.HEXCLAVE_SECRET_SERVER_KEY }}
 
   dashboard:
-    needs: changes
-    if: needs.changes.outputs.dashboard == 'true' && secrets.HEXCLAVE_SECRET_SERVER_KEY != ''
+    needs: [changes, hexclave-key]
+    if: needs.changes.outputs.dashboard == 'true' && needs.hexclave-key.outputs.present == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 30
     concurrency:
@@ -122,8 +141,8 @@ jobs:
           HEXCLAVE_SECRET_SERVER_KEY: ${{ secrets.HEXCLAVE_SECRET_SERVER_KEY }}
 
   telemetry:
-    needs: changes
-    if: (needs.changes.outputs.telemetry-group == 'true' || needs.changes.outputs.clickhouse == 'true' || needs.changes.outputs.collector == 'true') && secrets.HEXCLAVE_SECRET_SERVER_KEY != ''
+    needs: [changes, hexclave-key]
+    if: (needs.changes.outputs.telemetry-group == 'true' || needs.changes.outputs.clickhouse == 'true' || needs.changes.outputs.collector == 'true') && needs.hexclave-key.outputs.present == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 30
     concurrency:
