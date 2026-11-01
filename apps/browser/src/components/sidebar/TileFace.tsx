@@ -23,17 +23,18 @@ export function TileFace({ tabId, badge, ...state }: FaceState & { tabId: string
   const tileTheme = useTileTheme(tab?.url ?? "", tab?.favicon, tab?.customIcon, tab?.profileId ?? "");
   const glass = useGlass();
   if (!tab) return null;
-  const { width, active } = state;
+  const { active } = state;
+  const width = Math.min(state.width, layout.pinnedHeight);
   const icon = (
     <View>
-      <TabIcon tabId={tab.id} url={tab.url} favicon={tab.favicon} icon={tab.customIcon} />
+      <TabIcon tabId={tab.id} url={tab.url} favicon={tab.favicon} icon={null} />
       <TabBadges tabId={tabId} />
       <View pointerEvents="none" style={{ position: "absolute", right: -14, top: -8 }}><TabNumber tabId={tabId} /></View>
     </View>
   );
   if (glass)
     return (
-      <GlassTile {...state} tileTheme={tileTheme}>
+      <GlassTile {...state} width={width} tileTheme={tileTheme}>
         {icon}
         {badge}
       </GlassTile>
@@ -90,7 +91,7 @@ export function TileFace({ tabId, badge, ...state }: FaceState & { tabId: string
       </Surface>
     );
   return (
-    <RestingTile {...state}>
+    <RestingTile {...state} width={width}>
       {icon}
       {badge}
     </RestingTile>

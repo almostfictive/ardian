@@ -5,7 +5,6 @@ import { activated, apply, withNewTab } from "../tabs/tabs";
 import type { Workspace } from "../browser/types";
 import { activeWorkspaceId, tabWorkspaceId, workspacesOf } from "./model";
 import { leaveGroups } from "../groups/groups";
-import { prompt } from "../../platform/dialogs";
 
 export const useWorkspaces = (windowId: string) => useBrowser(useShallow((s) => s.windows[windowId] ? workspacesOf(s.windows[windowId]!) : []));
 export const useActiveWorkspace = (windowId: string) => useBrowser((s) => s.windows[windowId] ? activeWorkspaceId(s.windows[windowId]!) : "");
@@ -25,12 +24,10 @@ export function switchWorkspace(windowId: string, workspaceId: string) {
 }
 
 export async function createWorkspace(windowId: string) {
-  const name = await prompt({ title: "New Workspace", placeholder: "Workspace name", confirmTitle: "Create", windowId });
-  if (!name?.trim()) return;
   const s = useBrowser.getState();
   const window = s.windows[windowId];
   if (!window) return;
-  const workspace: Workspace = { id: newId("workspace"), profileId: window.profileId, name: name.trim(), icon: "briefcase", display: "icon" };
+  const workspace: Workspace = { id: newId("workspace"), profileId: window.profileId, name: `Workspace ${workspacesOf(window).length + 1}`, icon: null, display: "none" };
   useBrowser.setState({ windows: { ...s.windows, [windowId]: { ...window, workspaces: [...workspacesOf(window), workspace] } } });
   switchWorkspace(windowId, workspace.id);
 }

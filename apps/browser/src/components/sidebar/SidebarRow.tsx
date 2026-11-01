@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { View, type StyleProp, type ViewStyle } from "react-native";
-import { FadeLabel, font, radius, Surface, type SurfaceProps } from "../ui";
+import { FadeLabel, font, radius, GlassFill, useGlass, Surface, type SurfaceProps } from "../ui";
 import { hex, layout, useTheme } from "../ui/theme";
 import { useSelectedTabGlow } from "./rowLook";
 import { SELECTED_ROW_SHADOW_OFFSET, SIDEBAR_TYPE, TAB_ROW } from "./tokens";
@@ -30,9 +30,10 @@ export function SidebarRowSurface({
 }) {
   const theme = useTheme();
   const glow = useSelectedTabGlow();
+  const glass = useGlass();
   return (
     <Surface
-      fill={hex(fill)}
+      fill={glass && selected ? undefined : hex(fill)}
       cornerRadius={cornerRadius}
       borderWidth={border}
       borderColor={stroke === undefined ? undefined : hex(stroke)}
@@ -43,6 +44,7 @@ export function SidebarRowSurface({
       shadowOffset={SELECTED_ROW_SHADOW_OFFSET}
       style={{ height: layout.rowHeight, flexDirection: "row", alignItems: "center", paddingLeft: padLeft, paddingRight: padRight }}
     >
+      {glass && selected && <GlassFill radius={cornerRadius} state="active" />}
       {children}
     </Surface>
   );

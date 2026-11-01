@@ -112,7 +112,7 @@ function organiseItems(s: BrowserState, windowId: string, tab: Tab, f: Facts): T
         ];
   return [
     ...grouping,
-    { id: "moveToWorkspace", title: "Move to Workspace", symbol: "square.grid.2x2", children: workspacesOf(s.windows[windowId]!).map((w) => ({ value: { kind: "workspace" as const, workspaceId: w.id }, title: w.name })) },
+    { id: "moveToWorkspace", title: "Move to Workspace", symbol: "square.grid.2x2", children: workspacesOf(s.windows[windowId]!).map((w, index) => ({ value: { kind: "workspace" as const, workspaceId: w.id }, title: `Workspace ${index + 1}` })) },
     { id: "moveToWindow", title: "Move to Window", symbol: "macwindow", enabled: !f.incognito, children: windowItems(s, windowId) },
   ];
 }

@@ -1,6 +1,5 @@
 import { PAGE3, space } from "../ui/tokens";
 import { TopAppDock } from "./TopAppDock";
-import { WorkspaceSwitcher } from "./WorkspaceSwitcher";
 import { Page3History } from "./Page3History";
 import { useCallback, useLayoutEffect, useRef, useState } from "react";
 import { ScrollView, View } from "react-native";
@@ -104,7 +103,6 @@ export function Sidebar({ width }: { width: number }) {
               <WindowDragRegion style={{ position: "absolute", top: 0, left: 0, right: 0, height: 44 }} />
               <Page3History />
               <TopAppDock />
-              <WorkspaceSwitcher />
             </View>
 
 

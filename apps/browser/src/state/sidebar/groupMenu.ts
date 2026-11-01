@@ -44,7 +44,7 @@ export function groupMenuItems(s: BrowserState, windowId: string, groupId: strin
       { id: "duplicate", title: "Duplicate Group", symbol: "plus.square.on.square" },
     ],
     [
-      { id: "moveToWorkspace", title: "Move to Workspace", symbol: "square.grid.2x2", children: workspacesOf(s.windows[windowId]!).map((w) => ({ value: { kind: "workspace" as const, workspaceId: w.id }, title: w.name })) },
+      { id: "moveToWorkspace", title: "Move to Workspace", symbol: "square.grid.2x2", children: workspacesOf(s.windows[windowId]!).map((w, index) => ({ value: { kind: "workspace" as const, workspaceId: w.id }, title: `Workspace ${index + 1}` })) },
       ...(g.pinned ? [] : [{ id: "moveToWindow", title: "Move to Window", symbol: "macwindow", enabled: !incognito, children: windowItems(s, windowId) }]),
     ],
     [

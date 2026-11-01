@@ -68,7 +68,7 @@ export const TabRow = memo(function TabRow({ tabId, onto = false, shift = null }
   const resettable = (isPinnedRow(tab) || !tab.pin) && awayFromPin(tab);
   const resetting = resettable && backToPin.hovered && !renaming;
   const title = resetting ? "Back to Pinned URL" : tabTitle(tab);
-  const fill = selected && !active ? tokens.multiSelected : hovered && !active ? theme.tabHover : ink.clear;
+  const fill = active ? theme.tabSelected : selected ? tokens.multiSelected : hovered ? theme.rowHover : ink.clear;
   const border = selected && !active ? 0.5 : 0;
 
   return (
@@ -83,7 +83,7 @@ export const TabRow = memo(function TabRow({ tabId, onto = false, shift = null }
       {({ pressed }) => (
           <SidebarRowSurface
             fill={onto || (!active && pressed) ? theme.tabPressed : fill}
-            selected={false}
+            selected={active}
             border={border}
             stroke={selected && !active ? tokens.multiSelectedStroke : undefined}
             padLeft={TAB_ROW.contentLeft - border}
@@ -213,8 +213,8 @@ export const SplitRowItem = memo(function SplitRowItem({
     <Animated.View ref={wrapper.ref} style={wrapper.style} {...handle}>
       <View {...moved} ref={movedRef} {...hoverProps} style={moved.style as object}>
         <SidebarRowSurface
-          fill={!active && hovered ? theme.tabHover : ink.clear}
-          selected={false}
+          fill={active ? theme.tabSelected : hovered ? theme.rowHover : ink.clear}
+          selected={active}
           border={0}
           padLeft={space.xs}
           padRight={space.xs}
