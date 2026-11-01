@@ -63,7 +63,10 @@ export async function outputScreenshot(output: "png" | "pdf" | "clipboard") {
   if (!capture?.image) return;
   try {
     const result = await exportScreenshot(capture.image.data, capture.strokes, output, capture.windowId);
-    if (result) showToast(capture.windowId, output === "clipboard" ? "Screenshot Copied" : "Screenshot Saved", output === "clipboard" ? undefined : result, { icon: output === "clipboard" ? "doc.on.clipboard" : "checkmark" });
+    if (result) {
+      if (screenshotCurrent(capture.id)) closeScreenshot();
+      showToast(capture.windowId, output === "clipboard" ? "Screenshot Copied" : "Screenshot Saved", output === "clipboard" ? undefined : result, { icon: output === "clipboard" ? "doc.on.clipboard" : "checkmark" });
+    }
   } catch (error) { updateCapture(capture.id, { error: (error as Error).message }); }
 }
 function watchCapture(s: ReturnType<typeof useBrowser.getState>, prev: ReturnType<typeof useBrowser.getState>) {

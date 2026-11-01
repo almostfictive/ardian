@@ -114,3 +114,27 @@ test("closing capture ignores late native replies and navigation dismisses the e
   assert.equal(useScreenshot.getState().capture, null);
   webviews.delete(tab);
 });
+
+test("successful screenshot output closes the editor; cancelled save keeps it open", async () => {
+  const { shellNativeModules } = await import("../../test-native/shell.ts");
+  const { outputScreenshot } = await import("./actions.ts");
+  const app = shellNativeModules.ArdiaApp;
+  const original = app.exportScreenshot;
+  const { tab } = captureFixture();
+  webviews.set(tab, { capturePicture: async () => ({ data: "picture" }) });
+  try {
+    await captureScreenshot(tab);
+    await chooseCapture("selected");
+    await captureSelection([0, 0, 1, 1]);
+    app.exportScreenshot = async () => null;
+    await outputScreenshot("png");
+    assert.equal(useScreenshot.getState().capture.phase, "editor");
+    app.exportScreenshot = async () => "clipboard";
+    await outputScreenshot("clipboard");
+    assert.equal(useScreenshot.getState().capture, null);
+  } finally {
+    app.exportScreenshot = original;
+    closeScreenshot();
+    webviews.delete(tab);
+  }
+});
