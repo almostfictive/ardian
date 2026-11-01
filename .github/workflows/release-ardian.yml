@@ -46,6 +46,11 @@ jobs:
         working-directory: apps/browser
         run: pnpm pods
 
+      - name: Fetch the nearest published engine
+        run: |
+          framework=$(packages/ardiacore/scripts/fetch-engine.sh --nearest)
+          echo "ARDIACORE_FRAMEWORK=$framework" >> "$GITHUB_ENV"
+
       - name: Build Release (ad-hoc, no Metro server at runtime)
         working-directory: apps/browser
         run: |
@@ -60,8 +65,10 @@ jobs:
           test "$BUNDLE_ID" = "com.almostfictive.ardian"
 
       - name: Zip Release app
+        env:
+          INPUT_VERSION: ${{ inputs.version }}
         run: |
-          if [ -n "${{ inputs.version }}" ]; then TAG="${{ inputs.version }}";
+          if [ -n "$INPUT_VERSION" ]; then TAG="$INPUT_VERSION";
           elif [[ "${GITHUB_REF}" == refs/tags/v* ]]; then TAG="${GITHUB_REF_NAME}";
           else TAG="manual"; fi
           ditto -c -k --sequesterRsrc --keepParent apps/browser/build/Build/Products/Release/Ardian.app "Ardian-${TAG}.zip"

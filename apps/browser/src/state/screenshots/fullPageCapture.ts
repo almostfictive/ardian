@@ -39,6 +39,6 @@ export async function fullPageCapture(web: WebViewHandle, progress: (text: strin
     progress("Stitching screenshot…");
     return await bounded(stitchScreenshots(tiles, width, height), 10000);
   } finally {
-    await bounded(pageValue(web, `(()=>{if(location.href!==${JSON.stringify(href)})return;document.documentElement.style.scrollBehavior='auto';scrollTo({left:${x},top:${y},behavior:'instant'});document.documentElement.style.setProperty('scroll-behavior',${JSON.stringify(originalStyle?.value ?? "")},${JSON.stringify(originalStyle?.priority ?? "")});const state=globalThis[${key}];if(state){for(const [el,property,value,priority] of state.changes)el.style.setProperty(property,value,priority);state.style.remove();delete globalThis[${key}]}})()`)).catch(() => {});
+    await bounded(pageValue(web, `(()=>{const state=globalThis[${key}];if(state){for(const [el,property,value,priority] of state.changes)el.style.setProperty(property,value,priority);state.style.remove();delete globalThis[${key}]}if(location.href!==${JSON.stringify(href)})return;document.documentElement.style.scrollBehavior='auto';scrollTo({left:${x},top:${y},behavior:'instant'});document.documentElement.style.setProperty('scroll-behavior',${JSON.stringify(originalStyle?.value ?? "")},${JSON.stringify(originalStyle?.priority ?? "")})})()`)).catch(() => {});
   }
 }

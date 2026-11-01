@@ -13,6 +13,26 @@ cache="$root/apps/browser/build-local-engine"
 app="$root/apps/browser/build-local-preview/Build/Products/Release/Ardian.app"
 profile="$root/apps/browser/build-local-preview/profile"
 framework="$cache/Chromium Framework.framework"
+resolve_published_engine() {
+  local want entry commit candidate skipped=0
+  want=$(git rev-parse HEAD:engine)
+  entry=$(awk -v tree="$want" '$1 == tree {print; exit}' packages/ardiacore/prebuilt-engines.tsv)
+  if [[ -z "$entry" && $base -eq 1 ]]; then
+    while read -r commit; do
+      candidate=$(git rev-parse "$commit:engine" 2>/dev/null || true)
+      entry=$(awk -v tree="$candidate" '$1 == tree {print; exit}' packages/ardiacore/prebuilt-engines.tsv)
+      if [[ -n "$entry" ]]; then
+        echo "LIMITED PREVIEW: this checkout's engine is not published. Using the nearest published engine instead." >&2
+        break
+      fi
+      skipped=$((skipped + 1))
+      [[ $skipped -lt 200 ]] || break
+    done < <(git rev-list HEAD -- engine)
+  fi
+  [[ -n "$entry" ]] || { echo "No published base engine matches this checkout." >&2; exit 1; }
+  read -r tree version checksum <<< "$entry"
+  short=${tree:0:12}
+}
 case "$command" in
   setup)
     mkdir -p "$local_cache"
@@ -38,11 +58,7 @@ case "$command" in
       echo "Local engine edits require a Chromium source build. Use --base-engine for a limited preview without those engine edits." >&2
       exit 1
     fi
-    tree=$(git rev-parse HEAD:engine)
-    entry=$(awk -v tree="$tree" '$1 == tree {print; exit}' packages/ardiacore/prebuilt-engines.tsv)
-    [[ -n "$entry" ]] || { echo "No published base engine matches this checkout." >&2; exit 1; }
-    read -r tree version checksum <<< "$entry"
-    short=${tree:0:12}
+    resolve_published_engine
     tag="$version"
     [[ "$tag" == engine-* ]] || tag="v$version"
     mkdir -p "$cache"
@@ -57,8 +73,8 @@ case "$command" in
       [[ -f "$framework/Versions/Current/Chromium Framework" ]] || { echo "Engine archive did not contain the framework." >&2; exit 1; }
       printf '%s\n' "$checksum" > "$cache/.verified-$short"
     fi
-    xattr -dr com.apple.FinderInfo "$framework"
-    xattr -dr com.apple.ResourceFork "$framework"
+    xattr -dr com.apple.FinderInfo "$framework" || true
+    xattr -dr com.apple.ResourceFork "$framework" || true
     echo "Local dependencies and the checksum-verified base engine are ready."
     ;;
   build)
@@ -66,8 +82,8 @@ case "$command" in
       [[ $base -eq 1 ]] || { echo "Local engine edits need a source build. Pass --base-engine for a preview that excludes them." >&2; exit 1; }
       echo "LIMITED PREVIEW: uses the published base engine. Local engine edits, including the web-page Settings menu change, are not included."
     fi
-    tree=$(git rev-parse HEAD:engine)
-    [[ -f "$cache/.verified-${tree:0:12}" && -f "$framework/Versions/Current/Chromium Framework" ]] || { echo "Run scripts/ardian-local setup --base-engine first." >&2; exit 1; }
+    resolve_published_engine
+    [[ -f "$cache/.verified-$short" && -f "$framework/Versions/Current/Chromium Framework" ]] || { echo "Run scripts/ardian-local setup --base-engine first." >&2; exit 1; }
     ARDIACORE_STAGE_CACHE="$local_cache/staged" ARDIACORE_FRAMEWORK="$framework" "$root/scripts/agent/build-app" --as local-preview --config Release --ad-hoc --wait 60
     if [[ -n "$(git status --porcelain -- engine)" ]]; then
       git diff --binary HEAD -- engine > "$root/apps/browser/build-local-preview/excluded-engine.patch"

@@ -56,6 +56,19 @@ test("cancelling a full-page capture restores the page and captures no more tile
   assert(state.removed);
 });
 
+test("a page that moves during capture still drops the capture style", async () => {
+  const { web, state, context } = fixture();
+  const evaluate = web.evaluate;
+  let calls = 0;
+  web.evaluate = async (code) => {
+    calls += 1;
+    if (calls === 4) context.location.href = "https://example.com/moved";
+    return evaluate(code);
+  };
+  await assert.rejects(fullPageCapture(web, () => {}, () => true), /changed during capture/);
+  assert(state.removed);
+});
+
 test("oversized full-page captures fail before changing the page", async () => {
   const { web, state } = fixture(30000);
   await assert.rejects(fullPageCapture(web, () => {}, () => true), /20,000 px or 50 megapixel/);

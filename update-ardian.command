@@ -7,7 +7,7 @@
 #     Applications, and clears the download block so macOS will open it
 #     without the "can't verify" warning.
 # It only touches Ardian. It never touches Opera or any other browser.
-set -e
+set -eo pipefail
 REPO="almostfictive/Ardian"
 APP="/Applications/Ardian.app"
 STATE="$HOME/.ardian-update-state"
@@ -20,7 +20,7 @@ TAG="$(printf '%s' "$LATEST_JSON" | python3 -c 'import sys, json; print(json.loa
 URL="$(printf '%s' "$LATEST_JSON" | python3 -c 'import sys, json; d=json.load(sys.stdin); print([a["browser_download_url"] for a in d["assets"] if a["name"].startswith("Ardian-") and a["name"].endswith(".zip")][0])')"
 echo "Latest release: $TAG"
 
-if [ -f "$STATE" ] && [ "$(cat "$STATE")" = "$TAG" ] && [ -d "$APP" ]; then
+if [ -f "$STATE" ] && [ "$(cat "$STATE")" = "$TAG" ] && [ -x "$APP/Contents/MacOS/Ardian" ]; then
   echo "You already have $TAG. Nothing to do."
   exit 0
 fi
@@ -33,12 +33,24 @@ if pgrep -x Ardian >/dev/null 2>&1; then
   osascript -e 'tell application "Ardian" to quit' 2>/dev/null || true
   sleep 2
 fi
+if pgrep -x Ardian >/dev/null 2>&1; then
+  echo "Ardian is still running. Your installed copy was left alone." >&2
+  exit 1
+fi
 ditto -x -k "$TMPDIR/Ardian.zip" "$TMPDIR"
+if [ ! -d "$TMPDIR/Ardian.app" ]; then
+  echo "The download did not contain Ardian.app. Your installed copy was left alone." >&2
+  exit 1
+fi
 if [ -d "$APP" ]; then
   echo "Moving the old Ardian to Trash..."
   osascript -e 'tell application "Finder" to delete POSIX file "/Applications/Ardian.app"' 2>/dev/null || rm -rf "$APP"
 fi
 ditto "$TMPDIR/Ardian.app" "$APP"
+if [ ! -x "$APP/Contents/MacOS/Ardian" ]; then
+  echo "The new app did not install. This version was not recorded." >&2
+  exit 1
+fi
 xattr -dr com.apple.quarantine "$APP" 2>/dev/null || true
 printf '%s' "$TAG" > "$STATE"
 echo "Done. Ardian $TAG is now in Applications."
