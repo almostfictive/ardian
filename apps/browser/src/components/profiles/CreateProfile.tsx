@@ -6,8 +6,8 @@ import { createProfile } from "../../state/profiles/actions";
 import { endCreateProfileRequest, profileNames, takeCreateProfileSheet, useCreateProfileRequest, type CreateProfilePreset } from "../../state/profiles/createProfileRequest";
 import { unusedProfileColor } from "../../state/profiles/profiles";
 import type { ProfileColor } from "../../state/browser/types";
-import { Button, PROFILE_COLORS, Sheet, space, Swatch, swatch, Text, TextField, useTheme } from "../ui";
-import { profileColors, profileType } from "./tokens";
+import { Box, Button, DialogActions, DialogTitle, Dot, PROFILE_COLORS, Sheet, Swatch, TextField, useTheme } from "../ui";
+import { profileColors } from "./tokens";
 import { closeSettingsSheet, showSettingsSheet } from "../../state/settings/sheet";
 
 useCreateProfileRequest.subscribe((s, prev) => {
@@ -38,26 +38,22 @@ function CreateProfileSheet({ windowId, preset, onDone }: { windowId: string | n
   };
 
   return (
-    <Sheet width={420} onClose={() => onDone(null)}>
-      <Text weight="semibold" style={{ fontSize: profileType.sheetTitle }}>
-        Create a Profile
-      </Text>
-      <Text tone="textSecondary" style={{ fontSize: profileType.sheetBody, lineHeight: profileType.sheetBodyLine, marginTop: space.s }}>
-        Profiles separate your logins, cookies, passwords, extensions, history and bookmarks.
-      </Text>
-
-      <TextField value={name} onChangeText={setName} placeholder="Profile name" autoFocus onSubmit={submit} onEscape={() => onDone(null)} style={{ marginTop: space.xl }} />
-
-      <View style={{ flexDirection: "row", gap: swatch.gap, marginTop: space.l }}>
-        {(Object.keys(PROFILE_COLORS) as ProfileColor[]).map((c) => (
-          <ColorSwatch key={c} color={c} selected={color === c} onPress={() => setColor(c)} />
-        ))}
-      </View>
-
-      <View style={{ flexDirection: "row", justifyContent: "flex-end", gap: space.m, marginTop: space.xlx }}>
+    <Sheet size="s" onClose={() => onDone(null)}>
+      <Box gap="xl">
+        <DialogTitle subtitle="Profiles separate your logins, cookies, passwords, extensions, history and bookmarks.">Create a Profile</DialogTitle>
+        <Box gap="l">
+          <TextField value={name} onChangeText={setName} placeholder="Profile name" autoFocus onSubmit={submit} onEscape={() => onDone(null)} />
+          <Box row gap="m">
+            {(Object.keys(PROFILE_COLORS) as ProfileColor[]).map((c) => (
+              <ColorSwatch key={c} color={c} selected={color === c} onPress={() => setColor(c)} />
+            ))}
+          </Box>
+        </Box>
+      </Box>
+      <DialogActions>
         <Button title="Cancel" onPress={() => onDone(null)} />
         <Button title="Create Profile" kind="primary" onPress={submit} />
-      </View>
+      </DialogActions>
     </Sheet>
   );
 }
@@ -68,18 +64,7 @@ export function ColorStack({ colors: swatches, size = 12 }: { colors: string[]; 
   return (
     <View style={{ flexDirection: "row", width: size + (shown.length - 1) * (size * 0.6) }}>
       {shown.map((c, i) => (
-        <View
-          key={i}
-          style={{
-            width: size,
-            height: size,
-            borderRadius: size / 2,
-            marginLeft: i ? -size * 0.4 : 0,
-            backgroundColor: c,
-            borderWidth: 1,
-            borderColor: theme.dark ? profileColors.stackRing.dark : profileColors.stackRing.light,
-          }}
-        />
+        <Dot key={i} size={size} color={c} ring={theme.dark ? profileColors.stackRing.dark : profileColors.stackRing.light} style={{ marginLeft: i ? -size * 0.4 : 0 }} />
       ))}
     </View>
   );

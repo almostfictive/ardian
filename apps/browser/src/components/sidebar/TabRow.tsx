@@ -1,14 +1,13 @@
 import { memo, useCallback, useEffect, useRef, useState } from "react";
 import { Animated, Pressable, TextInput, View } from "react-native";
 import { toggleMute } from "../../state/browser/actions";
-import { hex, layout, useTheme } from "../ui/theme";
+import { layout, useTheme } from "../ui/theme";
 import { useIsActiveTab, usePageProfileId, useTab, useWindow, useWindowId } from "../../state/browser/hooks";
 import { returnToPinnedUrl } from "../../state/pins/actions";
 import { useSplitRowPanes } from "../../state/sidebar/hooks";
-import { useMuteState } from "../../state/tabs/hooks";
 import { muteTitle } from "../../state/tabs/mute";
 import { HoverSlot } from "../ui/HoverSlot";
-import { ActivitySpinner, Button, FadeLabel, font, ink, OutsidePressArea, radius, Surface, Symbol, useHover } from "../ui";
+import { ActivitySpinner, Button, Divider, FadeLabel, font, ink, OutsidePressArea, radius, space, Symbol, useHover } from "../ui";
 import { isPinnedRow, tabTitle } from "../../state/browser/model";
 import { awayFromPin } from "../../state/pins/organize";
 import { commitRename, endRename, startRename } from "../../state/sidebar/actions";
@@ -16,12 +15,13 @@ import { useDragItem, useDropOnto } from "./DragProvider";
 import { useShift, type EntryMotion } from "./EntryMotion";
 import { useRowHover } from "./hoverController";
 import { pressTabClose, useTabCloseControlWhile } from "../../state/sidebar/closeControl";
-import { ACTIVE, ICON_MARKS, LOADING, PLAYING, SELECTED, useRowState } from "../../state/sidebar/rowState";
+import { ACTIVE, ICON_MARKS, LOADING, mutedBy, PLAYING, SELECTED, useRowState } from "../../state/sidebar/rowState";
 import { registerRow, useSidebarUi } from "../../state/sidebar/sidebarUi";
 import { TabIcon } from "./TabIcon";
 import { TabBadges } from "../media/TabBadges";
-import { useSidebarTokens } from "./tokens";
+import { TAB_ROW, useSidebarTokens } from "./tokens";
 import { useSidebarRowLook } from "./rowLook";
+import { ROW_TITLE_FRAME, SidebarRowLabel, SidebarRowSurface } from "./SidebarRow";
 import { withShortcut } from "../../state/commands/commandShortcuts";
 import { TabPressArea } from "./TabPressArea";
 import { entryKey } from "../../state/sidebar/entryKey";
@@ -56,7 +56,7 @@ export const TabRow = memo(function TabRow({ tabId, onto = false, shift = null }
   const active = !!(flags & ACTIVE);
   const selected = !!(flags & SELECTED);
   const playingAudio = !!(flags & PLAYING);
-  const mute = useMuteState(tabId);
+  const mute = mutedBy(flags);
   const loading = !!(flags & LOADING);
   const renaming = useSidebarUi((u) => u.renaming?.kind === "tab" && u.renaming.id === tabId);
   const { hovered, hoverProps } = useRowHover(windowId, renaming ? null : { kind: "tab", id: tabId });
@@ -81,12 +81,13 @@ export const TabRow = memo(function TabRow({ tabId, onto = false, shift = null }
     >
       <TabPressArea windowId={windowId} tab={tab}>
       {({ pressed }) => (
-          <Surface
-            fill={hex(onto || (!active && pressed) ? theme.tabPressed : fill)}
-            cornerRadius={radius.card}
-            borderWidth={border}
-            borderColor={selected && !active ? hex(tokens.multiSelectedStroke) : undefined}
-            style={{ height: layout.rowHeight, flexDirection: "row", alignItems: "center", paddingLeft: 9 - border, paddingRight: 6 - border }}
+          <SidebarRowSurface
+            fill={onto || (!active && pressed) ? theme.tabPressed : fill}
+            selected={false}
+            border={border}
+            stroke={selected && !active ? tokens.multiSelectedStroke : undefined}
+            padLeft={TAB_ROW.contentLeft - border}
+            padRight={TAB_ROW.trailing - border}
           >
             {resettable ? (
               <View {...backToPin.hoverProps}>
@@ -110,7 +111,7 @@ export const TabRow = memo(function TabRow({ tabId, onto = false, shift = null }
               </View>
             )}
             {(playingAudio || mute) && (
-              <Pressable onPress={() => toggleMute(tab.id)} style={{ marginLeft: 6 }} tooltip={muteTitle(mute)}>
+              <Pressable onPress={() => toggleMute(tab.id)} style={{ marginLeft: space.s }} tooltip={muteTitle(mute)}>
                 <Symbol name={mute ? "speaker.slash" : "speaker.wave.2"} size={12} color={theme.textTab} style={{ width: 18, height: 16 }} />
               </Pressable>
             )}
@@ -122,18 +123,17 @@ export const TabRow = memo(function TabRow({ tabId, onto = false, shift = null }
                 onDone={(text) => (text === null ? endRename({ kind: "tab", id: tabId }) : commitRename({ kind: "tab", id: tabId }, text))}
               />
             ) : (
-              <FadeLabel text={title} fontSize={font.body.fontSize} color={active ? theme.tabSelectedText : theme.textTab} style={{ flex: 1, height: 18, marginLeft: 5 }} />
+              <SidebarRowLabel text={title} color={active ? theme.tabSelectedText : theme.textTab} />
             )}
             <TabNumber tabId={tab.id} />
             <HoverSlot
               hovered={hovered && !renaming}
-              width={22}
               reserve="hover"
-              hover={closeControl && <Button variant="icon" icon={closeControl.icon} size={10} weight="semibold" box={22} radius={radius.m} onPress={() => pressTabClose(tab.id)} tooltip={closeControl.tooltip} />}
+              hover={closeControl && <Button variant="icon" icon={closeControl.icon} size="s" weight="semibold" onPress={() => pressTabClose(tab.id)} tooltip={closeControl.tooltip} />}
             >
-              {loading && <ActivitySpinner style={{ width: 12, height: 12, marginRight: 2 }} />}
+              {loading && <ActivitySpinner style={{ width: 12, height: 12, marginRight: space.xxs }} />}
             </HoverSlot>
-          </Surface>
+          </SidebarRowSurface>
       )}
       </TabPressArea>
     </View>
@@ -169,7 +169,7 @@ export function RenameField({
     return () => clearTimeout(t);
   }, []);
   return (
-    <OutsidePressArea onOutsidePress={() => finish(text)} style={{ flex: 1, height: 18, marginLeft: 5 }}>
+    <OutsidePressArea onOutsidePress={() => finish(text)} style={ROW_TITLE_FRAME}>
       <TextInput
         ref={input}
         value={text}
@@ -212,22 +212,27 @@ export const SplitRowItem = memo(function SplitRowItem({
   return (
     <Animated.View ref={wrapper.ref} style={wrapper.style} {...handle}>
       <View {...moved} ref={movedRef} {...hoverProps} style={moved.style as object}>
-        <Surface
-          fill={hex(!active && hovered ? theme.tabHover : ink.clear)}
-          cornerRadius={radius.card}
-          style={{ height: layout.rowHeight, flexDirection: "row", alignItems: "center", paddingHorizontal: 3 }}
+        <SidebarRowSurface
+          fill={!active && hovered ? theme.tabHover : ink.clear}
+          selected={false}
+          border={0}
+          padLeft={space.xs}
+          padRight={space.xs}
         >
           {tabIds.map((id, i) => (
-            <View key={id} style={{ flex: 1, flexDirection: "row", alignItems: "center", minWidth: 0 }}>
-              {i > 0 && <View style={{ width: 1, height: 16, backgroundColor: theme.divider, marginRight: 2 }} />}
+            <View key={id} style={SPLIT_SLOT}>
+              {i > 0 && <Divider vertical thick length={SPLIT_DIVIDER_LENGTH} />}
               <SplitPane tabId={id} windowId={windowId} />
             </View>
           ))}
-        </Surface>
+        </SidebarRowSurface>
       </View>
     </Animated.View>
   );
 });
+
+const SPLIT_DIVIDER_LENGTH = 16;
+const SPLIT_SLOT = { flex: 1, flexDirection: "row", alignItems: "center", minWidth: 0, gap: space.xxs } as const;
 
 function SplitPane({ tabId, windowId }: { tabId: string; windowId: string }) {
   const theme = useTheme();
@@ -242,15 +247,15 @@ function SplitPane({ tabId, windowId }: { tabId: string; windowId: string }) {
           <View
             style={{
               height: layout.rowHeight - 6,
-              borderRadius: radius.button,
+              borderRadius: radius.tile,
               flexDirection: "row",
               alignItems: "center",
-              paddingLeft: 6,
+              paddingLeft: space.s,
               backgroundColor: active ? undefined : pressed ? theme.tabPressed : hovered ? theme.rowHover : undefined,
             }}
           >
-            <TabIcon tabId={tab.id} url={tab.url} favicon={tab.favicon} icon={tab.customIcon} size={14} />
-            <FadeLabel text={tabTitle(tab)} fontSize={font.small.fontSize} color={active ? theme.tabSelectedText : theme.textTab} style={{ flex: 1, height: 16, marginLeft: 5 }} />
+            <TabIcon tabId={tab.id} url={tab.url} favicon={tab.favicon} icon={tab.customIcon} compact />
+            <FadeLabel text={tabTitle(tab)} fontSize={font.small.fontSize} color={active ? theme.tabSelectedText : theme.textTab} style={{ flex: 1, height: 16, marginLeft: space.xs }} />
             <TabNumber tabId={tab.id} />
           </View>
         )}

@@ -1,3 +1,4 @@
+import { space } from "../ui/tokens";
 import { incognitoOriginal } from "../../state/browser/model";
 import { useHover } from "../ui/useHover";
 import { useEffect, useRef } from "react";
@@ -54,7 +55,7 @@ function ProfileMenuRow({ entry }: { entry: ProfileEntry }) {
   const theme = useTheme();
   const colors = PAGE3[theme.dark ? "dark" : "light"];
   const { hovered, hoverProps } = useHover();
-  return <View {...hoverProps}><Pressable disabled={entry.disabled} accessibilityRole="menuitem" accessibilityLabel={entry.title} accessibilityState={{ selected: entry.checked, disabled: entry.disabled }} onPress={entry.run} style={{ height: PAGE3.rowHeight, paddingHorizontal: 16, flexDirection: "row", alignItems: "center", gap: 12, backgroundColor: hovered && !entry.disabled ? colors.subtle : undefined, opacity: entry.disabled ? 0.45 : 1 }}>
+  return <View {...hoverProps}><Pressable disabled={entry.disabled} accessibilityRole="menuitem" accessibilityLabel={entry.title} accessibilityState={{ selected: entry.checked, disabled: entry.disabled }} onPress={entry.run} style={{ height: PAGE3.rowHeight, paddingHorizontal: space.xl, flexDirection: "row", alignItems: "center", gap: space.l, backgroundColor: hovered && !entry.disabled ? colors.subtle : undefined, opacity: entry.disabled ? 0.45 : 1 }}>
     <Symbol name={entry.icon} size={17} color={colors.primary} style={{ width: 20, height: 20 }} />
     <Text style={{ flex: 1, ...PAGE3.type.body, color: colors.primary }}>{entry.title}</Text>
     {entry.checked && <Symbol name="checkmark" size={13} color={colors.primary} style={{ width: 16, height: 16 }} />}

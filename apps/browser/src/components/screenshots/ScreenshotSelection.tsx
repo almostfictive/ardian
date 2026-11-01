@@ -1,3 +1,4 @@
+import { space } from "../ui/tokens";
 import { useMemo, useRef, useState } from "react";
 import { Image, PanResponder, Text, View } from "react-native";
 import type { ScreenshotImage } from "../../state/screenshots/types";
@@ -40,7 +41,7 @@ export function ScreenshotSelection({ image, error }: { image: ScreenshotImage; 
     </View>
     {ready && <View style={{ position: "absolute", left: Math.max(0, Math.min(width - 180, rect.left + rect.width / 2 - 90)), top: Math.min(height + 8, rect.top + rect.height + 8) }}><Button title="Capture screenshot" kind="primary" onPress={() => void captureSelection([rect.left / width, rect.top / height, rect.width / width, rect.height / height])} /></View>}
     </View>
-    {!ready && <Text style={{ ...PAGE3.type.label, color: PAGE3.railText, marginTop: 16 }}>Drag to select an area · Esc to cancel</Text>}
+    {!ready && <Text style={{ ...PAGE3.type.label, color: PAGE3.railText, marginTop: space.xl }}>Drag to select an area · Esc to cancel</Text>}
     {error && <Text style={{ color: theme.destructive }}>{error}</Text>}
   </View>;
 }

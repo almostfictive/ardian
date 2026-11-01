@@ -39,6 +39,7 @@ export function ContentCard() {
   const small = useIsSmallWindow(windowId);
   const hideWhileScrolling = useSettings((st) => st.hideToolbarWhileScrolling);
   const showSidebarButton = useSettings((st) => st.showSidebarButton !== false);
+  const classicToolbar = useSettings((st) => st.interfaceStyle === "classic");
   const barMode = useBookmarksBarMode(windowId);
   const bookmarksBarHasItems = useBookmarksBarHasItems(windowId);
   const toolbarRow = useToolbarRow();
@@ -78,13 +79,13 @@ export function ContentCard() {
     const place = (extensionsWidth = 0) => {
       const inset = 12;
       setUrlAnchor(windowId, {
-        left: origin.x + focusedRect.x + inset,
-        top: origin.y + focusedRect.y + bookmarkTop + 36,
-        width: Math.max(0, focusedRect.width - 2 * inset),
+        left: origin.x + focusedRect.x + (classicToolbar ? g.urlLeft : inset),
+        top: origin.y + focusedRect.y + bookmarkTop + (classicToolbar ? 0 : 36),
+        width: classicToolbar ? focusedRect.width - g.urlLeft - urlFieldRight(!!split, extensionsWidth, toolbarRow) : Math.max(0, focusedRect.width - 2 * inset),
       });
     };
     return watchToolbarExtensionsWidth(windowId, place);
-  }, [origin, focusedRect?.x, focusedRect?.y, focusedRect?.width, tabLayout, chrome.kind, !!split, showSidebarButton, toolbarRow, bookmarkTop]);
+  }, [origin, focusedRect?.x, focusedRect?.y, focusedRect?.width, tabLayout, chrome.kind, !!split, showSidebarButton, toolbarRow, bookmarkTop, classicToolbar]);
 
   useEffect(() => {
     if (origin && size.width > 0) setCardAnchor(windowId, { left: origin.x, top: origin.y, width: size.width, height: size.height });

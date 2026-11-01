@@ -1,3 +1,4 @@
+import { space } from "../ui/tokens";
 import { useEffect, useRef } from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 import { WebView, Box, Button, Symbol, Text, type WebViewHandle } from "../ui";
@@ -34,7 +35,7 @@ function MiniAppCard({ windowId, app, visible }: { windowId: string; app: MiniAp
   const keys = useRef<View>(null);
     useEffect(() => { if (visible) keys.current?.focus(); }, [visible]);
   return <View ref={keys} focusable enableFocusRing={false} keyDownEvents={[{ key: "Escape" }]} onKeyDown={(e) => { if (visible && e.nativeEvent.key === "Escape") closeMiniApp(windowId); }} style={{ flex: 1, borderRadius: PAGE3.pageRadius, overflow: "hidden", borderWidth: 1, borderColor: theme.popoverBorder, backgroundColor: theme.panel }}>
-    <Box row gap="m" style={{ height: 40, alignItems: "center", paddingLeft: 16, paddingRight: 8 }}>
+    <Box row gap="m" style={{ height: 40, alignItems: "center", paddingLeft: space.xl, paddingRight: space.m }}>
       <Symbol name={definition.icon} size={15} color={theme.textPrimary} style={{ width: 18, height: 18 }} />
       <Text numberOfLines={1} weight="medium" style={{ flex: 1 }}>{definition.title}</Text>
       <Button variant="icon" icon="arrow.clockwise" tooltip="Reload App" onPress={() => void web.current?.reload()} />
