@@ -33,6 +33,10 @@ if pgrep -x Ardian >/dev/null 2>&1; then
   osascript -e 'tell application "Ardian" to quit' 2>/dev/null || true
   sleep 2
 fi
+if pgrep -x Ardian >/dev/null 2>&1; then
+  echo "Ardian is still running. Your installed copy was left alone." >&2
+  exit 1
+fi
 ditto -x -k "$TMPDIR/Ardian.zip" "$TMPDIR"
 if [ ! -d "$TMPDIR/Ardian.app" ]; then
   echo "The download did not contain Ardian.app. Your installed copy was left alone." >&2
@@ -43,6 +47,10 @@ if [ -d "$APP" ]; then
   osascript -e 'tell application "Finder" to delete POSIX file "/Applications/Ardian.app"' 2>/dev/null || rm -rf "$APP"
 fi
 ditto "$TMPDIR/Ardian.app" "$APP"
+if [ ! -x "$APP/Contents/MacOS/Ardian" ]; then
+  echo "The new app did not install. This version was not recorded." >&2
+  exit 1
+fi
 xattr -dr com.apple.quarantine "$APP" 2>/dev/null || true
 printf '%s' "$TAG" > "$STATE"
 echo "Done. Ardian $TAG is now in Applications."
