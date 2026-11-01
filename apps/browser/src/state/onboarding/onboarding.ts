@@ -1,6 +1,5 @@
 import { readDocument, writeDocument } from "../../platform/documents";
 import { stopIntroMusic } from "../../platform/introMusic";
-import { devTestValue } from "../../platform/launchConfig";
 import { create } from "zustand";
 import { useBrowser } from "../browser/store";
 import { resolveWindowId, tabLayoutOf } from "../browser/model";
@@ -11,7 +10,6 @@ import { endToolTour, startToolTour } from "./tour";
 import { choosePresetColor, setProfileTheme } from "../profiles/themeActions";
 import { stepsForThisSurface } from "./demoSteps";
 import { parseSaved, unchanged, versionedJson, type Migrations } from "../../lib/savedDocument";
-import { hasSavedSession } from "../session/sessionDocument";
 import { isLiquidGlass } from "../../platform/app";
 
 export { playIntroMusic, setIntroMusicMuted, stopIntroMusic, type IntroMusicCues } from "../../platform/introMusic";
@@ -390,11 +388,5 @@ export function dismissOnboarding(session: number) {
 }
 
 export function maybeStartOnboarding() {
-  const saved = readSaved();
-  if (saved?.completedAt) return;
-  if (saved?.startedAt) return resumeOnboarding(saved);
-  if (hasSavedSession()) return markCompleted();
-  if (__DEV__ && devTestValue("onboarding") !== "1") return;
-  save({ startedAt: Date.now() });
-  startOnboarding();
+  if (!readSaved()?.completedAt) markCompleted();
 }
