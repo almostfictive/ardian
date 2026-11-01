@@ -20,7 +20,7 @@ TAG="$(printf '%s' "$LATEST_JSON" | python3 -c 'import sys, json; print(json.loa
 URL="$(printf '%s' "$LATEST_JSON" | python3 -c 'import sys, json; d=json.load(sys.stdin); print([a["browser_download_url"] for a in d["assets"] if a["name"].startswith("Ardian-") and a["name"].endswith(".zip")][0])')"
 echo "Latest release: $TAG"
 
-if [ -f "$STATE" ] && [ "$(cat "$STATE")" = "$TAG" ] && [ -d "$APP" ]; then
+if [ -f "$STATE" ] && [ "$(cat "$STATE")" = "$TAG" ] && [ -x "$APP/Contents/MacOS/Ardian" ]; then
   echo "You already have $TAG. Nothing to do."
   exit 0
 fi

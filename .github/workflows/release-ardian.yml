@@ -46,6 +46,11 @@ jobs:
         working-directory: apps/browser
         run: pnpm pods
 
+      - name: Fetch the nearest published engine
+        run: |
+          framework=$(packages/ardiacore/scripts/fetch-engine.sh --nearest)
+          echo "ARDIACORE_FRAMEWORK=$framework" >> "$GITHUB_ENV"
+
       - name: Build Release (ad-hoc, no Metro server at runtime)
         working-directory: apps/browser
         run: |

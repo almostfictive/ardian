@@ -31,25 +31,25 @@ function ProfilePopoverContent({ windowId }: { windowId: string }) {
   useEffect(() => keys.current?.focus(), []);
   const command = (name: Parameters<typeof runCommand>[0]["command"]) => { closeProfilePopover(); runCommand({ command: name, arg: name === "newWindow" ? (privateWindow && profileId ? incognitoOriginal(profileId) : profileId) ?? null : null, windowId }); };
   const entries = [
-    { title: "New Window", icon: "macwindow.badge.plus", run: () => command("newWindow") },
-    { title: "New Private Window", icon: "eye.slash", run: () => command("newIncognitoWindow") },
-    ...profiles.map((p) => ({ title: p.name, icon: "person.crop.circle", checked: p.id === profileId, disabled: privateWindow, run: () => { closeProfilePopover(); switchProfile(windowId, p.id); } })),
-    { title: "Add Profile", icon: "person.badge.plus", run: () => { closeProfilePopover(); void requestCreateProfile(windowId); } },
-    { title: "History", icon: "clock", run: () => command("showHistory") },
-    { title: "What’s New", icon: "sparkles", run: () => command("releaseNotes") },
-    { title: "Settings", icon: "gearshape", run: () => command("openSettings") },
+    { key: "new-window", title: "New Window", icon: "macwindow.badge.plus", run: () => command("newWindow") },
+    { key: "new-private-window", title: "New Private Window", icon: "eye.slash", run: () => command("newIncognitoWindow") },
+    ...profiles.map((p) => ({ key: p.id, title: p.name, icon: "person.crop.circle", checked: p.id === profileId, disabled: privateWindow, run: () => { closeProfilePopover(); switchProfile(windowId, p.id); } })),
+    { key: "add-profile", title: "Add Profile", icon: "person.badge.plus", run: () => { closeProfilePopover(); void requestCreateProfile(windowId); } },
+    { key: "history", title: "History", icon: "clock", run: () => command("showHistory") },
+    { key: "release-notes", title: "What’s New", icon: "sparkles", run: () => command("releaseNotes") },
+    { key: "settings", title: "Settings", icon: "gearshape", run: () => command("openSettings") },
   ];
   return <View style={StyleSheet.absoluteFill}>
     <Pressable accessibilityLabel="Close profile menu" style={StyleSheet.absoluteFill} onPress={closeProfilePopover} />
     <View ref={keys} focusable enableFocusRing={false} keyDownEvents={[{ key: "Escape" }]} onKeyDown={(e) => { if (e.nativeEvent.key === "Escape") closeProfilePopover(); }} style={{ position: "absolute", bottom: 46, left: expanded ? 12 : 68, width: PAGE3.panelWidth, maxHeight: "85%" }}>
       <PopoverSurface style={{ overflow: "hidden" }}><ScrollView style={{ flexGrow: 0 }}>
-        {entries.map((entry) => <ProfileMenuRow key={entry.title} entry={entry} />)}
+        {entries.map((entry) => <ProfileMenuRow key={entry.key} entry={entry} />)}
       </ScrollView></PopoverSurface>
     </View>
   </View>;
 }
 
-type ProfileEntry = { title: string; icon: string; run: () => void; checked?: boolean; disabled?: boolean };
+type ProfileEntry = { key: string; title: string; icon: string; run: () => void; checked?: boolean; disabled?: boolean };
 function ProfileMenuRow({ entry }: { entry: ProfileEntry }) {
   const theme = useTheme();
   const colors = PAGE3[theme.dark ? "dark" : "light"];
