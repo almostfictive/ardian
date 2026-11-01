@@ -10,7 +10,10 @@ import { pageHostLabel } from "../../lib/url";
 import { Button, ContextMenuArea, Symbol } from "../ui";
 import { useTheme } from "../ui/theme";
 import { PAGE3 } from "../ui/tokens";
-import { toolbarPalette } from "../ui/toolbarColors";
+import { siteScopedTheme } from "../ui/toolbarColors";
+import { ThemeContext } from "../ui/theme";
+import { useSitePalette } from "./useSitePalette";
+import { GlassFill, useGlass } from "../ui/Glass";
 import { ReloadButton } from "./NavButtons";
 import { showUrlBarMenu } from "../../state/omnibox/paste";
 import { ToolbarExtensions } from "../extensions/ToolbarExtensions";
@@ -24,15 +27,19 @@ export function PageCardToolbar({ tabId, windowId, inSplit }: { tabId: string; w
   const scrolled = useToolbarAutoHide((s) => !!s.scrolledDown[tabId]);
   const security = usePage(tabId, (p) => p.security);
   const popover = usePage(tabId, () => popoverOf(tabId));
-  if (!tab) return null;
+
   const toggle = () => setPopover(tabId, popoverOf(tabId) === "siteControls" ? null : "siteControls");
-  const palette = toolbarPalette(theme, null);
+  const glass = useGlass();
+  const palette = useSitePalette(tabId);
+  const shownTheme = siteScopedTheme(theme, palette);
   const hit = { width: 28, height: 28, plateX: 0, plateY: 0, box: 28, radius: radius.tile };
-  return <View style={{ height: scrolled ? 28 : 41, flexDirection: "row", alignItems: "center", paddingHorizontal: space.l, backgroundColor: colors.surface, gap: space.s }}>
+  if (!tab) return null;
+  return <ThemeContext.Provider value={shownTheme}><View style={{ height: scrolled ? 28 : 41, flexDirection: "row", alignItems: "center", paddingHorizontal: space.l, backgroundColor: glass ? undefined : palette.background ?? colors.surface, gap: space.s }}>
+    {glass && <GlassFill radius={radius.chrome} panelFill={palette.background ?? theme.panel} theme={shownTheme} />}
     <ContextMenuArea onContextMenu={() => void showUrlBarMenu(tab)} style={{ flex: 1 }}>
       <Pressable accessibilityRole="button" accessibilityLabel={tab.url || "Search or enter address"} onPress={() => openPanel(windowId, tab.url)} style={{ flexDirection: "row", alignItems: "center", height: scrolled ? 28 : 41, gap: space.s }}>
-        {tab.url ? <Symbol name={security?.level === "insecure" || security?.level === "certificateError" ? "lock.open" : "lock"} size={12} color={colors.secondary} style={{ width: 14, height: 14 }} /> : null}
-        <Text numberOfLines={1} ellipsizeMode="middle" style={{ ...PAGE3.type.label, color: colors.primary }}>{tab.url ? pageHostLabel(tab.url) : ""}</Text>
+        {tab.url ? <Symbol name={security?.level === "insecure" || security?.level === "certificateError" ? "lock.open" : "lock"} size={12} color={palette.secondary} style={{ width: 14, height: 14 }} /> : null}
+        <Text numberOfLines={1} ellipsizeMode="middle" style={{ ...PAGE3.type.label, color: palette.text }}>{tab.url ? pageHostLabel(tab.url) : ""}</Text>
       </Pressable>
     </ContextMenuArea>
     {!scrolled && !!tab.url && <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -44,5 +51,5 @@ export function PageCardToolbar({ tabId, windowId, inSplit }: { tabId: string; w
       <Button variant="icon" toolbar palette={palette} icon="shield" box={28} look="field" tooltip="Site Controls" onPress={toggle} />
       <View style={{ width: 28, height: 28 }}><ToolbarExtensions tabId={tabId} windowId={windowId} palette={palette} top={0} right={0} limit={1} /></View>
     </View>}
-  </View>;
+  </View></ThemeContext.Provider>;
 }

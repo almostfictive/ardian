@@ -42,8 +42,8 @@ export function controlGlassTint(theme: Theme, state: GlassState, tint: number):
 
 export function panelGlassTint(theme: Theme, fill: string, tint: number): string {
   const [r, g, b, a] = parseColor(fill);
-  const glassy = 1 - Math.min(1, a * PANEL_TINT_SHARE);
-  return profileTinted(theme, toHex([r, g, b, (1 - glassy * PANEL_GLASS_STRENGTH) * 255]), tint > 0);
+  const alpha = a * PANEL_TINT_SHARE * PANEL_GLASS_STRENGTH;
+  return profileTinted(theme, toHex([r, g, b, alpha * 255]), tint > 0);
 }
 
 export const GlassFill = memo(function GlassFill({

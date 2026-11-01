@@ -1,6 +1,7 @@
 import { ScreenshotHost } from "./components/screenshots/ScreenshotHost";
 import { ProfilePopover } from "./components/sidebar/ProfilePopover";
 import { PAGE3 } from "./components/ui/tokens";
+import { WindowBackdrop } from "./components/ui";
 import { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { CommandPanel } from "./components/omnibox/CommandPanel";
@@ -25,7 +26,7 @@ import { SidebarOverlays } from "./components/sidebar/Overlays";
 import { layout, profileAccent, profileTheme, useTheme } from "./components/ui/theme";
 import { ThemeScope } from "./components/window/ThemeScope";
 import { useBrowser } from "./state/browser/store";
-import { useWindowId, WindowContext } from "./state/browser/hooks";
+import { useSettings, useWindowId, WindowContext } from "./state/browser/hooks";
 import { provideProfileLooks } from "./state/profiles/looks";
 import { focusedWindowOf } from "./state/windows/ui";
 import { MiniAppsPanel } from "./components/sidebar/MiniAppsPanel";
@@ -56,6 +57,7 @@ function BrowserWindowRoot({ windowId }: { windowId?: string }) {
 }
 
 function BrowserWindow() {
+  const glass = useSettings((s) => s.interfaceStyle === "glass");
   const theme = useTheme();
   const windowId = useWindowId();
   const topTabs = false;
@@ -72,7 +74,7 @@ function BrowserWindow() {
 
   return (
     <View style={{ flex: 1, flexDirection: "row" }} onLayout={(e) => setWidth(e.nativeEvent.layout.width)}>
-      <View pointerEvents="none" style={[StyleSheet.absoluteFill, { backgroundColor: PAGE3[theme.dark ? "dark" : "light"].canvas }]} />
+      {glass ? <WindowBackdrop vibrancy {...theme.backdrop} colors={theme.windowTint} grainOpacity={theme.grain} style={StyleSheet.absoluteFill} /> : <View pointerEvents="none" style={[StyleSheet.absoluteFill, { backgroundColor: PAGE3[theme.dark ? "dark" : "light"].canvas }]} />}
       <WindowProfile />
       <DockedLayout
         fullscreen={fullscreen}

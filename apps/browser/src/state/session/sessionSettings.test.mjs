@@ -60,3 +60,10 @@ test("settings and their bookkeeping save apart, read back the same, and a chang
   assert.deepEqual(S().settingsMeta, { chosen: ["tabLayout", "appearance"], inferred: [] });
   assert.equal(S().settings.appearance, "light");
 });
+
+test("Glass becomes the saved default once and a later Classic choice survives", async () => {
+  const { parseSession } = await import("./persist.ts");
+  assert.equal(parseSession(JSON.stringify(doc(10, { interfaceStyle: "classic" }))).settings.interfaceStyle, "glass");
+  assert.equal(parseSession(JSON.stringify(doc(11, { interfaceStyle: "classic" }))).settings.interfaceStyle, "classic");
+  assert.equal(parseSession(JSON.stringify(doc(11, { interfaceStyle: "glass" }))).settings.interfaceStyle, "glass");
+});

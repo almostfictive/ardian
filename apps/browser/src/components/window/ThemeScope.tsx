@@ -3,7 +3,7 @@ import { spaceLookSource } from "../../lib/profileLook";
 import { useGlassSettings, useScopedLook } from "../../state/app/theme";
 import { isIncognitoProfile } from "../../state/browser/model";
 import { useProfileLook } from "../../state/profiles/hooks";
-import { GlassLookContext, liquidGlass } from "../ui/Glass";
+import { GlassLookContext } from "../ui/Glass";
 import { ToolbarRowContext } from "../ui/toolbarRowContext";
 import { useToolbarRow } from "../toolbar/useToolbarRow";
 import { scopedTheme, ThemeContext, type Theme } from "../ui/theme";
@@ -11,7 +11,7 @@ import { scopedTheme, ThemeContext, type Theme } from "../ui/theme";
 export function ThemeScope({ children }: { children: ReactNode }) {
   const theme = useScopedLook(scopedTheme);
   const { glass, tint } = useGlassSettings();
-  const look = useMemo(() => ({ controls: liquidGlass && glass, panes: liquidGlass && glass, tint }), [glass, tint]);
+  const look = useMemo(() => ({ controls: glass, panes: glass, tint }), [glass, tint]);
   const row = useToolbarRow();
   return (
     <ThemeContext.Provider value={theme}>

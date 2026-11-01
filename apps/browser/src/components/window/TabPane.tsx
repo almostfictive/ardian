@@ -74,6 +74,7 @@ export const TabPane = memo(function TabPane({
   lingering: boolean;
   seeThrough: boolean;
 }) {
+  const glass = useSettings((s) => s.interfaceStyle === "glass");
   const visible = !!rect;
   const live = visible || !!warm;
   const own = useTabValue(tabId, paneTab, shallowEqual);
@@ -119,7 +120,7 @@ export const TabPane = memo(function TabPane({
         borderRadius: fullscreen ? 0 : layout.cardRadius,
         overflow: "hidden",
         opacity: covered ? 0 : 1,
-        backgroundColor: visible && !fullscreen && !seeThrough ? theme.card : undefined,
+        backgroundColor: visible && !fullscreen && !seeThrough && !glass ? theme.card : undefined,
       }}
     >
       {!autoLayout && bookmarksBar && <BookmarksBar tabId={tabId} placeholder={!visible} />}

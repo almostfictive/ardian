@@ -12,7 +12,7 @@ export function FavouritesRow() {
   const items = usePageFavourites(profileId);
   const theme = useTheme();
   const colors = PAGE3[theme.dark ? "dark" : "light"];
-  return <View style={{ height: 36, backgroundColor: colors.surface }}>
+  return <View style={{ height: 36 }}>
     <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ alignItems: "center", gap: space.xxl, paddingHorizontal: space.xl }}>
       {items.map((item) => <ContextMenuArea key={item.id} onContextMenu={() => void favouriteMenu(windowId, item)}>
         <Pressable accessibilityRole="button" accessibilityLabel={item.title} onPress={() => openFavourite(windowId, item)} style={{ height: 36, flexDirection: "row", alignItems: "center", gap: space.s }}>
