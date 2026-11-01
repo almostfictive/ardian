@@ -17,6 +17,7 @@ import { GlassFill, useGlass } from "../ui/Glass";
 import { ReloadButton } from "./NavButtons";
 import { showUrlBarMenu } from "../../state/omnibox/paste";
 import { ToolbarExtensions } from "../extensions/ToolbarExtensions";
+import { useToolbarRow } from "./useToolbarRow";
 import { GLYPH } from "./tokens";
 
 export function PageCardToolbar({ tabId, windowId, inSplit }: { tabId: string; windowId: string; inSplit: boolean }) {
@@ -32,12 +33,13 @@ export function PageCardToolbar({ tabId, windowId, inSplit }: { tabId: string; w
   const glass = useGlass();
   const palette = useSitePalette(tabId);
   const shownTheme = siteScopedTheme(theme, palette);
+  const row = useToolbarRow();
   const hit = { width: 28, height: 28, plateX: 0, plateY: 0, box: 28, radius: radius.tile };
   if (!tab) return null;
-  return <ThemeContext.Provider value={shownTheme}><View style={{ height: scrolled ? 28 : 41, flexDirection: "row", alignItems: "center", paddingHorizontal: space.l, backgroundColor: glass ? undefined : palette.background ?? colors.surface, gap: space.s }}>
+  return <ThemeContext.Provider value={shownTheme}><View style={{ height: row.height, flexDirection: "row", alignItems: "center", paddingHorizontal: space.l, backgroundColor: glass ? undefined : palette.background ?? colors.surface, gap: space.s }}>
     {glass && <GlassFill radius={radius.chrome} panelFill={palette.background ?? theme.panel} theme={shownTheme} />}
     <ContextMenuArea onContextMenu={() => void showUrlBarMenu(tab)} style={{ flex: 1 }}>
-      <Pressable accessibilityRole="button" accessibilityLabel={tab.url || "Search or enter address"} onPress={() => openPanel(windowId, tab.url)} style={{ flexDirection: "row", alignItems: "center", height: scrolled ? 28 : 41, gap: space.s }}>
+      <Pressable accessibilityRole="button" accessibilityLabel={tab.url || "Search or enter address"} onPress={() => openPanel(windowId, tab.url)} style={{ flexDirection: "row", alignItems: "center", height: row.height, gap: space.s }}>
         {tab.url ? <Symbol name={security?.level === "insecure" || security?.level === "certificateError" ? "lock.open" : "lock"} size={12} color={palette.secondary} style={{ width: 14, height: 14 }} /> : null}
         <Text numberOfLines={1} ellipsizeMode="middle" style={{ ...PAGE3.type.label, color: palette.text }}>{tab.url ? pageHostLabel(tab.url) : ""}</Text>
       </Pressable>

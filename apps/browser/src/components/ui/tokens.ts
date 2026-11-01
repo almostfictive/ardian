@@ -391,7 +391,6 @@ export const sheetWidth = { xs: 320, s: 420, m: 440, l: 480 } as const;
 export type SheetSize = keyof typeof sheetWidth;
 
 export const toastLayout = { bottom: space.xxxl, maxWidth: 420, rise: 10 } as const;
-
 export const POPOVER_WIDTH = { s: 300, m: 340, l: 360 } as const;
 
 export const PAGE3 = {   expanded: 164, collapsed: 64, pageRadius: radius.chrome, panelRadius: radius.panel, panelWidth: POPOVER_WIDTH.m, rowHeight: 48, blur: 24, dockHeight: 32, dockIcon: iconButton.toolbar.glyph, dockGap: space.s, dockRadius: radius.tile,

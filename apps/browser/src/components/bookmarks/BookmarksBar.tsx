@@ -39,7 +39,7 @@ function SiteColoredBar({ windowId, tabId }: { windowId: string; tabId: string }
 
 export function bookmarksBarShown(mode: BookmarksBarMode, tab: { url: string } | undefined, hasItems: boolean): boolean {
   if (!tab || !hasItems || mode === "never") return false;
-  return mode === "always" || !tab.url;
+  return !tab.url;
 }
 
 export type BookmarksBarMode = Settings["bookmarksBar"];

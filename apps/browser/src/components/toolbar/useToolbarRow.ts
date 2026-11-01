@@ -2,6 +2,6 @@ import { useSettings } from "../../state/browser/hooks";
 import { currentSettings } from "../../state/browser/current";
 import { toolbarRowOf, type ToolbarRow } from "../../lib/toolbarRow";
 
-export const useToolbarRow = (): ToolbarRow => toolbarRowOf(useSettings((s) => s.compactToolbar));
+export const useToolbarRow = (): ToolbarRow => toolbarRowOf(useSettings((s) => s.interfaceStyle === "glass" || s.compactToolbar));
 
-export const currentToolbarRow = (): ToolbarRow => toolbarRowOf(currentSettings().compactToolbar);
+export const currentToolbarRow = (): ToolbarRow => toolbarRowOf(currentSettings().interfaceStyle === "glass" || currentSettings().compactToolbar);

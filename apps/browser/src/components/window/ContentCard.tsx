@@ -19,6 +19,7 @@ import { startSelectionTools } from "../../state/site/selection";
 import { startMedia } from "../../state/media/pip";
 import { urlFieldRight } from "../toolbar/Toolbar";
 import { WindowToolbar } from "../toolbar/WindowToolbar";
+import { FAVOURITES_HEIGHT } from "../toolbar/tokens";
 import { useToolbarRow } from "../toolbar/useToolbarRow";
 import "../dev/devExpose";
 import { PeekOverlay } from "../peek/PeekOverlay";
@@ -80,12 +81,12 @@ export function ContentCard() {
       const inset = 12;
       setUrlAnchor(windowId, {
         left: origin.x + focusedRect.x + (classicToolbar ? g.urlLeft : inset),
-        top: origin.y + focusedRect.y + bookmarkTop + (classicToolbar ? 0 : 36),
+        top: origin.y + focusedRect.y + bookmarkTop + (activeUrl ? 0 : FAVOURITES_HEIGHT),
         width: classicToolbar ? focusedRect.width - g.urlLeft - urlFieldRight(!!split, extensionsWidth, toolbarRow) : Math.max(0, focusedRect.width - 2 * inset),
       });
     };
     return watchToolbarExtensionsWidth(windowId, place);
-  }, [origin, focusedRect?.x, focusedRect?.y, focusedRect?.width, tabLayout, chrome.kind, !!split, showSidebarButton, toolbarRow, bookmarkTop, classicToolbar]);
+  }, [origin, focusedRect?.x, focusedRect?.y, focusedRect?.width, tabLayout, chrome.kind, !!split, showSidebarButton, toolbarRow, bookmarkTop, classicToolbar, activeUrl]);
 
   useEffect(() => {
     if (origin && size.width > 0) setCardAnchor(windowId, { left: origin.x, top: origin.y, width: size.width, height: size.height });

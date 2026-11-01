@@ -57,3 +57,5 @@ export const springs = {
   smooth: spring(springSpec.smooth),
   bouncy: spring(springSpec.bouncy),
 } as const;
+
+export const pressFeedback = { scale: 0.94 } as const;

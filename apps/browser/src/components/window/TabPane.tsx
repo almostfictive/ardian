@@ -124,7 +124,7 @@ export const TabPane = memo(function TabPane({
       }}
     >
       {!autoLayout && bookmarksBar && <BookmarksBar tabId={tabId} placeholder={!visible} />}
-      {visible && !fullscreen && !small && <FavouritesRow />}
+      {visible && isNewTab && !fullscreen && !small && <FavouritesRow />}
       {bar.kind === "toolbar" && <Toolbar tabId={tabId} geometry={geometry} windowId={windowId} inSplit={inSplit} focused={focused || !inSplit} />}
       {bar.kind === "backdrop" && <ToolbarBackdrop tabId={tabId} />}
       {bar.kind === "spacer" && <View style={{ height: toolbarHeight }} />}

@@ -7,3 +7,5 @@ export const TOOLBAR_MOTION = { dim: duration.base, progress: duration.base, hid
 import { radius, space } from "../ui/tokens";
 
 export const TOOLBAR_PILL = { top: space.xs, side: space.ml, bottom: space.xs, radius: radius.chrome } as const;
+
+export const FAVOURITES_HEIGHT = 28;

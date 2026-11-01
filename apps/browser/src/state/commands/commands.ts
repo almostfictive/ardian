@@ -31,6 +31,7 @@ import { closeNewTabBar, isEmptyCardTab, showNewTabBar, toggleNewTabBar } from "
 import { NEW_TAB_BAR_POLICY } from "../omnibox/newTabBarPolicy";
 import { addressBarInSidebar, commandBarCentred } from "../windows/layout";
 import { addFolderToSidebar, restoreArcFolders } from "../bookmarks/bookmarkGroups";
+import { reloadPage } from "../tabs/reload";
 import { withLivePage } from "../tabs/livePage";
 import { webviews } from "../../platform/webviews";
 import { togglePageEngine } from "../engines/actions";
@@ -198,9 +199,9 @@ export function runCommand({ command, arg, windowId: requested }: CommandEvent) 
     case "findPrevious":
       return page ? findStep(page.id, command === "findPrevious") : undefined;
     case "reload":
-      return void (tabId && withLivePage(tabId, (page) => page.reload()));
+      return void (tabId && reloadPage(tabId));
     case "forceReload":
-      return void (tabId && withLivePage(tabId, (page) => page.forceReload()));
+      return void (tabId && reloadPage(tabId, true));
     case "toggleTabLayout":
       return s.toggleTabLayout(windowId);
     case "openSplitPane":
