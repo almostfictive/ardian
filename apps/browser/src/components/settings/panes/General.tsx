@@ -1,8 +1,9 @@
+import { screenshotColor } from "../../screenshots/tokens";
 import type { DownloadSettings } from "../../../state/downloads/actions";
 import type { Settings } from "../../../state/settings/settings";
 import { checkForUpdates, setLaunchAtLogin } from "../../../state/app/appSettings";
 import { pickFolder } from "../../../state/app/system";
-import { Symbol, Button, font, PopUp, Toggle } from "../../ui";
+import { Symbol, Button, font, PopUp, Toggle, ScreenshotColor } from "../../ui";
 import { useEffect } from "react";
 import { AppState, Text, View } from "react-native";
 import { useTheme } from "../../ui/theme";
@@ -95,20 +96,25 @@ export function GeneralPane() {
         </Row>
       </Group>
 
-      <SectionHeader title="Sidebar mini apps" description="Choose which web apps stay within reach at the bottom of the sidebar." />
+      <SectionHeader title="Sidebar mini apps" description="Choose which web apps appear in the Top App Dock." />
       <Group>
         <MiniAppToggle id="whatsapp" title="WhatsApp" />
         <MiniAppToggle id="slack" title="Slack" />
         <MiniAppToggle id="telegram" title="Telegram" />
+        <MiniAppToggle id="discord" title="Discord" />
+        <MiniAppToggle id="gmail" title="Gmail" />
+        <MiniAppToggle id="calendar" title="Calendar" />
       </Group>
 
       <SectionHeader title="Screenshot tools" description="Set the starting colors for annotations in the screenshot editor." />
       <Group>
-        <Row title="Marker color">
-          <PopUp value={markerColor} options={MARKER_COLORS} onChange={(screenshotMarkerColor) => updateSettings({ screenshotMarkerColor })} minWidth={140} />
+        <Row anchor="general.screenshotMarkerColor">
+          <PopUp value={markerColor} options={colorOptions(MARKER_COLORS, markerColor)} onChange={(screenshotMarkerColor) => updateSettings({ screenshotMarkerColor })} minWidth={140} />
+          <ScreenshotColor color={screenshotColor(markerColor)} onColor={(e) => updateSettings({ screenshotMarkerColor: e.nativeEvent.color })} style={{ width: 28, height: 28 }} />
         </Row>
-        <Row title="Highlighter color">
-          <PopUp value={highlighterColor} options={HIGHLIGHTER_COLORS} onChange={(screenshotHighlighterColor) => updateSettings({ screenshotHighlighterColor })} minWidth={140} />
+        <Row anchor="general.screenshotHighlighterColor">
+          <PopUp value={highlighterColor} options={colorOptions(HIGHLIGHTER_COLORS, highlighterColor)} onChange={(screenshotHighlighterColor) => updateSettings({ screenshotHighlighterColor })} minWidth={140} />
+          <ScreenshotColor color={screenshotColor(highlighterColor)} onColor={(e) => updateSettings({ screenshotHighlighterColor: e.nativeEvent.color })} style={{ width: 28, height: 28 }} />
         </Row>
       </Group>
 
@@ -132,19 +138,19 @@ const MARKER_COLORS: { value: Settings["screenshotMarkerColor"]; title: string }
   { value: "red", title: "Red" },
   { value: "blue", title: "Blue" },
   { value: "black", title: "Black" },
-  { value: "purple", title: "Purple" },
   { value: "green", title: "Green" },
 ];
 
 const HIGHLIGHTER_COLORS: { value: Settings["screenshotHighlighterColor"]; title: string }[] = [
   { value: "yellow", title: "Yellow" },
-  { value: "lightgreen", title: "Green" },
-  { value: "cyan", title: "Cyan" },
+  { value: "green", title: "Green" },
+  { value: "purple", title: "Purple" },
   { value: "orange", title: "Orange" },
-  { value: "pink", title: "Pink" },
 ];
 
-function MiniAppToggle({ id, title }: { id: "whatsapp" | "slack" | "telegram"; title: string }) {
+const colorOptions = (presets: { value: string; title: string }[], color: string) => presets.some((p) => p.value === color) ? presets : [...presets, { value: color, title: "Custom color" }];
+
+function MiniAppToggle({ id, title }: { id: "whatsapp" | "slack" | "telegram" | "discord" | "gmail" | "calendar"; title: string }) {
   const apps = useSettings((settings) => settings.sidebarMiniApps);
   const enabled = apps.includes(id);
   return (

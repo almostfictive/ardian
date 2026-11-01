@@ -135,7 +135,7 @@ const SELECTED_TAB_GLOW = {
 export type SelectedTabGlowLevel = keyof typeof SELECTED_TAB_GLOW;
 
 export function selectedTabGlow(theme: Theme, setting: SelectedTabGlowLevel) {
-  const level = SELECTED_TAB_GLOW[setting] ?? SELECTED_TAB_GLOW.full;
+  const level = SELECTED_TAB_GLOW.off;
   return { shadowColor: hex(theme.tabSelectedShadow), shadowOpacity: level.opacity, shadowRadius: theme.tabSelectedShadowRadius * level.radius };
 }
 
@@ -151,7 +151,7 @@ export const layout = {
   rowGap: SIDEBAR_ROW.gap,
   cardInset: CARD_INSET,
   sidebarCardGap: CARD_INSET - SIDEBAR_INSET,
-  cardRadius: 10,
+  cardRadius: 18,
   toolbarButton: 30,
   toolbarIconCenters: [21, 56, 92, 127],
   breadcrumbX: 153,

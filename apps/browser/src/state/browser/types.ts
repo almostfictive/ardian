@@ -18,11 +18,16 @@ export type Profile = {
   pinnedCollapsed?: boolean;
 };
 
+export type Workspace = { id: string; profileId: string; name: string; icon: string | null; display: "name" | "icon" | "emoji" | "picture" | "none" };
+
 type WindowBase = {
   id: string;
   profileId: string;
   tabIds: string[];
   activeTabIds: Record<string, string>;
+  workspaces?: Workspace[];
+  activeWorkspaceIds?: Record<string, string>;
+  workspaceActiveTabIds?: Record<string, string>;
   sidebarOpen: boolean;
   tabLayout?: "sidebar" | "top";
   frame: Frame | null;
@@ -53,6 +58,7 @@ export type Tab = {
   pinnedUrl: string | null;
   page: TabPage;
   openerId: string | null;
+  workspaceId?: string;
   liveItem?: { folderId: string; itemId: string };
   pinKey?: string;
   engine?: PageEngine;
@@ -137,7 +143,7 @@ export type TabSnapshot = Pick<
   Tab,
   "url" | "title" | "favicon" | "pin" | "muted" | "zoom" | "customTitle" | "customIcon" | "profileId"
 > &
-  Partial<Pick<Tab, "pinnedUrl" | "engine">>;
+  Partial<Pick<Tab, "pinnedUrl" | "engine" | "workspaceId">>;
 
 export type ClosedTab = {
   kind: "tab";
@@ -157,7 +163,7 @@ export type ClosedTab = {
 export type ClosedWindow = {
   kind: "window";
   id: string;
-  window: Pick<BrowserWindow, "profileId" | "sidebarOpen" | "frame">;
+  window: Pick<BrowserWindow, "profileId" | "sidebarOpen" | "frame" | "workspaces" | "activeWorkspaceIds">;
   tabs: (TabSnapshot & { active: boolean; tabId?: string })[];
   groups: (Omit<TabGroup, "tabIds" | "windowId"> & { tabIndexes: number[] })[];
   closedAt: number;

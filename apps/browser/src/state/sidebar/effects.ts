@@ -1,7 +1,6 @@
 import { onAppEvent } from "../../platform/app";
 import { onWindowEvent } from "../../platform/windows";
 import { webviews } from "../../platform/webviews";
-import { startLive } from "../live";
 import { startAutoCleanUp } from "../pins/autoCleanUp";
 import { useBrowser } from "../browser/store";
 import { changedIds } from "../browser/changes";
@@ -17,7 +16,6 @@ let started = false;
 export function startSidebarEffects() {
   if (started) return;
   started = true;
-  startLive();
 
   useBrowser.subscribe((s, prev) => {
     const switcher = sidebarUi().switcher;

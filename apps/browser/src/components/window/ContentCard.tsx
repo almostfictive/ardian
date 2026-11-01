@@ -76,10 +76,10 @@ export function ContentCard() {
     if (!origin || !focusedRect || chrome.kind === "none") return;
     const g = geometryFor(focusedRect);
     const place = (extensionsWidth = 0) => {
-      const inset = Math.max(g.urlLeft, urlFieldRight(!!split, extensionsWidth, toolbarRow));
+      const inset = 12;
       setUrlAnchor(windowId, {
         left: origin.x + focusedRect.x + inset,
-        top: origin.y + focusedRect.y + bookmarkTop,
+        top: origin.y + focusedRect.y + bookmarkTop + 36,
         width: Math.max(0, focusedRect.width - 2 * inset),
       });
     };

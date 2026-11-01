@@ -1,3 +1,4 @@
+import { restoreWindowWorkspaces, workspaceWindowFromDisk } from "../workspaces/session";
 import { create, type StateCreator } from "zustand";
 import { setHeldReportsTransaction } from "../../platform/nativeEvents";
 import { createBookmarksSlice, ensureRoots, type BookmarksSlice } from "../bookmarks/bookmarks";
@@ -143,7 +144,7 @@ export const useBrowser = create<BrowserState>()(transactions.middleware(batched
       const activeTabIds = Object.fromEntries(Object.entries(w.activeTabIds).filter(([p, id]) => tabs[id]?.profileId === p));
       const profileId = tabIds.some((id) => tabs[id]!.profileId === w.profileId) ? w.profileId : tabs[tabIds[0]!]!.profileId;
       activeTabIds[profileId] ??= tabIds.find((id) => tabs[id]!.profileId === profileId)!;
-      windows[w.id] = { ...w, tabIds, profileId, activeTabIds };
+      windows[w.id] = restoreWindowWorkspaces(workspaceWindowFromDisk({ ...w, tabIds, profileId, activeTabIds }), tabs);
     }
     for (const t of Object.values(tabs)) if (!windows[t.windowId]) delete tabs[t.id];
     const windowOrder = [...(data.windowOrder ?? []).filter((id) => windows[id]), ...Object.keys(windows).filter((id) => !data.windowOrder?.includes(id))];

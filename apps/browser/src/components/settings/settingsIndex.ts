@@ -24,7 +24,7 @@ const PANE_LOOKS: Record<SettingsPane, { title: string; icon: string }> = {
   advanced: { title: "Advanced", icon: "slider.horizontal.3" },
 };
 
-export const PANES: { id: SettingsPane; title: string; icon: string }[] = SETTINGS_PANES.map((id) => ({ id, ...PANE_LOOKS[id] }));
+export const PANES: { id: SettingsPane; title: string; icon: string }[] = SETTINGS_PANES.filter((id) => id !== "liveFolders").map((id) => ({ id, ...PANE_LOOKS[id] }));
 
 const ROWS = { ...generalRows, ...privacyRows, ...toolRows };
 

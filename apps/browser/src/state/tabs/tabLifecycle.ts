@@ -31,7 +31,7 @@ export function noteReady(tabId: string) {
 }
 
 export function noteDiscarded(tabId: string) {
-  useLifecycle.setState((l) => ({ discarded: { ...l.discarded, [tabId]: true } }));
+  useLifecycle.setState((l) => { const frozen = { ...l.frozen }; delete frozen[tabId]; return { discarded: { ...l.discarded, [tabId]: true }, frozen }; });
 }
 
 export function noteGone(tabId: string) {
@@ -40,10 +40,12 @@ export function noteGone(tabId: string) {
 
 function forget(tabId: string) {
   const l = useLifecycle.getState();
-  if (!l.discarded[tabId]) return;
+  if (!l.discarded[tabId] && !l.frozen[tabId]) return;
   const discarded = { ...l.discarded };
   delete discarded[tabId];
-  useLifecycle.setState({ discarded });
+  const frozen = { ...l.frozen };
+  delete frozen[tabId];
+  useLifecycle.setState({ discarded, frozen });
 }
 
 function releaseUnusedProfiles() {

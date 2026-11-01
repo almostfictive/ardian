@@ -35,6 +35,13 @@ export const generalRows = {
       rows: { commandBarPreference: { advanced: true, title: "When input looks like a website", keywords: ["omnibox", "address", "url", "search", "website first"] } },
     },
     {
+      section: "Screenshot tools",
+      rows: {
+        screenshotMarkerColor: { title: "Marker color", keywords: ["screenshot", "annotation", "pen", "color"] },
+        screenshotHighlighterColor: { title: "Highlighter color", keywords: ["screenshot", "annotation", "highlight", "color"] },
+      },
+    },
+    {
       section: "Downloads",
       rows: {
         downloadsFolder: { title: "Downloads folder", description: "Where downloaded files are saved.", keywords: ["download location", "save to", "path", "folder"] },
@@ -153,11 +160,6 @@ export const generalRows = {
           description: "Where + New Tab sits in the sidebar, whatever Add new tabs says. At the top it stays above your tabs and scrolls with them; at the bottom it follows your last tab and stays at the sidebar's bottom edge once the tabs fill it.",
           keywords: ["new tab button", "plus", "+", "top", "bottom", "sticky", "docked", "position"],
           shown: inSidebar,
-        },
-        shareTabsAcrossWindows: {
-          title: "Share tabs across windows",
-          description: "Every window of a profile lists the same tabs, as in Arc. A tab is live in one window at a time: selecting it in another brings it there, and the first window shows it greyed until you click it. Each window keeps its own selected tab.",
-          keywords: ["arc", "multiple windows", "same tabs", "sync windows", "shared sidebar", "unpinned"],
         },
         warnBeforeClosingLastTab: { advanced: true, title: "Warn before closing last tab in a Profile", keywords: ["confirm", "close tab"] },
         tabReorderHaptics: { advanced: true, title: "Haptic feedback when reordering tabs", keywords: ["trackpad", "vibration", "drag"] },

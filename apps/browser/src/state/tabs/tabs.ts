@@ -16,6 +16,7 @@ import type { AdoptId, BrowserWindow, ClosedTab, Tab, TabSnapshot } from "../bro
 import { orderSections } from "../groups/groups";
 import { samePage } from "../../lib/url";
 import { historyOf } from "../history/history";
+import { activeWorkspaceId, tabWorkspaceId, workspacesOf } from "../workspaces/model";
 import { pinHome } from "../pins/pinHomes";
 
 export type NewTabOptions = {
@@ -66,7 +67,8 @@ export function closingTabs(s: BrowserState, ids: string[], { lastClosesWindow =
     const view = viewTabIds(next, w.id);
     const shown = view.filter((id) => gone.includes(id));
     if (!shown.length || !view.every((id) => gone.includes(id) || isAsleep(next.tabs[id]))) continue;
-    const keepsWindow = !lastClosesWindow || leavesEmptyWindow(shown.length > 1 ? removeTabs(next, shown.slice(1), false) : next, shown[0]!);
+    const keepsOtherWorkspace = w.tabIds.some((id) => !gone.includes(id) && s.tabs[id] && (s.tabs[id]!.profileId !== w.profileId || tabWorkspaceId(s.tabs[id]!) !== activeWorkspaceId(w)));
+    const keepsWindow = keepsOtherWorkspace || !lastClosesWindow || leavesEmptyWindow(shown.length > 1 ? removeTabs(next, shown.slice(1), false) : next, shown[0]!);
     if (keepsWindow) next = withNewTab(next, w.id)[0];
     else closedWindows.push(w.id);
   }
@@ -93,6 +95,8 @@ export function activated(s: BrowserState, id: string, shareLivePins = true): Pa
     ...w,
     profileId: w.kind === "private" ? w.profileId : tab.profileId,
     activeTabIds: { ...w.activeTabIds, [tab.profileId]: id },
+    activeWorkspaceIds: { ...w.activeWorkspaceIds, [tab.profileId]: tabWorkspaceId(tab) },
+    workspaceActiveTabIds: { ...w.workspaceActiveTabIds, [tabWorkspaceId(tab)]: id },
   };
   const ui = s.windowUi[w.id];
   return {
@@ -131,7 +135,7 @@ export function removeTabs(s: BrowserState, ids: string[], record: boolean): Bro
     const activeTabIds = { ...w.activeTabIds };
     for (const [profileId, activeId] of Object.entries(w.activeTabIds)) {
       if (!gone.has(activeId)) continue;
-      const before = w.tabIds.filter((id) => s.tabs[id]?.profileId === profileId);
+      const before = w.tabIds.filter((id) => s.tabs[id]?.profileId === profileId && tabWorkspaceId(s.tabs[id]!) === activeWorkspaceId(w, profileId));
       const left = before.filter((id) => !gone.has(id));
       const awake = left.filter((id) => !isAsleep(s.tabs[id]));
       const after = awake.length ? awake : left;
@@ -140,7 +144,7 @@ export function removeTabs(s: BrowserState, ids: string[], record: boolean): Bro
       if (next) activeTabIds[profileId] = next;
       else delete activeTabIds[profileId];
     }
-    windows[w.id] = { ...w, tabIds, activeTabIds };
+    windows[w.id] = { ...w, tabIds, activeTabIds, workspaceActiveTabIds: Object.fromEntries(Object.entries(w.workspaceActiveTabIds ?? {}).filter(([, id]) => !gone.has(id))) };
   }
   tabs = adoptOrphans(without(tabs, gone), s.tabs, gone);
 
@@ -233,7 +237,7 @@ function backToPin(s: BrowserState, t: Tab): Partial<Tab> {
 
 function lastRegularTab(s: BrowserState, w: BrowserWindow, id: string, closing: Set<string>): string | undefined {
   const profileId = s.tabs[id]!.profileId;
-  const candidates = w.tabIds.filter((t) => !closing.has(t) && s.tabs[t]?.profileId === profileId && !inPinnedContainer(s, t));
+  const candidates = w.tabIds.filter((t) => !closing.has(t) && s.tabs[t]?.profileId === profileId && tabWorkspaceId(s.tabs[t]!) === tabWorkspaceId(s.tabs[id]!) && !inPinnedContainer(s, t));
   const panes = splitTabIdsOf(splitOf(s, id))?.filter((t) => candidates.includes(t)) ?? [];
   const pool = panes.length ? panes : candidates;
   return pool.reduce<string | undefined>((best, t) => (!best || s.tabs[t]!.lastActiveAt > s.tabs[best]!.lastActiveAt ? t : best), undefined);
@@ -243,7 +247,7 @@ function lastLivePinnedTab(s: BrowserState, w: BrowserWindow, id: string, closin
   const profileId = s.tabs[id]!.profileId;
   const live = w.tabIds.filter((t) => {
     const tab = s.tabs[t];
-    return !closing.has(t) && tab?.profileId === profileId && inPinnedContainer(s, t) && hasPage(tab);
+    return !closing.has(t) && tab?.profileId === profileId && tabWorkspaceId(tab) === tabWorkspaceId(s.tabs[id]!) && inPinnedContainer(s, t) && hasPage(tab);
   });
   return live.reduce<string | undefined>((best, t) => (!best || s.tabs[t]!.lastActiveAt > s.tabs[best]!.lastActiveAt ? t : best), undefined);
 }
@@ -256,6 +260,7 @@ export function withNewTab(s: BrowserState, windowId: string, o: NewTabOptions =
   const url = o.url ? resolveTyped(s.settings, o.url) : "";
   const tab = makeTab(windowId, profileId, url, { ...o.snapshot, pin: o.pinned === false ? null : (o.snapshot?.pin ?? (o.pinned ? TILE_PIN : null)) });
   if (tab.page.kind === "loaded" && !o.snapshot) tab.page = loadedPage(navigationTo(url, true));
+  tab.workspaceId = o.openerId && s.tabs[o.openerId]?.profileId === profileId ? tabWorkspaceId(s.tabs[o.openerId]!) : o.snapshot?.workspaceId && workspacesOf(w, profileId).some((workspace) => workspace.id === o.snapshot?.workspaceId) ? o.snapshot.workspaceId : activeWorkspaceId(w, profileId);
   tab.openerId = o.openerId ?? null;
   tab.pinnedUrl = tab.pin ? pinHome({ pinnedUrl: tab.pinnedUrl, url }, true) : tab.pinnedUrl || null;
   if (o.adoptId) tab.page = adoptedPage(o.adoptId);

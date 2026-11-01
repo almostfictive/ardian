@@ -12,13 +12,13 @@ export const ink = { white: "#FFFFFF", black: "#000000", clear: "#00000000", neu
 const darkRoles = {
   dark: true,
   grain: 0.006,
-  card: "rgba(18,18,18,0.5)",
+  card: "#1C1C1E",
   cardEdge: "rgba(0,0,0,0.35)",
   divider: "rgba(255,255,255,0.09)",
 
-  textPrimary: "#FFFFFF",
+  textPrimary: "#F5F5F7",
   textTab: "#FFFFFFC7",
-  textSecondary: "#FFFFFF80",
+  textSecondary: "#A1A1A6",
   textTertiary: "#FFFFFF59",
   icon: "#F7F5FFC6",
   iconDisabled: "#F7F5FF4D",
@@ -64,9 +64,9 @@ const darkRoles = {
   faviconTile: "rgba(247,245,255,0.2)",
   dropZoneFill: "rgba(255,255,255,0.06)",
 
-  popoverFill: "rgba(38,38,38,0.94)",
-  popoverTint: "rgba(38,38,38,0.72)",
-  popoverBorder: "rgba(255,255,255,0.14)",
+  popoverFill: "rgba(28,28,30,0.82)",
+  popoverTint: "rgba(28,28,30,0.82)",
+  popoverBorder: "#3A3A3C",
   popoverRowPressed: "rgba(255,255,255,0.12)",
   promptFill: "rgba(255,255,255,0.1)",
   promptFillHover: "rgba(255,255,255,0.14)",
@@ -109,13 +109,13 @@ export type ColorRoles = typeof darkRoles;
 const lightRoles: ColorRoles = {
   dark: false,
   grain: 0.05,
-  card: "rgba(255,255,255,0.7)",
+  card: "#FFFFFF",
   cardEdge: "rgba(0,0,0,0.08)",
   divider: "rgba(0,0,0,0.09)",
 
-  textPrimary: "#000000",
+  textPrimary: "#1D1D1F",
   textTab: "#000000AD",
-  textSecondary: "#00000080",
+  textSecondary: "#6E6E73",
   textTertiary: "#00000059",
   icon: "#000000C6",
   iconDisabled: "#0000004D",
@@ -161,9 +161,9 @@ const lightRoles: ColorRoles = {
   faviconTile: "rgba(0,0,0,0.13)",
   dropZoneFill: "rgba(0,0,0,0.04)",
 
-  popoverFill: "rgba(255,255,255,0.96)",
-  popoverTint: "rgba(255,255,255,0.7)",
-  popoverBorder: "rgba(0,0,0,0.12)",
+  popoverFill: "rgba(255,255,255,0.8)",
+  popoverTint: "rgba(255,255,255,0.8)",
+  popoverBorder: "#D2D2D7",
   popoverRowPressed: "rgba(0,0,0,0.1)",
   promptFill: "rgba(0,0,0,0.06)",
   promptFillHover: "rgba(0,0,0,0.09)",
@@ -299,8 +299,8 @@ export const radius = {
   button: 7,
   l: 8,
   card: 10,
-  panel: 12,
-  sheet: 14,
+  panel: 16,
+  sheet: 16,
 } as const;
 
 export type Radius = keyof typeof radius;
@@ -340,3 +340,12 @@ export const hairline = { panel: 0.5, ring: 0.5 } as const;
 export const swatch = { size: 20, inset: 2, ring: 2, gap: 7 } as const;
 
 export const opacity = { disabled: 0.45 } as const;
+
+export const PAGE3 = {
+  expanded: 164, collapsed: 64, pageRadius: 18, panelRadius: 16, panelWidth: 340, rowHeight: 48, blur: 24, dockHeight: 32, dockIcon: 15, dockGap: 6, dockRadius: 8,
+  light: { canvas: "#F5F5F7", surface: "#FFFFFF", primary: "#1D1D1F", secondary: "#6E6E73", border: "#D2D2D7", glass: "rgba(255,255,255,0.8)", subtle: "rgba(29,29,31,0.07)" },
+  dark: { canvas: "#000000", surface: "#1C1C1E", primary: "#F5F5F7", secondary: "#A1A1A6", border: "#3A3A3C", glass: "rgba(28,28,30,0.82)", subtle: "rgba(255,255,255,0.08)" },
+  rail: "#171717", railText: "#F5F5F7", selected: "#0A66D9", selection: "#0A84FF", dim: "rgba(0,0,0,0.45)",
+  marker: ["#FF3B30", "#007AFF", "#34C759", "#1D1D1F"], highlighter: ["#FFCC00", "#FF9500", "#AF52DE", "#34C759"],
+  type: { display: { fontSize: 40, lineHeight: 44 }, heading: { fontSize: 17, lineHeight: 22 }, body: { fontSize: 15, lineHeight: 22 }, label: { fontSize: 13, lineHeight: 18 }, caption: { fontSize: 12, lineHeight: 16 } },
+} as const;

@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { useShallow } from "zustand/react/shallow";
 import { useBrowser } from "../browser/store";
 import { activeTabId, tabTitle, viewTabIds } from "../browser/model";
@@ -17,9 +18,7 @@ import { pinnedCollapsed, pinnedKept } from "./pinnedFold";
 import { useSidebarUi, type Hover } from "./sidebarUi";
 
 export function useSidebarWidth(windowId: string): number {
-  const saved = useBrowser((s) => s.settings.sidebarWidth);
-  const dragging = useSidebarUi((u) => u.dragWidth[windowId]);
-  return dragging ?? saved;
+  return useBrowser((s) => s.windows[windowId]?.sidebarOpen === false ? 64 : 164);
 }
 
 export const useIsInSplit = (tabId: string) => useBrowser((s) => !!splitOf(s, tabId));
@@ -115,3 +114,19 @@ export const useLiveItemTab = (windowId: string, profileId: string, folderId: st
 
 export const useIsActiveIn = (windowId: string, profileId: string, tabId: string | null) => useBrowser((s) => !!tabId && activeTabId(s, windowId, profileId) === tabId);
 
+
+type TabGroupIndicator = { id: string; name: string; tabId: string; active: boolean };
+export function useTabGroupIndicators(windowId: string): TabGroupIndicator[] {
+  const json = useBrowser((s) => {
+  const ids = viewTabIds(s, windowId);
+  const groups = Object.values(s.groups).filter((g) => g.windowId === windowId && !g.parentId && g.tabIds.some((id) => ids.includes(id)));
+  const grouped = new Set(groups.flatMap((g) => g.tabIds));
+  const ungrouped = ids.find((id) => !grouped.has(id));
+  const active = activeTabId(s, windowId);
+  return JSON.stringify([
+    ...(ungrouped ? [{ id: "tabs", name: "Tabs", tabId: ungrouped, active: !!active && !grouped.has(active) }] : []),
+    ...groups.map((g) => ({ id: g.id, name: groupLabel(s, g), tabId: g.tabIds.find((id) => ids.includes(id))!, active: !!active && g.tabIds.includes(active) })),
+  ]);
+  });
+  return useMemo(() => JSON.parse(json) as TabGroupIndicator[], [json]);
+}

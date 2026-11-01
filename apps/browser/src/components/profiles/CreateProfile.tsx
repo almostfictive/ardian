@@ -1,13 +1,12 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { Pressable, View } from "react-native";
 import { useWindowId } from "../../state/browser/hooks";
 import { currentProfiles } from "../../state/browser/current";
-import { useProfileOrder, useProfileRecords, useCreateProfileShareDefault } from "../../state/profiles/hooks";
 import { createProfile } from "../../state/profiles/actions";
 import { endCreateProfileRequest, profileNames, takeCreateProfileSheet, useCreateProfileRequest, type CreateProfilePreset } from "../../state/profiles/createProfileRequest";
-import { dataGroups, unusedProfileColor } from "../../state/profiles/profiles";
+import { unusedProfileColor } from "../../state/profiles/profiles";
 import type { ProfileColor } from "../../state/browser/types";
-import { Button, PROFILE_COLORS, radius, Radio, Sheet, space, Swatch, swatch, Text, TextField, Toggle, useTheme } from "../ui";
+import { Button, PROFILE_COLORS, Sheet, space, Swatch, swatch, Text, TextField, useTheme } from "../ui";
 import { profileColors, profileType } from "./tokens";
 import { closeSettingsSheet, showSettingsSheet } from "../../state/settings/sheet";
 
@@ -31,22 +30,12 @@ export function CreateProfileHost() {
 }
 
 function CreateProfileSheet({ windowId, preset, onDone }: { windowId: string | null; preset: CreateProfilePreset; onDone: (id: string | null) => void }) {
-  const theme = useTheme();
-  const profiles = useProfileRecords();
-  const profileOrder = useProfileOrder();
-  const groups = useMemo(() => dataGroups({ profiles, profileOrder }), [profiles, profileOrder]);
-  const current = useCreateProfileShareDefault(windowId);
   const [name, setName] = useState(preset.name ?? "");
   const [color, setColor] = useState<ProfileColor>(() => unusedProfileColor(currentProfiles()));
-  const [share, setShare] = useState(!!preset.shareWith);
-  const [shareWith, setShareWith] = useState(preset.shareWith ?? current);
-  const selectedGroup = groups.find((g) => g.profileIds.includes(shareWith)) ?? groups[0];
-
   const submit = () => {
-    const id = createProfile({ name, color, shareWith: share ? (selectedGroup?.profileIds[0] ?? null) : null });
+    const id = createProfile({ name, color });
     onDone(id);
   };
-  const single = groups.length === 1;
 
   return (
     <Sheet width={420} onClose={() => onDone(null)}>
@@ -63,35 +52,6 @@ function CreateProfileSheet({ windowId, preset, onDone }: { windowId: string | n
         {(Object.keys(PROFILE_COLORS) as ProfileColor[]).map((c) => (
           <ColorSwatch key={c} color={c} selected={color === c} onPress={() => setColor(c)} />
         ))}
-      </View>
-
-      <View style={{ marginTop: space.xl, borderRadius: radius.card, backgroundColor: theme.groupFill, borderWidth: 1, borderColor: theme.groupBorder, padding: space.l }}>
-        <View style={{ flexDirection: "row", alignItems: "center", gap: space.l }}>
-          <Text style={{ flex: 1 }}>{single ? "Share data with current profile" : "Share data with another profile"}</Text>
-          <Toggle value={share} onChange={setShare} />
-        </View>
-        {share && (
-          <Text size="footnote" tone="textSecondary" style={{ lineHeight: profileType.noteLine, marginTop: space.s }}>
-            {single
-              ? "This profile will share your cookies, logins, passwords, extensions, bookmarks and history with your current profile. Tabs stay separate."
-              : "This profile will share your cookies, logins, passwords, extensions, bookmarks and history with another profile you choose. Tabs stay separate."}
-          </Text>
-        )}
-        {share && !single && (
-          <View style={{ marginTop: space.ml, borderRadius: radius.l, backgroundColor: theme.field, borderWidth: 1, borderColor: theme.fieldBorder, overflow: "hidden" }}>
-            {groups.map((g, i) => (
-              <Pressable key={g.dataId} onPress={() => setShareWith(g.profileIds[0]!)}>
-                <View style={{ flexDirection: "row", alignItems: "center", gap: space.ml, height: 32, paddingHorizontal: space.ml, borderTopWidth: i ? 1 : 0, borderColor: theme.divider }}>
-                  <Radio on={g === selectedGroup} look="compact" />
-                  <ColorStack colors={g.profileIds.map((id) => PROFILE_COLORS[profiles[id]!.color]?.swatch ?? profileColors.unknownSwatch)} />
-                  <Text numberOfLines={1} style={{ flex: 1 }}>
-                    {profileNames(g.profileIds.map((id) => profiles[id]!.name))}
-                  </Text>
-                </View>
-              </Pressable>
-            ))}
-          </View>
-        )}
       </View>
 
       <View style={{ flexDirection: "row", justifyContent: "flex-end", gap: space.m, marginTop: space.xlx }}>

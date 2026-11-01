@@ -79,6 +79,9 @@ export function startDevHarness() {
     get miniApps(): typeof import("../../state/sidebar/miniApps") {
       return require("../../state/sidebar/miniApps");
     },
+    get workspaces(): typeof import("../../state/workspaces/actions") & typeof import("../../state/workspaces/lifecycle") {
+      return { ...require("../../state/workspaces/actions"), ...require("../../state/workspaces/lifecycle") };
+    },
     get screenshots(): typeof import("../../state/screenshots/actions") {
       return require("../../state/screenshots/actions");
     },

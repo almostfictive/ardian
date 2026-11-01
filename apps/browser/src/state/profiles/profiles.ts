@@ -27,7 +27,7 @@ const COLORS: ProfileColor[] = ["blue", "green", "orange", "purple", "red", "yel
 export const unusedProfileColor = (profiles: Record<string, Profile>): ProfileColor =>
   COLORS.find((c) => !Object.values(profiles).some((p) => p.color === c)) ?? "blue";
 
-const dataIdOf = (profile: Profile) => profile.dataId ?? profile.id;
+const dataIdOf = (profile: Profile) => profile.id;
 
 export function dataGroups(s: Pick<BrowserState, "profiles" | "profileOrder">): { dataId: string; profileIds: string[] }[] {
   const groups = new Map<string, string[]>();
@@ -52,16 +52,14 @@ export const createProfilesSlice: StateCreator<BrowserState, [], [], ProfilesSli
     profileOrder: [DEFAULT_PROFILE.id],
     orphanedProfileData: [],
 
-    createProfile({ name, color, icon = null, shareWith }) {
+    createProfile({ name, color, icon = null }) {
       const s = get();
-      const source = shareWith ? s.profiles[shareWith] : undefined;
       const profile: Profile = {
         id: newId("p"),
         name: name.trim() || `Profile ${s.profileOrder.length + 1}`,
         color: color ?? unusedProfileColor(s.profiles),
         icon,
         createdAt: Date.now(),
-        ...(source ? { dataId: dataIdOf(source) } : {}),
       };
       const profiles = { ...s.profiles, [profile.id]: profile };
       const bookmarks = ensureRoots(s.bookmarks, engineProfile({ profiles }, profile.id))[0];

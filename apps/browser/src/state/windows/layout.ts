@@ -13,12 +13,7 @@ export function useTabLayout(): "sidebar" | "top" {
 
 export function addressBarInSidebar(s: BrowserState, windowId: string): boolean {
   const w = s.windows[windowId];
-  return (
-    !!w &&
-    s.settings.addressBar === "sidebar" &&
-    (w.sidebarOpen || switchOn("sidebarSlide")) &&
-    tabLayoutOf(s, w.id) === "sidebar"
-  );
+  return false;
 }
 
 export function commandBarCentred(s: BrowserState, windowId: string): boolean {

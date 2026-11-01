@@ -207,6 +207,7 @@ void AcceptDrops(NSView *root, BOOL accept) {
   if (_visible == visible) return;
   if (!visible) [self storePageFocus];
   _visible = visible;
+  if (visible) _tab.frozen = NO;
   if (visible) [self stopHolding];
   if (visible) [self settleRevealsInWindow];
   if (!visible) [_tab exitExclusiveAccess];
@@ -225,6 +226,7 @@ void AcceptDrops(NSView *root, BOOL accept) {
 - (void)setFrozen:(BOOL)frozen {
   _frozen = frozen;
   _tab.frozen = frozen;
+  [self schedulePainting];
 }
 
 - (void)setPageBackgroundColor:(NSColor *)color {

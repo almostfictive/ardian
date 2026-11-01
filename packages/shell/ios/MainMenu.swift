@@ -230,7 +230,6 @@ enum MainMenu {
       cmd(.newGroupWithTabs),
       hidden(.closeTabGroup),
       .separator(),
-      sub("Move to Profile", [], menu: moveToProfile),
       sub("Move to Window", [], menu: moveToWindow),
       .separator(),
       cmd(.bookmarkPage),

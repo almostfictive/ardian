@@ -1,3 +1,5 @@
+import { workspacesOf } from "../workspaces/model";
+import { moveTabsToWorkspace } from "../workspaces/actions";
 import { chooseFromMenu, type ChoiceItem } from "../app/menuChoice";
 import { moveTabsToProfile, switchToTab } from "../browser/actions";
 import { useBrowser, type BrowserState } from "../browser/store";
@@ -35,13 +37,7 @@ export function multiTabMenuItems(s: BrowserState, windowId: string, ids: string
       { id: "newGroup", title: `New Group with ${n} Tabs`, symbol: "folder.badge.plus", enabled: !f.allTiles, ...hintWhen(!f.allTiles, "newGroupWithTabs", s) },
       ...(f.tabs.some((t) => groupOf(s, t.id)) ? [{ id: "ungroup", title: "Remove from Group", symbol: "folder.badge.minus" }] : []),
       ...(groups.length ? [{ id: "moveToGroup", title: "Move to Group", symbol: "folder", children: groups }] : []),
-      {
-        id: "moveToProfile",
-        title: `Move ${n} Tabs to Profile`,
-        symbol: "person",
-        enabled: !f.incognito,
-        children: profileItems(s, (id) => f.tabs.every((t) => t.profileId === id)),
-      },
+      { id: "moveToWorkspace", title: "Move to Workspace", symbol: "square.grid.2x2", children: workspacesOf(s.windows[windowId]!).map((w) => ({ value: { kind: "workspace" as const, workspaceId: w.id }, title: w.name })) },
       { id: "moveToWindow", title: "Move to Window", symbol: "macwindow", enabled: !f.incognito, children: windowItems(s, windowId) },
     ],
     [
@@ -57,7 +53,8 @@ export function multiTabMenuItems(s: BrowserState, windowId: string, ids: string
 }
 
 function sendTabs(windowId: string, ids: string[], profileId: string, to: Destination) {
-  if (to.kind === "group") store().placeTabs(ids, { pinned: false, groupId: to.groupId });
+  if (to.kind === "workspace") moveTabsToWorkspace(ids, to.workspaceId);
+  else if (to.kind === "group") store().placeTabs(ids, { pinned: false, groupId: to.groupId });
   else if (to.kind === "profile") void moveTabsToProfile(ids, to.profileId);
   else if (to.kind === "window") {
     const target = store().moveTabsToWindow(ids, to.windowId);

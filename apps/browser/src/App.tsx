@@ -1,4 +1,6 @@
-import { WindowBackdrop } from "./components/ui";
+import { ScreenshotHost } from "./components/screenshots/ScreenshotHost";
+import { ProfilePopover } from "./components/sidebar/ProfilePopover";
+import { PAGE3 } from "./components/ui/tokens";
 import { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { CommandPanel } from "./components/omnibox/CommandPanel";
@@ -14,7 +16,6 @@ import { isUtilityWindowId } from "./state/settings/settingsWindows";
 import { OnboardingOverlay } from "./components/onboarding";
 import { CreateProfileHost } from "./components/profiles/CreateProfile";
 import { useFullscreenTab } from "./state/tabs/pageState";
-import { ProfileTint } from "./components/window/ProfileSwipe";
 import { TOP_STRIP_HEIGHT, TopStripPeek, TopTabStrip } from "./components/tabstrip/TopTabStrip";
 import { useTabLayout } from "./state/windows/layout";
 import { WindowProfile } from "./components/window/WindowProfile";
@@ -57,7 +58,7 @@ function BrowserWindowRoot({ windowId }: { windowId?: string }) {
 function BrowserWindow() {
   const theme = useTheme();
   const windowId = useWindowId();
-  const topTabs = useTabLayout() === "top";
+  const topTabs = false;
   const fullscreen = !!useFullscreenTab(windowId);
   const miniApp = useMiniApps((state) => state.active[windowId]);
   const [width, setWidth] = useState(0);
@@ -65,15 +66,14 @@ function BrowserWindow() {
     <>
       <ContentCard />
       {!fullscreen && !miniApp && <ExtensionSidePanel />}
-      {!fullscreen && <MiniAppsPanel />}
+
     </>
   );
 
   return (
     <View style={{ flex: 1, flexDirection: "row" }} onLayout={(e) => setWidth(e.nativeEvent.layout.width)}>
-      <WindowBackdrop vibrancy {...theme.backdrop} colors={theme.windowTint} grainOpacity={theme.grain} style={StyleSheet.absoluteFill} />
+      <View pointerEvents="none" style={[StyleSheet.absoluteFill, { backgroundColor: PAGE3[theme.dark ? "dark" : "light"].canvas }]} />
       <WindowProfile />
-      <ProfileTint />
       <DockedLayout
         fullscreen={fullscreen}
         topTabs={topTabs}
@@ -87,6 +87,8 @@ function BrowserWindow() {
         {card}
       </DockedLayout>
       <CommandPanel windowWidth={width} />
+      {!fullscreen && <MiniAppsPanel />}
+      <ProfilePopover />
       <FolderMenus />
       <DownloadsPopover />
       <ExtensionOverlays />
@@ -95,6 +97,7 @@ function BrowserWindow() {
       <EditBookmarkDialog />
       <CreateProfileHost />
       <SidebarOverlays windowWidth={width} />
+      <ScreenshotHost />
       <OnboardingOverlay />
     </View>
   );

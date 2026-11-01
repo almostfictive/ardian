@@ -64,7 +64,12 @@ export type IntroMusicCues = {
   end: number;
 };
 
+export type ScreenshotStroke = { points: [number, number][]; color: string; highlighter: boolean };
+export type ScreenshotImage = { data: string; width: number; height: number };
 export type AppNative = {
+  renderScreenshot(data: string, crop: number[] | null, strokes: ScreenshotStroke[]): Promise<ScreenshotImage>;
+  stitchScreenshots(tiles: { data: string; y: number }[], width: number, height: number): Promise<ScreenshotImage>;
+  exportScreenshot(data: string, strokes: ScreenshotStroke[], output: "png" | "pdf" | "clipboard", windowId: string): Promise<string | null>;
   setWindowActivity(windowId: string, url: string | null, title: string | null): Promise<void>;
   share(url: string, title: string | null, windowId: string | null, anchor: ShareAnchor | null): Promise<void>;
   shareVia(service: string, url: string, title: string | null, windowId: string | null): Promise<void>;

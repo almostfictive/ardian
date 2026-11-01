@@ -5,10 +5,9 @@ import { forgetClosedWindowCleanUps } from "../pins/tabCleanup";
 import { livePinTables } from "../pins/pinChoices";
 import { settlePeeks } from "../peek/peek";
 import { pinnedTabsLeaveLive, settlePinHomes } from "../pins/pinHomes";
-import { mirrorPins } from "../pins/pinMirror";
 import { settleSharedPins } from "../pins/pinShare";
 import { settleTileFolders } from "../pins/tileFolders";
-import { mirrorTabs, pagesIntoSplits, unshareTabs } from "../tabs/tabShare";
+import { pagesIntoSplits, unshareTabs } from "../tabs/tabShare";
 
 export type SettleStep = (s: BrowserState, prev: BrowserState) => BrowserState | null;
 
@@ -30,8 +29,6 @@ export const SETTLE_STEPS: readonly (readonly [string, SettleStep])[] = [
   ["pagesIntoSplits", pagesIntoSplits],
   ["settleSharedPins", settleSharedPins],
   ["settleTileFolders", settleTileFolders],
-  ["mirrorPins", mirrorPins],
-  ["mirrorTabs", mirrorTabs],
   ["pinnedTabsLeaveLive", patched(pinnedTabsLeaveLive)],
 ];
 

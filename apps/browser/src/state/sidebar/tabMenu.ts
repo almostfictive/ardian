@@ -1,3 +1,5 @@
+import { workspacesOf } from "../workspaces/model";
+import { moveTabsToWorkspace } from "../workspaces/actions";
 import type { MenuItem } from "../../platform/menus";
 import { chooseFromMenu, type ChoiceItem } from "../app/menuChoice";
 import { closeTab, moveTabsToProfile, moveTabToWindow, openWindow, toggleMute, toggleSiteMute } from "../browser/actions";
@@ -110,7 +112,7 @@ function organiseItems(s: BrowserState, windowId: string, tab: Tab, f: Facts): T
         ];
   return [
     ...grouping,
-    { id: "moveToProfile", title: "Move to Profile", symbol: "person", enabled: !f.incognito, children: profileItems(s, (id) => id === tab.profileId) },
+    { id: "moveToWorkspace", title: "Move to Workspace", symbol: "square.grid.2x2", children: workspacesOf(s.windows[windowId]!).map((w) => ({ value: { kind: "workspace" as const, workspaceId: w.id }, title: w.name })) },
     { id: "moveToWindow", title: "Move to Window", symbol: "macwindow", enabled: !f.incognito, children: windowItems(s, windowId) },
   ];
 }
@@ -184,6 +186,7 @@ function openAsSplit(windowId: string, tabId: string, wasActive: boolean) {
 
 function sendTab(windowId: string, tabId: string, to: Destination) {
   if (to.kind === "group") store().placeTabs([tabId], { pinned: false, groupId: to.groupId });
+  else if (to.kind === "workspace") moveTabsToWorkspace([tabId], to.workspaceId);
   else if (to.kind === "profile") void moveTabsToProfile([tabId], to.profileId);
   else if (to.kind === "window") moveTabToWindow(tabId, to.windowId);
   else void bookmarkTabs(windowId, [tabId], to);

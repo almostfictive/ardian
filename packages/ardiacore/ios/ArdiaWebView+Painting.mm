@@ -120,7 +120,7 @@ BOOL Above(NSView *a, NSView *b) {
 }
 
 - (BOOL)paints {
-  return _visible || (_warm && !self.neighbourPageAsleep) || _leave.active || _reveal.active || _frameHold.holding;
+  return _visible || (_warm && !_frozen && !self.neighbourPageAsleep) || _leave.active || _reveal.active || _frameHold.holding;
 }
 
 - (BOOL)neighbourPageAsleep {
@@ -227,6 +227,13 @@ BOOL Above(NSView *a, NSView *b) {
     AcceptDrops(sub, _visible);
   }
   [CATransaction commit];
+  if (_frozen && !_visible && !shown) {
+    __weak ArdiaWebView *weakSelf = self;
+    dispatch_async(dispatch_get_main_queue(), ^{
+      ArdiaWebView *view = weakSelf;
+      if (view && view->_frozen && !view->_visible) view->_tab.frozen = YES;
+    });
+  }
   if (TraceVisibility())
     NSLog(@"[ardiacore-vis] %@ paint visible=%d warm=%d tab=%d page=%@ inWindow=%ld hiddenAncestor=%d", _transferKey,
           _visible, _warm, _tab ? (int)_tab.tabId : -1, _tab.view.superview == self ? @"here" : @"elsewhere",

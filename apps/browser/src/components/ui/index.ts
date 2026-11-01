@@ -51,3 +51,5 @@ export {
   type SymbolProps,
   type WebViewHandle,
 } from "./native";
+
+export { ScreenshotCanvas, ScreenshotColor } from "@ardia/shell";

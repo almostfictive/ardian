@@ -1,3 +1,5 @@
+import { workspacesOf } from "../workspaces/model";
+import { moveTabsToWorkspace } from "../workspaces/actions";
 import { chooseFromMenu, type ChoiceItem } from "../app/menuChoice";
 import { closeGroup, moveGroupToProfile, moveGroupToWindow } from "../browser/actions";
 import { useBrowser, type BrowserState } from "../browser/store";
@@ -42,7 +44,7 @@ export function groupMenuItems(s: BrowserState, windowId: string, groupId: strin
       { id: "duplicate", title: "Duplicate Group", symbol: "plus.square.on.square" },
     ],
     [
-      { id: "moveToProfile", title: "Move to Profile", symbol: "person", enabled: !incognito, children: profileItems(s, (id) => id === g.profileId) },
+      { id: "moveToWorkspace", title: "Move to Workspace", symbol: "square.grid.2x2", children: workspacesOf(s.windows[windowId]!).map((w) => ({ value: { kind: "workspace" as const, workspaceId: w.id }, title: w.name })) },
       ...(g.pinned ? [] : [{ id: "moveToWindow", title: "Move to Window", symbol: "macwindow", enabled: !incognito, children: windowItems(s, windowId) }]),
     ],
     [
@@ -67,6 +69,7 @@ export async function openGroupMenu(windowId: string, groupId: string) {
 
 function sendGroup(groupId: string, to: GroupChoice) {
   if (to.kind === "color") store().updateGroup(groupId, { color: to.color });
+  else if (to.kind === "workspace") moveTabsToWorkspace(store().groups[groupId]?.tabIds ?? [], to.workspaceId);
   else if (to.kind === "profile") void moveGroupToProfile(groupId, to.profileId);
   else if (to.kind === "window") moveGroupToWindow(groupId, to.windowId);
 }

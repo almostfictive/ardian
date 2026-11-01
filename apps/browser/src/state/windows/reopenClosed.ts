@@ -107,6 +107,8 @@ export function restoreWindow(s: BrowserState, entry: ClosedWindow): BrowserStat
   const profileOk = (p: string) => (s.profiles[p] ? p : s.settings.defaultProfileId);
   const w = emptyWindow(id, profileOk(entry.window.profileId), "main", entry.window.frame);
   w.sidebarOpen = entry.window.sidebarOpen;
+  w.workspaces = entry.window.workspaces;
+  w.activeWorkspaceIds = entry.window.activeWorkspaceIds;
   const tabs = { ...s.tabs };
   const live = { ...s.live };
   const ids: string[] = [];

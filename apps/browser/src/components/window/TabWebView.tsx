@@ -1,3 +1,4 @@
+import { useWorkspaceFrozen, applyWorkspaceFreeze, refreshWorkspaceFreeze } from "../../state/workspaces/lifecycle";
 import { WebView } from "../ui";
 import { type OpenWindowRequest, openFromPage } from "../../state/tabs/openFromPage";
 import type { PageEngine } from "../../state/engines/engines";
@@ -54,6 +55,8 @@ export const TabWebView = memo(function TabWebView(props: TabWebViewProps) {
 
 function EngineWebView({ tabId, visible, warm, peekOf, engine }: TabWebViewProps & { engine: PageEngine }) {
   const { navigation, adoptId, profileId, shownUrl } = useTabValue(tabId, webViewTab, shallowEqual);
+  const workspaceIsFrozen = useWorkspaceFrozen(tabId);
+  useEffect(() => { applyWorkspaceFreeze(tabId, workspaceIsFrozen); }, [tabId, workspaceIsFrozen, visible]);
   const neighbour = useBrowserWhile(warm, (s) => warm && s.windows[s.tabs[tabId]?.windowId ?? ""]?.profileId !== profileId);
   const tab = () => currentTab(tabId);
   const ref = useMemo(() => webviewRef(tabId), [tabId]);
@@ -135,6 +138,7 @@ function EngineWebView({ tabId, visible, warm, peekOf, engine }: TabWebViewProps
         markTabReady(tabId);
         noteTabReady(tabId);
         noteReady(tabId);
+        refreshWorkspaceFreeze(tabId);
         void webviews.get(tabId)?.setMuted(isTabSilenced(tabId));
       }}
       onNavigationChange={({ url: reported, title, canGoBack, canGoForward, isLoading, themeColor, themeColorSource, initialDocumentAccessed, committedInitial, committedUrl }) => {

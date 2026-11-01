@@ -13,7 +13,7 @@ import { splitTabIds, withPaneIds } from "../splits/splits";
 type Section = ReturnType<typeof sectionOf>;
 
 
-export const sharesTabs = (s: Pick<BrowserState, "settings">) => !!s.settings?.shareTabsAcrossWindows;
+export const sharesTabs = (_: Pick<BrowserState, "settings">) => false;
 
 const listable = (t: Tab) => !t.pin && !!t.url && !t.liveItem;
 

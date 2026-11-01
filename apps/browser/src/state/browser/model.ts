@@ -2,6 +2,7 @@ import { appUrlOrigin, displayHost } from "@ardia/core";
 import type { BrowserState } from "./store";
 import { DEFAULT_PROFILE_ID } from "../settings/settings";
 import type { BrowserWindow, Navigation, Profile, Tab, TabGroup, TabLive, TabPin, TabSnapshot } from "./types";
+import { activeWorkspaceId, tabWorkspaceId } from "../workspaces/model";
 import { pinnedGroupMembers } from "./structure";
 
 
@@ -27,7 +28,7 @@ export const engineProfile = (s: Pick<BrowserState, "profiles">, profileId: stri
     const at = profileId.indexOf("@");
     return `${at < 0 ? profileId : profileId.slice(0, at)}@${engineProfile(s, incognitoOriginal(profileId))}`;
   }
-  const id = s.profiles[profileId]?.dataId ?? profileId;
+  const id = profileId;
   return id === DEFAULT_PROFILE_ID ? "" : id;
 };
 
@@ -79,6 +80,7 @@ export const snapshotTab = (t: Tab): TabSnapshot => ({
   pinnedUrl: t.pinnedUrl,
   ...(t.engine ? { engine: t.engine } : {}),
   profileId: t.profileId,
+  ...(t.workspaceId ? { workspaceId: t.workspaceId } : {}),
 });
 
 export const TILE_PIN: TabPin = { as: "tile" };
@@ -102,7 +104,10 @@ export function viewTabIds(s: BrowserState, windowId: string, profileId?: string
   const w = s.windows[windowId];
   if (!w) return [];
   const profile = profileId ?? w.profileId;
-  return w.tabIds.filter((id) => s.tabs[id]?.profileId === profile);
+  return w.tabIds.filter((id) => {
+    const t = s.tabs[id];
+    return t?.profileId === profile && tabWorkspaceId(t) === activeWorkspaceId(w, profile);
+  });
 }
 
 export function pinnedItemsRemain(s: BrowserState, id: string): boolean {
@@ -116,6 +121,7 @@ export function closesWindow(s: BrowserState, id: string): boolean {
   const tab = s.tabs[id];
   const w = tab && s.windows[tab.windowId];
   if (!tab || !w || tab.profileId !== w.profileId || inPinnedContainer(s, id)) return false;
+  if (w.tabIds.some((t) => s.tabs[t] && (s.tabs[t]!.profileId !== tab.profileId || tabWorkspaceId(s.tabs[t]!) !== tabWorkspaceId(tab)))) return false;
   return viewTabIds(s, w.id).every((t) => t === id || s.tabs[t]!.page.kind === "asleep");
 }
 

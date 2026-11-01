@@ -1,3 +1,4 @@
+import { FavouritesRow } from "../toolbar/FavouritesRow";
 import { memo, useEffect, useLayoutEffect } from "react";
 import { Animated, View } from "react-native";
 import { layout } from "../ui/theme";
@@ -79,7 +80,7 @@ export const TabPane = memo(function TabPane({
   const theme = useProfileTheme(own.profileId);
   const toolbarHeight = useToolbarRow().height;
   const isNewTab = !own.url;
-  const emptyCard = useSettings((st) => isNewTab && st.newTabOpens === "commandBar");
+  const emptyCard = true;
   const newTabShown = useStoreWhile(usePages, live, (s) => !!s.pages[tabId]?.newTabShown);
   const inSomeSplit = useBrowserWhile(!!warm, (s) => !!warm && !!splitOf(s, tabId));
   const inSplit = visible ? inActiveSplit : inSomeSplit;
@@ -122,6 +123,7 @@ export const TabPane = memo(function TabPane({
       }}
     >
       {!autoLayout && bookmarksBar && <BookmarksBar tabId={tabId} placeholder={!visible} />}
+      {visible && !fullscreen && !small && <FavouritesRow />}
       {bar.kind === "toolbar" && <Toolbar tabId={tabId} geometry={geometry} windowId={windowId} inSplit={inSplit} focused={focused || !inSplit} />}
       {bar.kind === "backdrop" && <ToolbarBackdrop tabId={tabId} />}
       {bar.kind === "spacer" && <View style={{ height: toolbarHeight }} />}

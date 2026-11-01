@@ -15,7 +15,6 @@ import { AdvancedPane } from "./panes/Advanced";
 import { AppearancePane } from "./panes/Appearance";
 import { CalendarPane } from "./panes/Calendar";
 import { GeneralPane } from "./panes/General";
-import { LiveFoldersPane } from "./panes/LiveFolders";
 import { ExtensionsPane } from "./panes/Extensions";
 import { PasswordsPane } from "./panes/Passwords";
 import { AutofillPane } from "./panes/Autofill";
@@ -174,7 +173,7 @@ const PANE_VIEWS: Record<SettingsPane, (place: SettingsPlace) => ReactNode> = {
   search: () => <SearchPane />,
   engines: () => <EnginesPane />,
   shortcuts: () => <ShortcutsPane />,
-  liveFolders: () => <LiveFoldersPane />,
+  liveFolders: () => <GeneralPane />,
   calendar: () => <CalendarPane />,
   advanced: () => <AdvancedPane />,
 };

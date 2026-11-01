@@ -3,7 +3,7 @@ import type { ChoiceItem } from "../app/menuChoice";
 import { menuShortcut } from "../commands/commandShortcuts";
 import { bookmarkRoots, folderChildren, ROOT_TITLES } from "../bookmarks/bookmarks";
 import type { BrowserState } from "../browser/store";
-import { bookmarkProfileId, windowTitle } from "../browser/model";
+import { bookmarkProfileId, viewTabIds, windowTitle } from "../browser/model";
 import { groupLabel } from "../pins/tabGrouping";
 import { groupPath } from "../groups/groups";
 
@@ -12,6 +12,7 @@ export { menuSections as sections } from "../app/menuSections";
 export type Choice = Extract<MenuItem, { id: string }>;
 
 export type Destination =
+  | { kind: "workspace"; workspaceId: string }
   | { kind: "profile"; profileId: string | null }
   | { kind: "window"; windowId: string | null }
   | { kind: "group"; groupId: string }
@@ -61,7 +62,7 @@ export function groupItems(s: BrowserState, windowId: string, exclude: string | 
   const w = s.windows[windowId];
   const byTitle = (a: { title: string }, z: { title: string }) => (a.title < z.title ? -1 : a.title > z.title ? 1 : 0);
   const listed = Object.values(s.groups)
-    .filter((g) => g.windowId === windowId && g.profileId === w?.profileId && g.id !== exclude)
+    .filter((g) => g.windowId === windowId && g.profileId === w?.profileId && g.id !== exclude && g.tabIds.some((id) => viewTabIds(s, windowId).includes(id)))
     .map((g) => ({
       pinned: g.pinned,
       item: { value: { kind: "group" as const, groupId: g.id }, title: groupPath(s.groups, g.id).map((id) => groupLabel(s, s.groups[id]!)).join(" › ") },

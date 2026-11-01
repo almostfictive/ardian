@@ -8,8 +8,8 @@ export type PaneBar =
   | { kind: "autoHide"; bar: "pane" | "window" | "backdrop" | null };
 
 export function cardChrome(o: { addressInSidebar: boolean; small: boolean; split: boolean; fullscreen: boolean; hideWhileScrolling: boolean }): CardChrome {
-  if (o.addressInSidebar || o.small) return { kind: "none" };
-  return { kind: o.split || o.fullscreen ? "pane" : "window", autoHide: o.hideWhileScrolling };
+  if (o.small) return { kind: "none" };
+  return { kind: "pane", autoHide: false };
 }
 
 export function paneBar(chrome: CardChrome, pane: { visible: boolean; fullscreen: boolean; lingering: boolean }): PaneBar {

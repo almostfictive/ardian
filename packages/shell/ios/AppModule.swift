@@ -6,7 +6,7 @@ import ExpoModulesCore
 public class AppModule: Module {
   public func definition() -> ModuleDefinition {
     Name("ArdiaApp")
-    Constant("apiVersion") { () -> Int in 36 }
+    Constant("apiVersion") { () -> Int in 37 }
 
     OnCreate {
       DispatchQueue.main.async { AppIcons.restore() }
@@ -75,6 +75,16 @@ public class AppModule: Module {
     AsyncFunction("openExternalURL") { (url: String) -> Bool in
       guard let target = URL(string: url), target.scheme != nil else { return false }
       return NSWorkspace.shared.open(target)
+    }.runOnQueue(.main)
+
+    AsyncFunction("renderScreenshot") { (data: String, crop: [Double]?, strokes: [[String: Any]]) throws -> [String: Any] in
+      try ScreenshotImage.reply(ScreenshotImage.render(data, crop: crop, strokes: strokes))
+    }
+    AsyncFunction("stitchScreenshots") { (tiles: [[String: Any]], width: Double, height: Double) throws -> [String: Any] in
+      try ScreenshotImage.stitch(tiles, width: width, height: height)
+    }
+    AsyncFunction("exportScreenshot") { (data: String, strokes: [[String: Any]], output: String, windowId: String, promise: Promise) in
+      ScreenshotImage.export(data, strokes: strokes, output: output, windowId: windowId, promise: promise)
     }.runOnQueue(.main)
 
     AsyncFunction("saveScreenshot") { (data: String) throws -> String in

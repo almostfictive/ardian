@@ -154,8 +154,8 @@ export const toolRows = {
       rows: {
         memorySaver: {
           advanced: true,
-          title: "Memory Saver",
-          description: "Ardian frees up memory from inactive tabs. This gives active tabs and other apps more computer resources and keeps Ardian fast. Your inactive tabs automatically become active again when you go back to them.",
+          title: "Snooze inactive tabs to save memory",
+          description: "Workspace tabs are frozen first and resume without reloading. Memory Saver can later discard individual tabs when memory is needed. Discarded tabs reload when selected.",
           keywords: ["sleep", "sleeping tabs", "tab sleeping", "discard", "hibernate", "memory", "ram", "inactive tabs", "unload", "suspend", "performance"],
         },
         memorySaverMode: {
@@ -168,12 +168,12 @@ export const toolRows = {
       },
     },
     {
-      section: "Always keep these sites active",
+      section: "Do not let it sleep",
       rows: {
         keepActiveSites: {
           advanced: true,
-          title: "Always keep these sites active",
-          description: "Sites you add will always stay active and memory won't be freed up from them.",
+          title: "Do not let it sleep",
+          description: "URLs you add are never frozen or discarded, including in inactive workspaces.",
           keywords: ["sleep", "never sleep", "keep awake", "exceptions", "discard", "hibernate", "memory saver", "memory"],
         },
       },

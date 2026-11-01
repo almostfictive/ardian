@@ -1,3 +1,4 @@
+import { PageCardToolbar } from "./PageCardToolbar";
 import { pageHostLabel, urlTrail } from "../../lib/url";
 import { memo, useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { useShallow } from "zustand/react/shallow";
@@ -45,94 +46,8 @@ export const urlTextLeft = (insecure: boolean) => (insecure ? LOCK.left + LOCK.w
 export const insecureLevel = (p: PageState) =>
   p.security && (p.security.level === "insecure" || p.security.level === "certificateError") ? p.security.level : null;
 
-export function Toolbar({
-  tabId,
-  geometry,
-  windowId,
-  inSplit,
-  focused,
-  bare,
-}: {
-  tabId: string;
-  geometry: ToolbarGeometry;
-  windowId: string;
-  inSplit: boolean;
-  focused: boolean;
-  bare?: boolean;
-}) {
-  const theme = useTheme();
-  const sidebarHint = useShortcutHint("toggleSidebar");
-  const tab = useToolbarTab(tabId);
-  const isLoading = useTabLive(tabId, (l) => l.isLoading);
-  const palette = useSitePalette(tabId);
-  const band = useEasedColor(bare ? null : palette.background);
-  const history = useHistoryAvailability(tabId);
-  const row = useToolbarRow();
-  const extensionsWidth = useToolbarExtensionsWidth(windowId, 1, row.extensionButton);
-  useEffect(() => setToolbarExtensionsWidth(windowId, extensionsWidth), [windowId, extensionsWidth]);
-  const dim = useRef(new Animated.Value(focused ? 1 : 0.5)).current;
-  const dimmedFor = useRef(focused);
-  useEffect(() => {
-    if (dimmedFor.current === focused) return;
-    dimmedFor.current = focused;
-    Animated.timing(dim, { toValue: focused ? 1 : 0.5, duration: TOOLBAR_MOTION.dim, easing: curve.outQuad, useNativeDriver: true }).start();
-  }, [focused]);
-  const focus = useCallback(() => {
-    if (!focused) activate(tabId);
-  }, [focused, tabId]);
-  const at = useMemo(() => {
-    const top = row.center - row.button / 2;
-    const place = (center: number | null) => ({ position: "absolute" as const, top, left: (center ?? 0) - row.button / 2 });
-    const hit = { width: row.button, height: row.button, plateX: 0, plateY: 0, box: row.button, radius: row.buttonRadius };
-    return { top, hit, sidebarButton: place(geometry.sidebarButton), back: place(geometry.back), forward: place(geometry.forward), reload: place(geometry.reload) };
-  }, [geometry, row]);
-  const right = Math.max(geometry.urlLeft, urlFieldRight(inSplit, extensionsWidth, row));
-  const urlStyle = useMemo(() => ({ position: "absolute" as const, left: right, right, top: urlFieldOf(row).top }), [geometry.urlLeft, right, row]);
-  if (!tab) return <View style={{ height: row.height }} />;
-
-  return (
-    <View style={{ height: row.height }}>
-      {!bare &&
-        (liquidGlass ? (
-          <View style={{ position: "absolute", top: TOOLBAR_PILL.top, left: TOOLBAR_PILL.side, right: TOOLBAR_PILL.side, bottom: TOOLBAR_PILL.bottom, borderRadius: TOOLBAR_PILL.radius, overflow: "hidden" }}>
-            <GlassFill kind="panel" radius={TOOLBAR_PILL.radius} fill={palette.background ?? palette.pill} dark={palette.background ? palette.text.startsWith(ink.white) : undefined} />
-          </View>
-        ) : (
-          <Animated.View style={[StyleSheet.absoluteFill, { backgroundColor: band }]} />
-        ))}
-      <WindowDragRegion style={StyleSheet.absoluteFill} />
-      <Animated.View style={[StyleSheet.absoluteFill, { opacity: dim }]} pointerEvents="box-none">
-        {geometry.sidebarButton !== null && (
-          <Button variant="icon" toolbar
-            style={at.sidebarButton}
-            palette={palette}
-            icon="sidebar.left"
-            size={GLYPH}
-            box={row.button}
-            radius={row.buttonRadius}
-            onPress={() => toggleSidebar(windowId)}
-            tooltip={withShortcut("Auto-Hide Tabs", sidebarHint)}
-          />
-        )}
-        <HistoryButton style={at.back} hit={at.hit} tabId={tab.id} windowId={tab.windowId} direction={-1} disabled={!history.back} palette={palette} onFocus={focus} />
-        <HistoryButton style={at.forward} hit={at.hit} tabId={tab.id} windowId={tab.windowId} direction={1} disabled={!history.forward} palette={palette} onFocus={focus} />
-        <ReloadButton style={at.reload} hit={at.hit} tab={tab} loading={isLoading} palette={palette} onFocus={focus} />
-        <ToolbarExtensions tabId={tab.id} windowId={windowId} palette={palette} top={row.center - row.extensionButton / 2} right={inSplit ? 8 + 2 * row.button : 8} limit={1} button={row.extensionButton} />
-        {tab ? (
-          <ToolbarUrlField tab={tab} palette={palette} windowId={windowId} inSplit={inSplit} onFocus={focus} style={urlStyle} />
-        ) : null}
-        {inSplit && (
-          <View style={{ position: "absolute", top: at.top, right: 8, flexDirection: "row", gap: -2 }}>
-            <Button variant="icon" toolbar palette={palette} icon="rectangle.split.2x1" size={14} box={row.button} radius={row.buttonRadius} onPress={() => showSplitMenu(tab.id)} tooltip="Split View" />
-            <Button variant="icon" toolbar palette={palette} icon="xmark" size={12} weight="medium" box={row.button} radius={row.buttonRadius} onPress={() => closePane(tab.id)} tooltip="Close Pane" />
-          </View>
-        )}
-      </Animated.View>
-
-      {tab.url && !bare && !liquidGlass ? <View style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: 1, borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: palette.divider }} /> : null}
-      {isLoading && <TabProgressBar key={tabId} tabId={tabId} color={palette.background ? palette.icon : theme.accent} />}
-    </View>
-  );
+export function Toolbar({ tabId, windowId, inSplit }: { tabId: string; geometry: ToolbarGeometry; windowId: string; inSplit: boolean; focused: boolean; bare?: boolean }) {
+  return <PageCardToolbar tabId={tabId} windowId={windowId} inSplit={inSplit} />;
 }
 
 export function ToolbarBackdrop({ tabId }: { tabId: string }) {

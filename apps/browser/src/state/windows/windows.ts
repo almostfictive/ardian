@@ -1,3 +1,4 @@
+import { activeWorkspaceId } from "../workspaces/model";
 import type { StateCreator } from "zustand";
 import type { BrowserState } from "../browser/store";
 import {
@@ -91,7 +92,7 @@ export function moveTabsInto(s: BrowserState, ids: string[], targetId: string): 
   for (const tab of moving) {
     const t = tab;
     const loaded = hasLoadedPage(tab);
-    tabs[t.id] = { ...t, windowId: targetId, page: loaded ? loadedPage(navigationTo(t.url)) : hasPage(tab) ? IDLE : tab.page };
+    tabs[t.id] = { ...t, windowId: targetId, workspaceId: activeWorkspaceId(target, t.profileId), page: loaded ? loadedPage(navigationTo(t.url)) : hasPage(tab) ? IDLE : tab.page };
     live[t.id] = IDLE_LIVE;
     activeTabIds[t.profileId] ??= t.id;
   }
@@ -158,7 +159,7 @@ export const createWindowsSlice: StateCreator<BrowserState, [], [], WindowsSlice
     if (!next.windows[id]!.tabIds.length) next = withNewTab(next, id, { url: o.url, adoptId: o.adoptId })[0];
     const first = next.windows[id]!.tabIds[0]!;
     const shown = next.windows[id]!.activeTabIds[next.tabs[first]!.profileId] ?? first;
-    if (!small) next = adoptParkedPins(next, id, next.tabs[shown]!.profileId);
+
     next = apply(next, activated(next, shown));
     const focused = focusedWindowOf(s);
     if (o.background && focused && s.windows[focused]) {
@@ -240,7 +241,7 @@ export const createWindowsSlice: StateCreator<BrowserState, [], [], WindowsSlice
     let s = get();
     const w = s.windows[windowId];
     if (!w || w.kind === "private" || isSmallWindow(w) || !s.profiles[profileId] || w.profileId === profileId) return;
-    s = adoptParkedPins(s, windowId, profileId);
+
     const remembered = w.activeTabIds[profileId];
     let target = remembered && s.tabs[remembered]?.windowId === windowId ? remembered : undefined;
     target ??= s.windows[windowId]!.tabIds.find((id) => s.tabs[id]?.profileId === profileId && !isAsleep(s.tabs[id]));
@@ -266,6 +267,7 @@ export const createWindowsSlice: StateCreator<BrowserState, [], [], WindowsSlice
 
   moveTabToProfile(tabId, profileId) {
     const s = get();
+    if (s.tabs[tabId]?.profileId !== profileId) return;
     const next = intoProfile(s, tabId, profileId);
     if (next !== s) set(apply(next, activated(next, tabId)));
   },
@@ -283,6 +285,7 @@ export const createWindowsSlice: StateCreator<BrowserState, [], [], WindowsSlice
   moveGroupToProfile(groupId, profileId) {
     const s = get();
     const g = s.groups[groupId];
+    if (g?.profileId !== profileId) return;
     if (!g || g.profileId === profileId || !s.profiles[profileId] || isIncognitoProfile(g.profileId)) return;
     const tree = groupTree(s.groups, groupId);
     const kept = splitsWithin(s, g.tabIds);

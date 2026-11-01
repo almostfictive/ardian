@@ -46,8 +46,7 @@ export function ProfilesPane() {
   return (
     <View>
       <Text style={{ marginTop: 20, ...settingsType.lead, lineHeight: 17, color: theme.textSecondary }}>
-        Profiles keep your browsing organized. Each keeps its own history, logins, cookies, and extensions, unless you turn on Share data
-        when you create it: then it uses another profile's, and only the tabs are its own.
+        Profiles keep separate history, logins, cookies, and extensions. Each profile has its own workspaces and tabs.
       </Text>
 
       <SectionHeader title="New windows open with" />
