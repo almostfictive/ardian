@@ -60,8 +60,10 @@ jobs:
           test "$BUNDLE_ID" = "com.almostfictive.ardian"
 
       - name: Zip Release app
+        env:
+          INPUT_VERSION: ${{ inputs.version }}
         run: |
-          if [ -n "${{ inputs.version }}" ]; then TAG="${{ inputs.version }}";
+          if [ -n "$INPUT_VERSION" ]; then TAG="$INPUT_VERSION";
           elif [[ "${GITHUB_REF}" == refs/tags/v* ]]; then TAG="${GITHUB_REF_NAME}";
           else TAG="manual"; fi
           ditto -c -k --sequesterRsrc --keepParent apps/browser/build/Build/Products/Release/Ardian.app "Ardian-${TAG}.zip"

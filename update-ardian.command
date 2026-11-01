@@ -7,7 +7,7 @@
 #     Applications, and clears the download block so macOS will open it
 #     without the "can't verify" warning.
 # It only touches Ardian. It never touches Opera or any other browser.
-set -e
+set -eo pipefail
 REPO="almostfictive/Ardian"
 APP="/Applications/Ardian.app"
 STATE="$HOME/.ardian-update-state"
@@ -34,6 +34,10 @@ if pgrep -x Ardian >/dev/null 2>&1; then
   sleep 2
 fi
 ditto -x -k "$TMPDIR/Ardian.zip" "$TMPDIR"
+if [ ! -d "$TMPDIR/Ardian.app" ]; then
+  echo "The download did not contain Ardian.app. Your installed copy was left alone." >&2
+  exit 1
+fi
 if [ -d "$APP" ]; then
   echo "Moving the old Ardian to Trash..."
   osascript -e 'tell application "Finder" to delete POSIX file "/Applications/Ardian.app"' 2>/dev/null || rm -rf "$APP"
