@@ -44,7 +44,7 @@ export function Tile({
   const site = useSiteTokens();
   const glass = useGlass();
   const lit = pressed || open;
-  const fill = shape === "row" || quiet ? (lit || hovered ? menuRowFill(theme, lit) : undefined) : lit ? site.tilePressed : hovered ? site.tileHover : site.tile;
+  const fill = shape === "row" || quiet ? (lit || hovered ? menuRowFill(theme, lit) : undefined) : lit ? site.tilePressed : hovered ? site.tileHover : undefined;
   const corner = shape === "tile" ? radius.tile : shape === "row" ? PANEL.rowRadius : capsule(height);
   return (
     <View
@@ -104,7 +104,7 @@ export const ActionTile = forwardRef<
         onAccessibilityAction={(event) => event.nativeEvent.actionName === "activate" && onPress(event)}
       >
         {({ pressed }) => (
-          <Tile shape="tile" height={caption ? SITE_PANEL.captionHeight : SITE_PANEL.actionHeight} hovered={hovered} pressed={pressed} stroke style={caption ? CAPTIONED : CENTERED}>
+          <Tile shape="tile" height={caption ? SITE_PANEL.captionHeight : SITE_PANEL.actionHeight} hovered={hovered} pressed={pressed} open={active} style={caption ? CAPTIONED : CENTERED}>
             {caption ? (
               <>
                 <Symbol name={icon} size={13} color={active ? theme.accent : theme.icon} style={CAPTION_GLYPH} />

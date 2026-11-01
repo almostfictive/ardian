@@ -92,7 +92,7 @@ export function MenuRow({
     );
   return (
     <View {...hoverProps} tooltip={tooltip}>
-      <Pressable onPress={onPress} disabled={disabled}>
+      <Pressable accessibilityRole="menuitem" accessibilityLabel={title} accessibilityState={{ selected, disabled }} onPress={onPress} disabled={disabled}>
         {({ pressed }) => content(pressed)}
       </Pressable>
     </View>

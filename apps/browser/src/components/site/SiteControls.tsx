@@ -203,7 +203,7 @@ function SiteControlsPanel({
 
         {origin ? (
           <>
-            <SectionLabel title="Settings" inset={PANEL.inset} top={SITE_PANEL.sectionTop} bottom={SITE_PANEL.sectionGap - (SITE_PANEL.settingHeight - SITE_PANEL.settingBadge) / 2} />
+            <SectionLabel title="Settings" inset={PANEL.inset} top={SITE_PANEL.sectionTop} bottom={SITE_PANEL.sectionGap} />
             <SettingRow
               icon="shield.lefthalf.filled"
               title="Block Ads & Trackers"
@@ -287,7 +287,7 @@ function SiteControlsPanel({
         ) : null}
 
         <Divider inset="xl" style={{ marginTop: origin ? space.m : space.xl }} />
-        <Box row style={{ alignItems: "center", justifyContent: "space-between", paddingHorizontal: PANEL.inset, paddingTop: space.ml, paddingBottom: space.l }}>
+        <Box row style={{ alignItems: "center", justifyContent: "space-between", paddingHorizontal: PANEL.inset, paddingVertical: space.m }}>
           <ConnectionChip security={security} open={expanded === "connection"} onPress={() => toggle("connection")} />
           <MoreButton open={expanded === "more"} onPress={() => toggle("more")} />
         </Box>

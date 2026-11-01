@@ -94,7 +94,7 @@ export function Popover({
   fitHeight = false,
   closing = false,
   onClosed,
-  glass = false,
+  glass = true,
 }: {
   width: keyof typeof POPOVER_WIDTH | number;
   top: number;
@@ -124,7 +124,7 @@ export function Popover({
   );
 }
 
-export function PopoverSurface({ children, glass = false, ...props }: Omit<PanelProps, "fill" | "radius" | "border" | "borderWidth" | "shadow" | "glass"> & { glass?: boolean }) {
+export function PopoverSurface({ children, glass = true, ...props }: Omit<PanelProps, "fill" | "radius" | "border" | "borderWidth" | "shadow" | "glass"> & { glass?: boolean }) {
   const theme = useTheme();
   const paneGlass = useGlass("panes");
   if (glass && paneGlass)
