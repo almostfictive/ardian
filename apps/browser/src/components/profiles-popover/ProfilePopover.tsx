@@ -9,7 +9,7 @@ import { runCommand } from "../../state/commands/commands";
 import { switchProfile } from "../../state/browser/actions";
 import { requestCreateProfile } from "../../state/profiles/createProfileRequest";
 
-import { PANEL, POPOVER_WIDTH, Symbol, Text, useHover } from "../ui";
+import { PANEL, POPOVER_WIDTH, space, Symbol, Text, useHover } from "../ui";
 import { useTheme } from "../ui/theme";
 
 export function ProfilePopover() {
@@ -51,7 +51,7 @@ type ProfileEntry = { title: string; icon: string; run: () => void; checked?: bo
 function ProfileMenuRow({ entry }: { entry: ProfileEntry }) {
   const theme = useTheme();
   const { hovered, hoverProps } = useHover();
-  return <View {...hoverProps}><Pressable disabled={entry.disabled} accessibilityRole="menuitem" accessibilityLabel={entry.title} accessibilityState={{ selected: entry.checked, disabled: entry.disabled }} onPress={entry.run} style={{ height: PANEL.rowHeight, paddingHorizontal: 16, flexDirection: "row", alignItems: "center", gap: 12, backgroundColor: hovered && !entry.disabled ? theme.rowHover : undefined, opacity: entry.disabled ? 0.45 : 1 }}>
+  return <View {...hoverProps}><Pressable disabled={entry.disabled} accessibilityRole="menuitem" accessibilityLabel={entry.title} accessibilityState={{ selected: entry.checked, disabled: entry.disabled }} onPress={entry.run} style={{ height: PANEL.rowHeight, paddingHorizontal: space.m, flexDirection: "row", alignItems: "center", gap: space.ml, backgroundColor: hovered && !entry.disabled ? theme.rowHover : undefined, opacity: entry.disabled ? 0.45 : 1 }}>
     <Symbol name={entry.icon} size={17} color={theme.textPrimary} style={{ width: 20, height: 20 }} />
     <Text style={{ flex: 1, color: theme.textPrimary }}>{entry.title}</Text>
     {entry.checked && <Symbol name="checkmark" size={13} color={theme.textPrimary} style={{ width: 16, height: 16 }} />}
