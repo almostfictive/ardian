@@ -9,6 +9,7 @@ import { useWindowId } from "../../state/browser/hooks";
 import { useSidebarDockState } from "../../state/windows/hooks";
 import { useToolbarLightsCenter } from "../../state/windows/layout";
 import { Sidebar } from "../sidebar/Sidebar";
+import { MiniAppsPanel } from "../mini-apps/MiniAppsPanel";
 import { dismissHoverIn } from "../../state/sidebar/hover";
 import { useSidebarUi } from "../../state/sidebar/sidebarUi";
 import { peekHeld, watchHolds } from "../../state/app/transientUi";
@@ -159,6 +160,7 @@ export function DockedLayout({
         )}
       {topStrip && topTabs && !stripShown && topStrip.peek}
       {!topTabs && <SidebarDock dock={dock} open={open} width={width} fullscreen={fullscreen} arc={arc} lights={lights} />}
+      {!topTabs && <MiniAppsPanel />}
     </>
   );
 }

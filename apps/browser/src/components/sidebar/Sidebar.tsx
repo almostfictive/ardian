@@ -27,7 +27,6 @@ import { SidebarPage } from "./SidebarPage";
 import { SidebarRowLookContext, useSidebarRowLookSource } from "./rowLook";
 import { useRevealTabs } from "./useRevealTabs";
 import { TopAppDock } from "../mini-apps/TopAppDock";
-import { MiniAppsPanel } from "../mini-apps/MiniAppsPanel";
 
 const HEADER_RIGHT = space.m;
 
@@ -139,7 +138,6 @@ export function Sidebar({ width }: { width: number }) {
               <TopAppDock />
             </View>
 
-            <MiniAppsPanel />
             <ResizeHandle windowId={windowId} />
             {ghost && !ghost.landing && nothingPinned ? (
               addressBar ? (
