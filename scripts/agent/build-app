@@ -8,6 +8,7 @@
 #               passed to `locked` so a chromium take of yours covers the engine staging.
 # --config      Debug (default) or Release.
 # --force       build even when no native file changed.
+# --ad-hoc      sign a local preview without a development team.
 # --wait SECS   how long to wait for a pod install, or for another build into the same derived data (default 1500).
 #
 # - Incremental: keep using the same name. A new derived data compiles everything (a few minutes), and so does a copy
@@ -30,11 +31,12 @@ usage() {
   exit 64
 }
 
-name=${AC_LOCKED_AS:-dev} config=Debug force="" wait=1500
+name=${AC_LOCKED_AS:-dev} config=Debug force="" ad_hoc="" wait=1500
 while [[ $# -gt 0 ]]; do
   case "$1" in
     -h | --help) help ;;
     --force) force=1; shift; continue ;;
+    --ad-hoc) ad_hoc=1; shift; continue ;;
   esac
   [[ $# -ge 2 ]] || { echo "build-app: $1 needs a value" >&2; usage; }
   case "$1" in
@@ -53,7 +55,11 @@ repo=$(cd "$(dirname "$0")/../.." && pwd)
 app_dir="$repo/apps/browser"
 dd="$app_dir/build-$name"
 log="$dd/build-app.log"
-app="$dd/Build/Products/$config/Ardia.app"
+app="$dd/Build/Products/$config/Ardian.app"
+signing=()
+if [[ -n "$ad_hoc" ]]; then
+  signing=(CODE_SIGN_STYLE=Manual CODE_SIGN_IDENTITY=- DEVELOPMENT_TEAM= CODE_SIGN_ENTITLEMENTS= ENABLE_HARDENED_RUNTIME=NO ARCHS=arm64 ONLY_ACTIVE_ARCH=YES)
+fi
 stamp_file="$dd/.ac-native-stamp-$config"
 
 native_stamp() {
@@ -82,7 +88,7 @@ print(h.hexdigest())
 ' "$repo" "$chromium_framework"
 }
 
-stamp=$(native_stamp) || { echo "build-app: couldn't hash the native files" >&2; exit 1; }
+stamp="$(native_stamp)-${ad_hoc:-development}" || { echo "build-app: couldn't hash the native files" >&2; exit 1; }
 if [[ -z "$force" && $config == Debug && -d "$app" && -f "$stamp_file" && "$(cat "$stamp_file")" == "$stamp" ]]; then
   echo "JS-only: Metro reloads it; no build needed (no native file changed since $app was built; --force builds anyway)"
   exit 0
@@ -96,7 +102,7 @@ echo "build-app: $config into ${dd#"$repo"/} (log: ${log#"$repo"/})"
   cd "$app_dir" &&
     "$repo/scripts/agent/locked" xcodebuild --wait "$wait" --as "$name" -- \
       xcodebuild -workspace macos/Ardia.xcworkspace -scheme Ardia-macOS -derivedDataPath "$dd" \
-      -destination 'platform=macOS,arch=arm64' -configuration "$config" -hideShellScriptEnvironment build
+      -destination 'platform=macOS,arch=arm64' -configuration "$config" -hideShellScriptEnvironment ${signing[@]+"${signing[@]}"} build
 ) >"$log" 2>&1
 status=$?
 elapsed=$(($(date +%s) - start))
