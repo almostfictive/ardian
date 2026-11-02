@@ -19,18 +19,18 @@ trap 'exit 130' INT
 trap 'exit 143' TERM
 git fetch origin
 git fetch upstream
-git show-ref --verify --quiet refs/heads/ardian/base || fail "Create ardian/base before syncing."
-if git show-ref --verify --quiet refs/remotes/origin/ardian/base; then
-  git merge-base --is-ancestor origin/ardian/base ardian/base || fail "Bring local ardian/base up to date with origin/ardian/base first."
+git show-ref --verify --quiet refs/heads/main || fail "Create main before syncing."
+if git show-ref --verify --quiet refs/remotes/origin/main; then
+  git merge-base --is-ancestor origin/main main || fail "Bring local main up to date with origin/main first."
 fi
 day=$(date +%F)
 sync="sync/ardia-$day"
 branches=("$sync")
-sources=(ardian/base)
+sources=(main)
 while IFS= read -r section || [[ -n "$section" ]]; do
   [[ -n "$section" ]] || continue
   git check-ref-format --branch "$section" >/dev/null || fail "Invalid section branch: $section"
-  [[ "$section" != main && "$section" != ardian/base && "$section" != sync/* ]] || fail "Use a section branch, not $section."
+  [[ "$section" != main && "$section" != sync/* ]] || fail "Use a section branch, not $section."
   if git show-ref --verify --quiet "refs/heads/$section"; then
     source="$section"
     if git show-ref --verify --quiet "refs/remotes/origin/$section"; then

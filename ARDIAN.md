@@ -18,7 +18,7 @@ Updates are manual downloads from GitHub Releases; `update-ardian.command` check
 Deploy publish jobs skip when the Hexclave key is absent. Dependabot checks dependencies weekly.
 
 ## Syncing with Ardia
-Run `scripts/ardian-sync` from a clean checkout after pushing `ardian/base`.
+Run `scripts/ardian-sync` from a clean checkout after pushing `main`.
 It fetches both remotes and pushes `sync/ardia-YYYY-MM-DD` for review.
 List section branches, one per line, in `scripts/ardian-sections.txt`; each gets `sync/<branch>-YYYY-MM-DD`.
 A conflict aborts that merge and stops; resolve it on a separate branch. Existing dated branches are never overwritten.
