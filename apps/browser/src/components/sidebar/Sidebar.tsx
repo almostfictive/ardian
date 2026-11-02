@@ -26,6 +26,7 @@ import { GLOW_ROOM, ROW_PITCH, type SidebarGeometry } from "./pageLayout";
 import { SidebarPage } from "./SidebarPage";
 import { SidebarRowLookContext, useSidebarRowLookSource } from "./rowLook";
 import { useRevealTabs } from "./useRevealTabs";
+import { WorkspaceSwitcher } from "../workspaces/WorkspaceSwitcher";
 
 const HEADER_RIGHT = space.m;
 
@@ -122,6 +123,7 @@ export function Sidebar({ width }: { width: number }) {
               <ContextMenuArea style={StyleSheet.absoluteFill} onContextMenu={() => void openSidebarMenu(windowId)}>
                 <WindowDragRegion style={StyleSheet.absoluteFill} />
               </ContextMenuArea>
+              <WorkspaceSwitcher />
               {addressBar ? (
                 <>
                   <SidebarHeaderTools width={width} />
