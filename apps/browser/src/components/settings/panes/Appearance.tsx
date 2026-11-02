@@ -10,6 +10,9 @@ import { MiniWindow } from "../MiniWindow";
 import { PictureChoice } from "../PictureChoice";
 import { AmountSlider } from "../ThemeControls";
 import { BookmarksBarSection } from "./BookmarksBarSection";
+import { ThemePicker } from "../ThemeEditor";
+import { TabLayoutPicker } from "../../onboarding/Personalize";
+import { useWindowId } from "../../../state/browser/hooks";
 import { modePreview, stylePreview } from "../tokens";
 import { useSettingsColors } from "../useSettingsColors";
 import { APP_ICON_SIZE, appIconChoices, chooseAppIcon } from "../../../state/settings/paneData";
@@ -22,6 +25,7 @@ const MODES: { value: Settings["appearance"]; title: string; description: string
 ];
 
 export function AppearancePane() {
+  const windowId = useWindowId();
   const appearance = useSettings((s) => s.appearance);
   const spacesFollow = useSettings((s) => s.spacesFollowAppearance);
   const choose = (mode: Settings["appearance"]) => updateSettings({ appearance: mode });
@@ -41,6 +45,10 @@ export function AppearancePane() {
         </Group>
       </Box>
       <InterfaceStylePicker />
+      <SectionHeader title="Theme Color" description="Set the color used for this profile." />
+      <Group><ThemePicker windowId={windowId} size={28} gap={space.xs} /></Group>
+      <SectionHeader title="Tab Layout" description="Choose how you would like to view your tabs." />
+      <TabLayoutPicker windowId={windowId} />
       <AddressBarPicker />
       <BookmarksBarSection />
       <SelectedTabGlowPicker />

@@ -6,7 +6,7 @@ import { useWindow, useWindowId } from "../../state/browser/hooks";
 import { useCardAnchors } from "../../state/windows/layout";
 import { NewTabExtras } from "./NewTabExtras";
 import { IncognitoHeading } from "./IncognitoHeading";
-import { DIA_OFFSET, MARK_ABOVE_BAR, newTabBarTop } from "./newTabLayout";
+import { DIA_OFFSET, newTabBarTop } from "./newTabLayout";
 import { useOnboarding } from "../../state/onboarding/onboarding";
 import { Omnibox } from "../omnibox/Omnibox";
 import { NTP_BAR } from "./tokens";

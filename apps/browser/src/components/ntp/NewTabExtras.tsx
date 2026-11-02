@@ -2,7 +2,6 @@ import { StyleSheet, View } from "react-native";
 import { useWindow, useWindowId } from "../../state/browser/hooks";
 import { tourAnchorRef } from "../onboarding/tour/anchors";
 import { CheckInBanner } from "./CheckInBanner";
-import { PersonalizeButton } from "./Personalize";
 import { ReleaseNotesPage, ReleaseNotesPostcard } from "./Postcard";
 import { closeReleaseNotes, openReleaseNotes, retireReleaseNotes, usePendingReleaseNotes, useReleaseNotesPage } from "../../state/releaseNotes/releaseNotes";
 
@@ -19,7 +18,6 @@ export function NewTabExtras({ size, bar }: { size: { width: number; height: num
       <View ref={tourAnchorRef(windowId, "page")} style={StyleSheet.absoluteFill} pointerEvents="none" />
       <View ref={tourAnchorRef(windowId, "commandBar")} style={{ position: "absolute", left: bar.x, top: bar.y, width: bar.width, height: bar.height }} pointerEvents="none" />
       <CheckInBanner windowId={windowId} />
-      {incognito ? null : <PersonalizeButton windowId={windowId} />}
       {pending && !incognito && !page ? (
         <ReleaseNotesPostcard notes={pending} size={size} onOpen={() => openReleaseNotes(windowId)} onDismiss={retireReleaseNotes} />
       ) : null}
