@@ -30,6 +30,8 @@ const isWidth = (v: unknown) => typeof v === "number" && Number.isFinite(v) && v
 const hasStrings = (v: unknown, keys: readonly string[]) => isFields(v) && keys.every((k) => isString(v[k]));
 
 const STRING_LIST: JsonSchema = { type: "array", items: { type: "string" } };
+const MINI_APP_IDS = ["whatsapp", "slack", "telegram", "discord", "gmail", "calendar"];
+const MINI_APP_LIST: JsonSchema = { type: "array", items: { type: "string", enum: MINI_APP_IDS }, uniqueItems: true };
 const WIDTH: JsonSchema = { type: "number", exclusiveMinimum: 0 };
 const engineRecords = (keys: string[]): JsonSchema => ({
   type: "array",
@@ -94,6 +96,7 @@ export const SETTING_SPECS = {
   commandScrollZoom: flag(true, SYNCED),
   videoUpscaling: flag(true, SYNCED),
   sidebarMediaControls: flag(true, SYNCED),
+  sidebarMiniApps: shaped<string[]>(["whatsapp", "slack", "telegram"], (v) => isStringList(v) && new Set(v).size === v.length && v.every((id) => MINI_APP_IDS.includes(id)), MINI_APP_LIST, SYNCED),
   sidebarWidth: width(DEFAULT_SIDEBAR_WIDTH),
   showSidebarButton: flag(true, SYNCED),
   showClearButton: flag(true, SYNCED),

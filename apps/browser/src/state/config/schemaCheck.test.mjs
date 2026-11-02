@@ -3,7 +3,7 @@ import { test } from "node:test";
 
 export const SUBSET = new Set([
   "type", "enum", "const", "default", "description", "minimum", "maximum", "exclusiveMinimum", "pattern", "items", "prefixItems",
-  "minItems", "maxItems", "properties", "additionalProperties", "propertyNames", "required", "anyOf",
+  "minItems", "maxItems", "uniqueItems", "properties", "additionalProperties", "propertyNames", "required", "anyOf",
 ]);
 
 const isObject = (v) => typeof v === "object" && v !== null && !Array.isArray(v);
@@ -30,6 +30,7 @@ export function accepts(schema, v) {
   }
   if (typeof v === "string" && schema.pattern && !new RegExp(schema.pattern).test(v)) return false;
   if (Array.isArray(v)) {
+    if (schema.uniqueItems && new Set(v.map((item) => JSON.stringify(item))).size !== v.length) return false;
     const prefix = schema.prefixItems ?? [];
     if (!prefix.every((s, i) => i >= v.length || accepts(s, v[i]))) return false;
     if (schema.items !== undefined && !v.slice(prefix.length).every((x) => accepts(schema.items, x))) return false;
@@ -65,6 +66,7 @@ test("the subset checker reads the keywords the way JSON Schema does", () => {
   assert.equal(accepts({ type: ["number", "null"], exclusiveMinimum: 0 }, null), true);
   assert.equal(accepts({ type: ["number", "null"], exclusiveMinimum: 0 }, 0), false);
   assert.equal(accepts({ type: "array", prefixItems: [{ type: "number" }], minItems: 1, maxItems: 1 }, [1, 2]), false);
+  assert.equal(accepts({ type: "array", items: { type: "string" }, uniqueItems: true }, ["a", "a"]), false);
   assert.equal(accepts({ type: "object", properties: { a: { type: "string" } }, additionalProperties: false }, { b: 1 }), false);
   assert.deepEqual(keywordsOutsideSubset({ $schema: "x", type: "object", title: "no" }), ["/title"]);
 });

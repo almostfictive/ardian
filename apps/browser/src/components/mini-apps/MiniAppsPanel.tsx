@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 import { WebView, Button, Symbol, Text, type WebViewHandle } from "../ui";
 import { useTheme } from "../ui/theme";
-import { useWindow, useWindowId, useWindowProfileId } from "../../state/browser/hooks";
+import { useSettings, useWindow, useWindowId, useWindowProfileId } from "../../state/browser/hooks";
 import { openFromPage, pageProfileId } from "../../state/tabs/openFromPage";
 import { closeMiniApp, MINI_APPS, miniAppProfile, useMiniApps, type MiniAppId } from "../../state/mini-apps/store";
 import { space, radius } from "../ui";
@@ -13,12 +13,13 @@ export function MiniAppsPanel() {
   const profileId = useWindowProfileId();
   const active = useMiniApps((state) => state.active[windowId]);
   const visited = useMiniApps((state) => state.visited[`${windowId}|${profileId}`] ?? NONE);
+  const enabled = useSettings((state) => state.sidebarMiniApps);
   const privateWindow = useWindow(windowId, (window) => window?.kind === "private");
   const expanded = useWindow(windowId, (window) => window?.sidebarOpen);
   if (privateWindow || !visited.length) return null;
   return <View pointerEvents={active ? "auto" : "none"} style={StyleSheet.absoluteFill}>
     {active && <Pressable accessibilityLabel="Close mini-app" style={StyleSheet.absoluteFill} onPress={() => closeMiniApp(windowId)} />}
-    {visited.map((app) => <View key={`${profileId}|${app}`} pointerEvents={active === app ? "auto" : "none"} style={{ position: "absolute", left: active === app ? expanded ? 260 : 72 : -20000, top: 64, bottom: 64, right: 28, maxWidth: 960 }}><MiniAppCard windowId={windowId} app={app} visible={active === app} /></View>)}
+    {visited.filter((app) => enabled.includes(app)).map((app) => <View key={`${profileId}|${app}`} pointerEvents={active === app ? "auto" : "none"} style={{ position: "absolute", left: active === app ? expanded ? 260 : 72 : -20000, top: 64, bottom: 64, right: 28, maxWidth: 960 }}><MiniAppCard windowId={windowId} app={app} visible={active === app} /></View>)}
   </View>;
 }
 function MiniAppCard({ windowId, app, visible }: { windowId: string; app: MiniAppId; visible: boolean }) {
