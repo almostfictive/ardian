@@ -17,7 +17,7 @@ import { orderSections } from "../groups/groups";
 import { samePage } from "../../lib/url";
 import { historyOf } from "../history/history";
 import { pinHome } from "../pins/pinHomes";
-import { activeWorkspaceId } from "../workspaces/model";
+import { activeWorkspaceId, tabWorkspaceId } from "../workspaces/model";
 
 export type NewTabOptions = {
   url?: string;
@@ -67,7 +67,7 @@ export function closingTabs(s: BrowserState, ids: string[], { lastClosesWindow =
     const view = viewTabIds(next, w.id);
     const shown = view.filter((id) => gone.includes(id));
     if (!shown.length || !view.every((id) => gone.includes(id) || isAsleep(next.tabs[id]))) continue;
-    const keepsOtherWorkspace = w.tabIds.some((tabId) => !gone.includes(tabId) && s.tabs[tabId] && (s.tabs[tabId]!.profileId !== w.profileId || s.tabs[tabId]!.workspaceId !== w.activeWorkspaceIds?.[w.profileId]));
+    const keepsOtherWorkspace = w.tabIds.some((tabId) => !gone.includes(tabId) && s.tabs[tabId] && (s.tabs[tabId]!.profileId !== w.profileId || tabWorkspaceId(s.tabs[tabId]!) !== activeWorkspaceId(w)));
     const keepsWindow = keepsOtherWorkspace || !lastClosesWindow || leavesEmptyWindow(shown.length > 1 ? removeTabs(next, shown.slice(1), false) : next, shown[0]!);
     if (keepsWindow) next = withNewTab(next, w.id)[0];
     else closedWindows.push(w.id);

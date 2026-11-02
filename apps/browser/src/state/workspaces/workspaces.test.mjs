@@ -109,13 +109,13 @@ test("sessions restore workspace selections and validate malformed fields", () =
   switchWorkspace(windowId, other);
   const second = s().newTab(windowId, { url: "https://example.com/second" });
   const state = s();
-  const saved = parseSession(JSON.stringify({ version: 10, profiles: state.profiles, profileOrder: state.profileOrder, windows: Object.values(state.windows), tabs: Object.values(state.tabs), groups: [], splits: [] }));
+  const saved = parseSession(JSON.stringify({ version: 9, profiles: state.profiles, profileOrder: state.profileOrder, windows: Object.values(state.windows), tabs: Object.values(state.tabs), groups: [], splits: [] }));
   assert(saved);
   s().hydrate(saved);
   assert.equal(activeWorkspaceId(s().windows[windowId]), other);
   assert.equal(s().windows[windowId].activeTabIds[state.windows[windowId].profileId], second);
   switchWorkspace(windowId, home);
   assert.equal(s().windows[windowId].activeTabIds[state.windows[windowId].profileId], first);
-  const malformed = parseSession(JSON.stringify({ version: 10, windows: [{ ...state.windows[windowId], workspaces: "invalid", activeWorkspaceIds: 123 }] }));
+  const malformed = parseSession(JSON.stringify({ version: 9, windows: [{ ...state.windows[windowId], workspaces: "invalid", activeWorkspaceIds: 123 }] }));
   assert.deepEqual(malformed.windows[windowId].workspaces, []);
 });
