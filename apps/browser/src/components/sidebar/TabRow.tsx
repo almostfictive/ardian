@@ -67,8 +67,8 @@ export const TabRow = memo(function TabRow({ tabId, onto = false, shift = null }
   const resettable = (isPinnedRow(tab) || !tab.pin) && awayFromPin(tab);
   const resetting = resettable && backToPin.hovered && !renaming;
   const title = resetting ? "Back to Pinned URL" : tabTitle(tab);
-  const fill = active ? theme.tabSelected : selected ? tokens.multiSelected : hovered ? theme.tabHover : ink.clear;
-  const border = active || selected ? 0.5 : 0;
+  const fill = active ? hovered ? theme.tabSelectedHover : theme.tabSelected : selected ? tokens.multiSelected : hovered ? theme.tabHover : ink.clear;
+  const border = selected && !active ? 0.5 : 0;
 
   return (
     <View
@@ -82,11 +82,10 @@ export const TabRow = memo(function TabRow({ tabId, onto = false, shift = null }
       {({ pressed }) => (
           <SidebarRowSurface
             fill={onto || (!active && pressed) ? theme.tabPressed : fill}
-            selected={active}
             border={border}
             stroke={selected && !active ? tokens.multiSelectedStroke : undefined}
-            padLeft={TAB_ROW.contentLeft - border}
-            padRight={TAB_ROW.trailing - border}
+            padLeft={TAB_ROW.contentLeft}
+            padRight={TAB_ROW.trailing}
           >
             {resettable ? (
               <View {...backToPin.hoverProps}>
@@ -207,16 +206,13 @@ export const SplitRowItem = memo(function SplitRowItem({
   const { hovered, hoverProps } = useRowHover(windowId, null);
   const [moved, movedRef] = useShift(motion?.shift ?? null, useCallback((v: View | null) => registerRow(windowId, entryKey("split", splitId), v), [windowId, splitId]));
   if (tabIds.length < 2) return null;
-  const splitBorder = active ? 1 : 0;
   return (
     <Animated.View ref={wrapper.ref} style={wrapper.style} {...handle}>
       <View {...moved} ref={movedRef} {...hoverProps} style={moved.style as object}>
         <SidebarRowSurface
-          fill={active ? theme.tabSelected : hovered ? theme.tabHover : ink.clear}
-          selected={active}
-          border={splitBorder}
-          padLeft={space.xs - splitBorder}
-          padRight={space.xs - splitBorder}
+          fill={active ? hovered ? theme.tabSelectedHover : theme.tabSelected : hovered ? theme.tabHover : ink.clear}
+          padLeft={space.xs}
+          padRight={space.xs}
         >
           {tabIds.map((id, i) => (
             <View key={id} style={SPLIT_SLOT}>

@@ -24,9 +24,10 @@ const darkRoles = {
   iconDisabled: "#F7F5FF4D",
   mark: "#FFFFFF",
 
-  tabHover: "rgba(255,255,255,0.16)",
+  tabHover: "rgba(255,255,255,0.18)",
   tabPressed: "rgba(255,255,255,0.31)",
-  tabSelected: "rgba(18,18,18,0.5)",
+  tabSelected: "rgba(255,255,255,0.12)",
+  tabSelectedHover: "rgba(255,255,255,0.18)",
   tabSelectedText: "#FFFFFF",
   tabSelectedBorder: ["rgba(255,255,255,0.15)", "rgba(255,255,255,0.15)"] as [string, string],
   tabSelectedShadow: "rgba(255,255,255,0.15)",
@@ -127,7 +128,8 @@ const lightRoles: ColorRoles = {
 
   tabHover: "rgba(255,255,255,0.55)",
   tabPressed: "rgba(255,255,255,0.7)",
-  tabSelected: "rgba(255,255,255,0.7)",
+  tabSelected: "rgba(0,0,0,0.07)",
+  tabSelectedHover: "rgba(0,0,0,0.045)",
   tabSelectedText: "#000000",
   tabSelectedBorder: ["rgba(255,255,255,0.98)", "rgba(0,0,0,0.06)"],
   tabSelectedShadow: "rgba(0,0,0,0.12)",

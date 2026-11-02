@@ -51,7 +51,6 @@ export function AppearancePane() {
       <TabLayoutPicker windowId={windowId} />
       <AddressBarPicker />
       <BookmarksBarSection />
-      <SelectedTabGlowPicker />
       <ScrollBarsPicker />
       <AppIconPicker />
     </View>
@@ -156,29 +155,6 @@ function AddressBarPicker() {
         </Row>
         </Group>
       </Box>
-    </>
-  );
-}
-
-function SelectedTabGlowPicker() {
-  const glow = useSettings((s) => s.selectedTabGlow);
-  return (
-    <>
-      <SectionHeader title="Selected Tab" />
-      <Group>
-        <Row anchor="appearance.selectedTabGlow">
-          <PopUp
-            value={glow}
-            options={[
-              { value: "full", title: "Full" },
-              { value: "soft", title: "Soft" },
-              { value: "off", title: "Off" },
-            ]}
-            onChange={(v) => updateSettings({ selectedTabGlow: v })}
-            minWidth={120}
-          />
-        </Row>
-      </Group>
     </>
   );
 }

@@ -302,17 +302,6 @@ export const generalRows = {
       },
     },
     {
-      section: "Selected Tab",
-      rows: {
-        selectedTabGlow: {
-          advanced: true,
-          title: "Glow around the selected tab",
-          description: "The soft light around the selected tab in the sidebar. Full is Dia's.",
-          keywords: ["glow", "shadow", "halo", "highlight", "selected tab", "active tab"],
-        },
-      },
-    },
-    {
       section: "Scroll Bars",
       rows: {
         pageScrollBars: {

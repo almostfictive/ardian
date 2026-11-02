@@ -65,7 +65,7 @@ export function LiveItemRow({ folderId, item, windowId, inStack = false }: { fol
             }}
           >
             {({ pressed }) => (
-              <SidebarRowSurface fill={!active && pressed ? theme.tabPressed : fill} selected={active} border={active ? 1 : 0} padLeft={TAB_ROW.contentLeft + indent}>
+              <SidebarRowSurface fill={!active && pressed ? theme.tabPressed : active && hovered ? theme.tabSelectedHover : fill} padLeft={TAB_ROW.contentLeft + indent}>
                 {unread ? <Dot size={5} color={theme.accent} style={{ position: "absolute", left: UNREAD_DOT_LEFT + indent }} /> : null}
                 <ItemIcon item={item} completion={completion} colors={colors} />
                 <SidebarRowLabel text={item.title} weight={unread ? "medium" : undefined} color={active ? theme.tabSelectedText : completion ? theme.textSecondary : theme.textTab} />
