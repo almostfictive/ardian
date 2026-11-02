@@ -39,7 +39,8 @@ while IFS= read -r section || [[ -n "$section" ]]; do
   elif git show-ref --verify --quiet "refs/remotes/origin/$section"; then
     source="origin/$section"
   else
-    fail "Section branch does not exist: $section"
+    printf 'Skipping section branch not found on origin: %s\n' "$section"
+    continue
   fi
   branches+=("sync/$section-$day")
   sources+=("$source")
