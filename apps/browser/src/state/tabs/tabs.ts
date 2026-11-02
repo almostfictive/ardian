@@ -67,7 +67,7 @@ export function closingTabs(s: BrowserState, ids: string[], { lastClosesWindow =
     const view = viewTabIds(next, w.id);
     const shown = view.filter((id) => gone.includes(id));
     if (!shown.length || !view.every((id) => gone.includes(id) || isAsleep(next.tabs[id]))) continue;
-    const keepsOtherWorkspace = w.tabIds.some((tabId) => !gone.includes(tabId) && s.tabs[tabId] && (s.tabs[tabId]!.profileId !== w.profileId || tabWorkspaceId(s.tabs[tabId]!) !== activeWorkspaceId(w)));
+    const keepsOtherWorkspace = w.tabIds.some((tabId) => !gone.includes(tabId) && s.tabs[tabId] && !inPinnedContainer(next, tabId) && (s.tabs[tabId]!.profileId !== w.profileId || tabWorkspaceId(s.tabs[tabId]!) !== activeWorkspaceId(w)));
     const keepsWindow = keepsOtherWorkspace || !lastClosesWindow || leavesEmptyWindow(shown.length > 1 ? removeTabs(next, shown.slice(1), false) : next, shown[0]!);
     if (keepsWindow) next = withNewTab(next, w.id)[0];
     else closedWindows.push(w.id);
@@ -133,7 +133,7 @@ export function removeTabs(s: BrowserState, ids: string[], record: boolean): Bro
     const activeTabIds = { ...w.activeTabIds };
     for (const [profileId, activeId] of Object.entries(w.activeTabIds)) {
       if (!gone.has(activeId)) continue;
-      const before = w.tabIds.filter((id) => s.tabs[id]?.profileId === profileId && s.tabs[id]?.workspaceId === w.activeWorkspaceIds?.[profileId]);
+      const before = w.tabIds.filter((id) => s.tabs[id]?.profileId === profileId && tabWorkspaceId(s.tabs[id]!) === activeWorkspaceId(w, profileId));
       const left = before.filter((id) => !gone.has(id));
       const awake = left.filter((id) => !isAsleep(s.tabs[id]));
       const after = awake.length ? awake : left;
