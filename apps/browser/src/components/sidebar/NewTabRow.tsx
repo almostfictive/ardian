@@ -1,12 +1,12 @@
 import { memo, useState } from "react";
 import { Animated, Pressable, View, type LayoutChangeEvent } from "react-native";
-import { Button, ContextMenuArea, radius, space, Symbol, Text, useHover } from "../ui";
+import { ContextMenuArea, radius, space, Symbol, Text, useHover } from "../ui";
 import { layout, useTheme } from "../ui/theme";
 import { HoverSlot } from "../ui/HoverSlot";
 import { newTab } from "../../state/tabs/actions";
 import { useCleanedCount } from "../../state/sidebar/hooks";
 import { openNewTabInSplit } from "../../state/splits/actions";
-import { openOverflowMenu, openSidebarMenu } from "../../state/sidebar/menus";
+import { openSidebarMenu } from "../../state/sidebar/menus";
 import { toggleNewTabBar } from "../../state/omnibox/newTabBar";
 import { modifiersOf } from "../../lib/keys";
 import { useClipped, useShift, type ClipSource } from "./EntryMotion";
@@ -15,9 +15,8 @@ import { SidebarRowLabel } from "./SidebarRow";
 
 const CLIPPED = { marginTop: -layout.rowGap, paddingTop: layout.rowGap, overflow: "hidden" } as const;
 const NEW_TAB_LABEL_X = 30;
-const CLEANED_HINT_RIGHT = 30;
 const CLEANED_HINT_GAP = space.m;
-const BUTTONS_ROOM = TAB_ROW.trailing + TAB_ROW.closeSlot + TAB_ROW.trailing;
+const BUTTONS_ROOM = TAB_ROW.trailing;
 const MEASURE_TEXT = { alignSelf: "flex-start" } as const;
 const HINT = { marginRight: space.xxs } as const;
 const MEASURE_OFFSCREEN = { position: "absolute", width: 1000, height: 0, overflow: "hidden", opacity: 0 } as const;
@@ -36,7 +35,7 @@ export const NewTabRow = memo(function NewTabRow({ windowId, shift = null, clip 
     setWidths((w) => (w[key] === width ? w : { ...w, [key]: width }));
   };
   const hint = `${cleaned} cleaned`;
-  const hintFits = widths.hint > 0 && NEW_TAB_LABEL_X + widths.label + CLEANED_HINT_GAP + widths.hint <= widths.row - CLEANED_HINT_RIGHT;
+  const hintFits = widths.hint > 0 && NEW_TAB_LABEL_X + widths.label + CLEANED_HINT_GAP + widths.hint <= widths.row;
   return (
     <View {...hoverProps} onLayout={measure("row")} style={[{ flexDirection: "row", alignItems: "center" }, clipped ? CLIPPED : null]}>
       <View pointerEvents="none" style={MEASURE_OFFSCREEN}>
@@ -86,14 +85,6 @@ export const NewTabRow = memo(function NewTabRow({ windowId, shift = null, clip 
               {hint}
             </Text>
           }
-        />
-        <Button variant="icon"
-          icon="chevron.down"
-          size="s"
-          weight="semibold"
-          color={hovered ? theme.textSecondary : theme.textTertiary}
-          tooltip="Open and recently closed tabs"
-          onPress={() => void openOverflowMenu(windowId)}
         />
       </View>
     </View>

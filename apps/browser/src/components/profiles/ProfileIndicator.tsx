@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { Pressable, View } from "react-native";
 import { profileNameColor, useTheme } from "../ui/theme";
-import { useIsIncognito, useProfiles, useWindowId, useWindowProfile } from "../../state/browser/hooks";
+import { useIsIncognito, useWindowId, useWindowProfile } from "../../state/browser/hooks";
 import { setMeasuredWidth, useMeasuredWidth } from "../../state/windows/measuredWidths";
 import { ContextMenuArea, radius, Symbol, Text, useHover } from "../ui";
 import { openProfileItemMenu } from "./profileMenu";
@@ -16,11 +16,10 @@ export const PROFILE_INDICATOR_X = 84;
 function useIndicator(room: number) {
   const theme = useTheme();
   const incognito = useIsIncognito();
-  const profiles = useProfiles();
   const profile = useWindowProfile();
   const title = incognito ? "Incognito" : profile.name;
   const textWidth = useMeasuredWidth(`profile-name|${title}`);
-  const shown = (incognito || profiles.length >= 2) && room >= ICON_WIDTH;
+  const shown = room >= ICON_WIDTH;
   const nameRoom = room - 2 * PAD;
   const showName = !!textWidth && (textWidth <= nameRoom || nameRoom >= MIN_CUT_NAME);
   const width = !shown ? 0 : showName ? Math.min(room, textWidth + 2 * PAD) : ICON_WIDTH;
