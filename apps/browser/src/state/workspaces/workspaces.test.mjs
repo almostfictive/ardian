@@ -3,8 +3,8 @@ import { test } from "node:test";
 
 globalThis.__DEV__ = false;
 const { useBrowser } = await import("../browser/store.ts");
-const { switchWorkspace, moveTabsToWorkspace } = await import("./actions.ts");
-const { defaultWorkspaceId, activeWorkspaceId } = await import("./model.ts");
+const { switchWorkspace, moveTabsToWorkspace, createWorkspace } = await import("./actions.ts");
+const { defaultWorkspaceId, activeWorkspaceId, MAX_WORKSPACES, workspacesOf } = await import("./model.ts");
 const { doNotSleep, workspaceFrozen, applyWorkspaceFreeze } = await import("./lifecycle.ts");
 const { numberedTabs } = await import("../sidebar/entries.ts");
 const { webviews } = await import("../../platform/webviews.ts");
@@ -19,6 +19,17 @@ function setup() {
   useBrowser.setState({ windows: { ...s().windows, [windowId]: { ...window, workspaces: [{ id: home, profileId: window.profileId, name: "Home", icon: "house", display: "icon" }, { id: other, profileId: window.profileId, name: "Other", icon: "briefcase", display: "icon" }] } } });
   return { windowId, home, other, profileId: window.profileId };
 }
+
+test("workspace count is capped at three and a fourth cannot be created", async () => {
+  const { windowId } = setup();
+  const window = s().windows[windowId];
+  const workspaces = [...workspacesOf(window), { id: "workspace:third", profileId: window.profileId, name: "Third", icon: null, display: "icon" }];
+  useBrowser.setState({ windows: { ...s().windows, [windowId]: { ...window, workspaces } } });
+  assert.equal(MAX_WORKSPACES, 3);
+  assert.equal(workspacesOf(s().windows[windowId]).length, 3);
+  await createWorkspace(windowId);
+  assert.equal(workspacesOf(s().windows[windowId]).length, 3);
+});
 
 test("workspace switches preserve pages and remember each active tab", () => {
   const { windowId, home, other } = setup();

@@ -1,6 +1,6 @@
 import { isFields, isString } from "../../lib/decode";
 import type { BrowserWindow, Tab, Workspace } from "../browser/types";
-import { activeWorkspaceId, defaultWorkspaceId, tabWorkspaceId, workspacesOf } from "./model";
+import { activeWorkspaceId, defaultWorkspaceId, MAX_WORKSPACES, tabWorkspaceId, workspacesOf } from "./model";
 
 const displays: Workspace["display"][] = ["name", "icon", "emoji", "picture", "none"];
 const stringMap = (value: unknown): Record<string, string> => isFields(value) ? Object.fromEntries(Object.entries(value).filter((entry): entry is [string, string] => isString(entry[1]))) : {};
@@ -13,7 +13,14 @@ export function workspaceWindowFromDisk(window: BrowserWindow): BrowserWindow {
     seen.add(value.id);
     workspaces.push({ id: value.id, profileId: value.profileId, name: value.name.trim(), icon: isString(value.icon) ? value.icon : null, display: value.display as Workspace["display"] });
   }
-  return { ...window, workspaces, activeWorkspaceIds: stringMap(window.activeWorkspaceIds), workspaceActiveTabIds: stringMap(window.workspaceActiveTabIds) };
+  const counts = new Map<string, number>();
+  const capped = workspaces.filter((workspace) => {
+    const count = counts.get(workspace.profileId) ?? 0;
+    if (count >= MAX_WORKSPACES) return false;
+    counts.set(workspace.profileId, count + 1);
+    return true;
+  });
+  return { ...window, workspaces: capped, activeWorkspaceIds: stringMap(window.activeWorkspaceIds), workspaceActiveTabIds: stringMap(window.workspaceActiveTabIds) };
 }
 
 export function restoreWindowWorkspaces(window: BrowserWindow, tabs: Record<string, Tab>): BrowserWindow {
