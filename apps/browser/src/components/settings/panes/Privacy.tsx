@@ -61,7 +61,7 @@ export function PrivacyPane() {
     if (!on && c === "ads") {
       const { confirmed } = await confirm({
         title: "Turn Off Ad Blocker?",
-        message: "Ardia's Ad Blocker hides ads so pages load faster and feel cleaner.",
+        message: "Ardian's Ad Blocker hides ads so pages load faster and feel cleaner.",
         confirmTitle: "Turn Off",
       });
       if (!confirmed) return refresh();
@@ -162,7 +162,7 @@ function FilterListsSheet() {
       <DialogActions
         note={
           <Text size="caption" tone="textTertiary">
-            {blocker?.version ? `Blocking by uBlock Origin ${blocker.version}, included with Ardia. Its lists update on their own.` : ""}
+            {blocker?.version ? `Blocking by uBlock Origin ${blocker.version}, included with Ardian. Its lists update on their own.` : ""}
           </Text>
         }
       >

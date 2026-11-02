@@ -1,6 +1,5 @@
 import { readDocument, writeDocument } from "../../platform/documents";
 import { systemInfo } from "../../platform/app";
-import { devTestValue } from "../../platform/launchConfig";
 import { create } from "zustand";
 import { parseSaved, unchanged, versionedJson, type Migrations } from "../../lib/savedDocument";
 import { hasSavedSession } from "../session/sessionDocument";
@@ -17,7 +16,7 @@ const RELEASE_NOTES: ReleaseNotes[] = [
   {
     version: "1.0",
     date: "September 2026",
-    title: "Hello, Ardia",
+    title: "Hello, Ardian",
     summary: "The first release: a calm, fast browser that keeps your tabs, your pages and your focus in one place.",
     items: [
       { title: "A command bar for everything", body: "Search, type an address or jump to an open tab from the New Tab page, or from any page with ⌘L." },
@@ -29,8 +28,6 @@ const RELEASE_NOTES: ReleaseNotes[] = [
     ],
   },
 ];
-
-const POSTCARD_SECONDS = 86_400;
 
 const DOC = "release-notes.json";
 const DOC_VERSION = 1;
@@ -67,13 +64,7 @@ export function trackAppVersion(): boolean {
   if (!version) return false;
   const saved = readSaved();
   const updated = saved ? saved.lastVersion !== version : hasSavedSession();
-  let pending = saved?.pending ?? null;
-  if (__DEV__) {
-    if (devTestValue("whatsNew") === "1") pending = { version, since: Date.now() };
-  } else if (updated) {
-    pending = notesFor(version) ? { version, since: Date.now() } : null;
-  }
-  if (pending && Date.now() - pending.since > POSTCARD_SECONDS * 1000) pending = null;
+  const pending = null;
   save({ lastVersion: version, pending });
   useReleaseNotes.setState({ pending });
   return updated;

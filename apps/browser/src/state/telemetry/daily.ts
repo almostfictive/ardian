@@ -98,7 +98,7 @@ export function dailyProperties(flags: DailyFlags, channel: string | null): Reco
   return {
     $lib: DAILY_LIB,
     $lib_version: "1",
-    $app_name: "Ardia",
+    $app_name: "Ardian",
     $app_version: info.appVersion,
     $os: "macOS",
     os_major: (info.osVersion ?? "").split(".")[0] || null,

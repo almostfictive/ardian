@@ -24,7 +24,7 @@ export function CliControlPill({ style }: { style?: Animated.WithAnimatedValue<V
             transform: [{ translateY: appear.interpolate({ inputRange: [0, 1], outputRange: [8, 0] }) }, { scale: appear.interpolate({ inputRange: [0, 1], outputRange: [0.96, 1] }) }],
           }}
         >
-          <Hud shape="capsule" height={PILL_HEIGHT} accessibilityRole="alert" accessibilityLabel="The ardia command is controlling Ardia">
+          <Hud shape="capsule" height={PILL_HEIGHT} accessibilityRole="alert" accessibilityLabel="The ardia command is controlling Ardian">
             <View style={PILL_ROW}>
               <Dot size={TERMINAL_DOT} color={theme.textPrimary}>
                 <Symbol name="terminal.fill" size={9} weight="bold" color={theme.onPrimary} style={TERMINAL_GLYPH} />
@@ -33,7 +33,7 @@ export function CliControlPill({ style }: { style?: Animated.WithAnimatedValue<V
                 <Text size="small" weight="semibold">
                   ardia
                 </Text>
-                {" is controlling Ardia"}
+                {" is controlling Ardian"}
               </Text>
               <Button variant="pill" tone="chip" title="Stop" onPress={stopCliControl} />
             </View>

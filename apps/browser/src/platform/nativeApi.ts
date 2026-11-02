@@ -17,7 +17,7 @@ type Documents = { readDocument(name: string): string | null; writeDocument(name
 const skewedModule = <Module,>(name: string) => requireOptionalNativeModule<Module>(name) ?? requireNativeModule<Module>("ArdiaShell");
 
 export function openSkewWindow() {
-  void skewedModule<Windows>("ArdiaAppWindows").openWindow("native-api-skew", { kind: "settings", title: "Ardia", focus: false });
+  void skewedModule<Windows>("ArdiaAppWindows").openWindow("native-api-skew", { kind: "settings", title: "Ardian", focus: false });
 }
 
 export function answerWithSkew(message: string) {

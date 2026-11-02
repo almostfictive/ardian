@@ -80,7 +80,7 @@ function LittleArdiaBar() {
       field={tab ? <PageField tab={tab} windowId={windowId} hidden={panelOpen} /> : null}
       buttons={[
         { icon: copied ? "checkmark" : "link", disabled: !tab?.url, tooltip: "Copy Link (⇧⌘C)", onPress: copy },
-        { icon: "arrow.up.left.and.arrow.down.right", tooltip: "Open in Ardia (⌘O)", onPress: () => openInMainWindow(windowId) },
+        { icon: "arrow.up.left.and.arrow.down.right", tooltip: "Open in Ardian (⌘O)", onPress: () => openInMainWindow(windowId) },
       ]}
       trailing={severalProfiles ? <ProfileButton windowId={windowId} /> : undefined}
     >

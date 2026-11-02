@@ -73,11 +73,11 @@ export const privacyRows = {
     { section: "Credit Cards", rows: { cardList: { title: "Credit Cards", keywords: ["add card", "saved cards", "payment"] } } },
   ],
   extensions: [
-    { section: "Extensions", rows: { installed: { title: "Extensions", description: "Add features to Ardia with extensions from the Chrome Web Store. Each profile has its own.", keywords: ["add ons", "plugins", "installed"] } } },
+    { section: "Extensions", rows: { installed: { title: "Extensions", description: "Add features to Ardian with extensions from the Chrome Web Store. Each profile has its own.", keywords: ["add ons", "plugins", "installed"] } } },
     {
       section: "Add extensions",
       rows: {
-        webStore: { title: "Chrome Web Store", description: "Browse the store; its Add to Ardia button installs here.", keywords: ["install extension"] },
+        webStore: { title: "Chrome Web Store", description: "Browse the store; its Add to Ardian button installs here.", keywords: ["install extension"] },
         addLink: { advanced: true, title: "Add from a link", description: "Paste a Chrome Web Store link or extension ID.", keywords: ["install extension", "url"] },
         unpacked: { advanced: true, title: "Load unpacked extension", description: "For developers: load an extension folder with a manifest.json.", keywords: ["developer mode"] },
       },

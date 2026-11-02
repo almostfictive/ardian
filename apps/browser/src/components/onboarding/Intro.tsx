@@ -17,7 +17,7 @@ import { curve, springs } from "../ui/motion";
 import { space } from "../ui/tokens";
 import { onboardingMotion, onboardingType } from "./tokens";
 
-const WORDMARK = "Ardia";
+const WORDMARK = "Ardian";
 const ICON = require("../../../assets/app-icon.png");
 
 const LETTER = 0.52;

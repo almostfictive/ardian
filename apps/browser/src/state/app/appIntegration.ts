@@ -7,7 +7,6 @@ import { useBrowser } from "../browser/store";
 import { focus, switchToTab } from "../browser/actions";
 import { afterFirstWindow } from "../../lib/afterFirstWindow";
 import { offerDefaultBrowserAgain } from "../onboarding/defaultBrowserOffer";
-import { openReleaseNotesAfterUpdate } from "../releaseNotes/releaseNotesPage";
 import { handleWebNotificationResponse } from "../site/webNotifications";
 import { startHandoff } from "./handoff";
 import { startScripting } from "./scripting";
@@ -22,9 +21,8 @@ export function startAppIntegration() {
   });
   startHandoff();
   startScripting();
-  const updated = trackAppVersion();
+  trackAppVersion();
   maybeStartOnboarding();
-  if (updated) openReleaseNotesAfterUpdate();
   afterFirstWindow(() => {
     void offerDefaultBrowserAgain({
       read: readDocument,

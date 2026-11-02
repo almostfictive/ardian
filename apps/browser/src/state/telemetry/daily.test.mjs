@@ -67,7 +67,7 @@ test("one anonymous ping a day, marked only after a 2xx", async () => {
       distinct_id: undefined,
       $lib: "ardia-daily",
       $lib_version: "1",
-      $app_name: "Ardia",
+      $app_name: "Ardian",
       $app_version: "0.3.0",
       $os: "macOS",
       os_major: "26",
