@@ -27,7 +27,8 @@ export function TopAppDock() {
 function MiniAppDockButton({ id, profileId, selected, onPress }: { id: MiniAppId; profileId: string; selected: boolean; onPress: () => void }) {
   const theme = useTheme();
   const definition = MINI_APPS[id];
-  const favicon = useFavicon(definition.url, null, profileId);
+  const faviconUrl = `${new URL(definition.url).origin}/favicon.ico`;
+  const favicon = useFavicon(definition.url, faviconUrl, profileId);
   return <Pressable accessibilityRole="button" accessibilityLabel={definition.title} accessibilityState={{ selected }} tooltip={definition.title} onPress={onPress} style={{ flex: 1, height: miniAppBoxHeight(32), maxHeight: 32, alignItems: "center", justifyContent: "center", borderRadius: radius.chrome, backgroundColor: selected ? theme.rowHover : undefined }}>
     {favicon ? <Image source={{ uri: favicon.uri }} style={{ width: 16, height: 16, borderRadius: radius.hair }} /> : <View style={{ width: 12, height: 12, borderRadius: capsule(12), backgroundColor: theme.textTertiary }} />}
   </Pressable>;
