@@ -1,0 +1,70 @@
+#!/bin/bash
+# Fetch Ardia and prepare dated merge branches for Ardian and its sections.
+# Push each successful merge for review; stop at the first conflict.
+set -euo pipefail
+cd "$(git -C "$(dirname "$0")/.." rev-parse --show-toplevel)"
+fail() { printf '%s\n' "$*" >&2; exit 1; }
+[[ -z "$(git status --porcelain)" ]] || fail "Commit your changes and remove untracked files before syncing."
+git symbolic-ref --quiet --short HEAD >/dev/null || fail "Check out a branch before syncing."
+[[ ! -e "$(git rev-parse --git-path MERGE_HEAD)" ]] || fail "Finish the current merge before syncing."
+original=$(git branch --show-current)
+restore_branch() {
+  local status=$?
+  if [[ -e "$(git rev-parse --git-path MERGE_HEAD)" ]]; then git merge --abort || return 1; fi
+  git switch --quiet "$original" || return 1
+  return "$status"
+}
+trap restore_branch EXIT
+trap 'exit 130' INT
+trap 'exit 143' TERM
+git fetch origin
+git fetch upstream
+git show-ref --verify --quiet refs/heads/ardian/base || fail "Create ardian/base before syncing."
+if git show-ref --verify --quiet refs/remotes/origin/ardian/base; then
+  git merge-base --is-ancestor origin/ardian/base ardian/base || fail "Bring local ardian/base up to date with origin/ardian/base first."
+fi
+day=$(date +%F)
+sync="sync/ardia-$day"
+branches=("$sync")
+sources=(ardian/base)
+while IFS= read -r section || [[ -n "$section" ]]; do
+  [[ -n "$section" ]] || continue
+  git check-ref-format --branch "$section" >/dev/null || fail "Invalid section branch: $section"
+  [[ "$section" != main && "$section" != ardian/base && "$section" != sync/* ]] || fail "Use a section branch, not $section."
+  if git show-ref --verify --quiet "refs/heads/$section"; then
+    source="$section"
+    if git show-ref --verify --quiet "refs/remotes/origin/$section"; then
+      git merge-base --is-ancestor "origin/$section" "$section" || fail "Bring local $section up to date with origin/$section first."
+    fi
+  elif git show-ref --verify --quiet "refs/remotes/origin/$section"; then
+    source="origin/$section"
+  else
+    fail "Section branch does not exist: $section"
+  fi
+  branches+=("sync/$section-$day")
+  sources+=("$source")
+done < scripts/ardian-sections.txt
+for ((i=0; i<${#branches[@]}; i++)); do
+  branch=${branches[$i]}
+  git check-ref-format --branch "$branch" >/dev/null || fail "Invalid sync branch: $branch"
+  for ((j=0; j<i; j++)); do
+    [[ "$branch" != "${branches[$j]}" ]] || fail "Repeated sync branch: $branch"
+  done
+  if git show-ref --verify --quiet "refs/heads/$branch" || git show-ref --verify --quiet "refs/remotes/origin/$branch"; then
+    fail "$branch already exists. Review it before another day's sync."
+  fi
+done
+for ((i=0; i<${#branches[@]}; i++)); do
+  branch=${branches[$i]}
+  target=$sync
+  [[ $i -ne 0 ]] || target=upstream/main
+  git switch --quiet -c "$branch" "${sources[$i]}"
+  if ! git merge --no-edit "$target"; then
+    printf 'Sync stopped: %s could not merge %s. These files clashed:\n' "$branch" "$target" >&2
+    git diff --name-only --diff-filter=U >&2
+    git merge --abort
+    fail "The merge was aborted. No further branches will be processed."
+  fi
+  git push --set-upstream origin "HEAD:refs/heads/$branch"
+done
+printf 'Sync branches are pushed and ready for review. Returned to %s.\n' "$original"
