@@ -36,6 +36,15 @@ test("workspace switches preserve pages and remember each active tab", () => {
   assert(workspaceFrozen(s(), second));
 });
 
+test("tabs opened by a page stay in that page's workspace", () => {
+  const { windowId, home, other } = setup();
+  const source = s().newTab(windowId, { url: "https://example.com/source" });
+  switchWorkspace(windowId, other);
+  const opened = s().newTab(windowId, { url: "https://example.com/opened", openerId: source });
+  assert.equal(s().tabs[opened].workspaceId, home);
+  assert.equal(activeWorkspaceId(s().windows[windowId]), home);
+});
+
 test("moving multiple tabs keeps the source workspace selected and preserves pages", () => {
   const { windowId, home, other } = setup();
   const first = s().newTab(windowId, { url: "https://example.com/one" });

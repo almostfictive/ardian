@@ -95,6 +95,8 @@ export function activated(s: BrowserState, id: string, shareLivePins = true): Pa
     ...w,
     profileId: w.kind === "private" ? w.profileId : tab.profileId,
     activeTabIds: { ...w.activeTabIds, [tab.profileId]: id },
+    activeWorkspaceIds: { ...w.activeWorkspaceIds, [tab.profileId]: tabWorkspaceId(tab) },
+    workspaceActiveTabIds: { ...w.workspaceActiveTabIds, [tabWorkspaceId(tab)]: id },
   };
   const ui = s.windowUi[w.id];
   return {
@@ -258,7 +260,7 @@ export function withNewTab(s: BrowserState, windowId: string, o: NewTabOptions =
   const url = o.url ? resolveTyped(s.settings, o.url) : "";
   const tab = makeTab(windowId, profileId, url, { ...o.snapshot, pin: o.pinned === false ? null : (o.snapshot?.pin ?? (o.pinned ? TILE_PIN : null)) });
   if (tab.page.kind === "loaded" && !o.snapshot) tab.page = loadedPage(navigationTo(url, true));
-  tab.workspaceId = o.snapshot?.workspaceId ?? activeWorkspaceId(w, profileId);
+  tab.workspaceId = o.snapshot?.workspaceId ?? (o.openerId && s.tabs[o.openerId]?.profileId === profileId ? tabWorkspaceId(s.tabs[o.openerId]!) : activeWorkspaceId(w, profileId));
   tab.openerId = o.openerId ?? null;
   tab.pinnedUrl = tab.pin ? pinHome({ pinnedUrl: tab.pinnedUrl, url }, true) : tab.pinnedUrl || null;
   if (o.adoptId) tab.page = adoptedPage(o.adoptId);
