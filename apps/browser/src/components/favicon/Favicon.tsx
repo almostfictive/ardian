@@ -72,15 +72,10 @@ function hostInitial(url: string): string {
   return Array.from(displayHost(host))[0]?.toLocaleUpperCase() ?? "";
 }
 
-const NEW_TAB_MARK = require("../../../assets/new-tab-mark.png");
+const NEW_TAB_ICON = require("../../../assets/new-tab-compass.svg");
 
 export function NewTabIcon({ size = 16 }: { size?: number }) {
-  const theme = useTheme();
   return (
-    <Image
-      key={theme.dark ? "dark" : "light"}
-      source={NEW_TAB_MARK}
-      style={{ width: size, height: size, tintColor: theme.mark, opacity: theme.dark ? 0.28 : 0.3 }}
-    />
+    <Image source={NEW_TAB_ICON} style={{ width: size, height: size }} />
   );
 }
