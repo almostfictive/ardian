@@ -5,7 +5,7 @@ import { useIsIncognito, useProfiles, useWindowId, useWindowProfile } from "../.
 import { setMeasuredWidth, useMeasuredWidth } from "../../state/windows/measuredWidths";
 import { ContextMenuArea, radius, Symbol, Text, useHover } from "../ui";
 import { openProfileItemMenu } from "./profileMenu";
-import { openProfileMenu } from "../../state/browser/actions";
+import { toggleProfilePopover } from "../../state/profiles-popover/store";
 
 const PAD = 9;
 const HEIGHT = 34;
@@ -51,7 +51,7 @@ export function ProfileIndicator({ room }: { room: number }) {
         </Text>
       </View>
       <ContextMenuArea onContextMenu={() => !incognito && void openProfileItemMenu(profileId, "sidebar", windowId, indicator.current)}>
-        <Pressable onPress={() => !incognito && void openProfileMenu(windowId)} disabled={incognito}>
+        <Pressable onPress={() => !incognito && toggleProfilePopover(windowId)} disabled={incognito}>
           {({ pressed }) => (
             <View
               style={{

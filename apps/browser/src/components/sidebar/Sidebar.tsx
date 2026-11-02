@@ -26,6 +26,7 @@ import { GLOW_ROOM, ROW_PITCH, type SidebarGeometry } from "./pageLayout";
 import { SidebarPage } from "./SidebarPage";
 import { SidebarRowLookContext, useSidebarRowLookSource } from "./rowLook";
 import { useRevealTabs } from "./useRevealTabs";
+import { ProfilePopover } from "../profiles-popover/ProfilePopover";
 
 const HEADER_RIGHT = space.m;
 
@@ -136,6 +137,7 @@ export function Sidebar({ width }: { width: number }) {
               )}
             </View>
 
+            <ProfilePopover />
             <ResizeHandle windowId={windowId} />
             {ghost && !ghost.landing && nothingPinned ? (
               addressBar ? (
