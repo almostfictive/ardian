@@ -19,7 +19,7 @@ import { FolderPanel } from "./FolderPanel";
 import { dismissHover, dismissHoverIn } from "../../state/sidebar/hover";
 import { PinFieldZone, PinSlotZone } from "./PinnedGrid";
 import { ResizeHandle } from "./ResizeHandle";
-import { SIDEBAR_FIELD, SIDEBAR_FOOTER_DOWNLOADS, SIDEBAR_HEADER_WITH_FIELD } from "./geometry";
+import { SIDEBAR_FIELD, SIDEBAR_FOOTER_DOWNLOADS } from "./geometry";
 import { closeFolderPanel } from "../../state/sidebar/tileFolderUi";
 import { openSidebarMenu } from "../../state/sidebar/menus";
 import { GLOW_ROOM, ROW_PITCH, type SidebarGeometry } from "./pageLayout";
@@ -27,6 +27,7 @@ import { SidebarPage } from "./SidebarPage";
 import { SidebarRowLookContext, useSidebarRowLookSource } from "./rowLook";
 import { useRevealTabs } from "./useRevealTabs";
 import { WorkspaceSwitcher } from "../workspaces/WorkspaceSwitcher";
+import { SidebarSlot } from "./SidebarSlots";
 
 const HEADER_RIGHT = space.m;
 
@@ -42,7 +43,7 @@ export function Sidebar({ width }: { width: number }) {
   const geometry = useRef<SidebarGeometry>({ viewport: 0, regions: { pinnedGroups: 0, list: 0 }, newTabAtTop: false, tilesFixed: true });
   const addressBar = useAddressBarInSidebar();
   const lightsY = useToolbarLightsCenter()[1];
-  const header = addressBar ? SIDEBAR_HEADER_WITH_FIELD : layout.sidebarHeader;
+  const [header, setHeader] = useState(142);
   const hasDownloads = useHasDownloads(windowId);
   const dots = useProfileDotsShown();
   const footerDownloads = addressBar && hasDownloads;
@@ -119,11 +120,13 @@ export function Sidebar({ width }: { width: number }) {
               </View>
             ) : null}
 
-            <View style={{ height: header }}>
-              <ContextMenuArea style={StyleSheet.absoluteFill} onContextMenu={() => void openSidebarMenu(windowId)}>
+            <View onLayout={(e) => setHeader(e.nativeEvent.layout.height)}>
+              <SidebarSlot name="trafficLights">
+              <ContextMenuArea style={{ height: 44 }} onContextMenu={() => void openSidebarMenu(windowId)}>
                 <WindowDragRegion style={StyleSheet.absoluteFill} />
               </ContextMenuArea>
-              <WorkspaceSwitcher />
+              </SidebarSlot>
+              <SidebarSlot name="profile">
               {addressBar ? (
                 <>
                   <SidebarHeaderTools width={width} />
@@ -136,6 +139,8 @@ export function Sidebar({ width }: { width: number }) {
                   {hasDownloads ? <DownloadsButton windowId={windowId} /> : null}
                 </View>
               )}
+              </SidebarSlot>
+              <SidebarSlot name="workspaces"><WorkspaceSwitcher /></SidebarSlot>
             </View>
 
             <ResizeHandle windowId={windowId} />
