@@ -26,6 +26,8 @@ build/
 !engine/patches/build/
 build-*/
 DerivedData/
+apps/browser/build-local-engine
+apps/browser/build-local-preview
 *.xcuserstate
 *.moved-aside
 *.hmap
