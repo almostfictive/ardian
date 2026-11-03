@@ -129,6 +129,12 @@ final class WindowManager: NSObject, NSWindowDelegate {
     if let center = lightsCenters[id] { ChromeWindows.setTrafficLightsCenter(center, in: window) }
     window.title = title
     if small, frame == nil { placeSmall(window, size: smallSize, pointer: smallPointer) } else if frame != nil || !window.isVisible { place(window, frame: frame) }
+    if let raw = LaunchConfig.shared.testValue("windowSize") {
+      let dimensions = raw.split(separator: "x").compactMap { Double($0) }
+      if dimensions.count == 2, dimensions.allSatisfy({ $0.isFinite && $0 >= 400 && $0 <= 4096 }) {
+        window.setFrame(NSRect(x: 0, y: 0, width: dimensions[0], height: dimensions[1]), display: false)
+      }
+    }
     relayoutRoot(window)
     managed[id] = entry
     if !small { lastPlaced = window }
