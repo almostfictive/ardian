@@ -1,15 +1,11 @@
 import { useCallback, useLayoutEffect, useRef, useState } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
-import { ContextMenuArea, space, WindowDragRegion } from "../ui";
-import { layout } from "../ui/theme";
-import { useSettings, useWindowId, useWindowProfileId } from "../../state/browser/hooks";
-import { useHasDownloads, useNoTiles } from "../../state/sidebar/hooks";
-import { useAddressBarInSidebar, useToolbarLightsCenter } from "../../state/windows/layout";
-import { DownloadsButton } from "../downloads/DownloadsButton";
-import { PROFILE_INDICATOR_X, ProfileIndicator } from "../profiles/ProfileIndicator";
+import { Button, ContextMenuArea, WindowDragRegion, space } from "../ui";
+import { useWindowId, useWindowProfileId } from "../../state/browser/hooks";
+import { useNoTiles } from "../../state/sidebar/hooks";
+import { openSettings } from "../../state/settings/settingsWindows";
 import { usePagerPages } from "../../state/windows/profilePager";
-import { PROFILE_DOTS_HEIGHT, ProfileDots, useProfileDotsShown } from "../profiles/ProfileDots";
-import { SidebarAddressRow, SidebarHeaderTools } from "./AddressBar";
+import { SidebarHeaderTools } from "./AddressBar";
 import { DragGhost } from "./DragGhost";
 import { DragProvider } from "./DragProvider";
 import type { DragController } from "./dragController";
@@ -17,9 +13,8 @@ import type { Ghost } from "./dragModel";
 import { SidebarDropArea } from "./SidebarDropArea";
 import { FolderPanel } from "./FolderPanel";
 import { dismissHover, dismissHoverIn } from "../../state/sidebar/hover";
-import { PinFieldZone, PinSlotZone } from "./PinnedGrid";
+import { PinSlotZone } from "./PinnedGrid";
 import { ResizeHandle } from "./ResizeHandle";
-import { SIDEBAR_FIELD, SIDEBAR_FOOTER_DOWNLOADS } from "./geometry";
 import { closeFolderPanel } from "../../state/sidebar/tileFolderUi";
 import { openSidebarMenu } from "../../state/sidebar/menus";
 import { GLOW_ROOM, ROW_PITCH, type SidebarGeometry } from "./pageLayout";
@@ -29,25 +24,19 @@ import { useRevealTabs } from "./useRevealTabs";
 import { WorkspaceSwitcher } from "../workspaces/WorkspaceSwitcher";
 import { SidebarSlot } from "./SidebarSlots";
 
-const HEADER_RIGHT = space.m;
+const FOOTER_HEIGHT = 32;
 
 export function Sidebar({ width }: { width: number }) {
   const windowId = useWindowId();
   const current = useWindowProfileId();
   const { pages, paging } = usePagerPages(windowId);
   const [available, setAvailable] = useState(0);
-  const newTabAtTop = useSettings((s) => s.newTabButtonPosition === "top");
-  const dockAbove = newTabAtTop || available <= 0 ? Infinity : available - ROW_PITCH - 12;
+  const dockAbove = available <= 0 ? Infinity : available - ROW_PITCH - 12;
   const scroll = useRef<ScrollView>(null);
   const scrollY = useRef(0);
   const geometry = useRef<SidebarGeometry>({ viewport: 0, regions: { pinnedGroups: 0, list: 0 }, newTabAtTop: false, tilesFixed: true });
-  const addressBar = useAddressBarInSidebar();
-  const lightsY = useToolbarLightsCenter()[1];
-  const [header, setHeader] = useState(142);
-  const hasDownloads = useHasDownloads(windowId);
-  const dots = useProfileDotsShown();
-  const footerDownloads = addressBar && hasDownloads;
-  const footer = dots || footerDownloads ? PROFILE_DOTS_HEIGHT : 0;
+  const header = 36;
+  const footer = FOOTER_HEIGHT;
   const nothingPinned = useNoTiles(windowId, current);
   const rowLook = useSidebarRowLookSource();
 
@@ -98,7 +87,7 @@ export function Sidebar({ width }: { width: number }) {
                     current={page.id === current}
                     resting={!!page.resting}
                     dockAbove={dockAbove}
-                    height={Math.max(0, available - (addressBar ? GLOW_ROOM : 0))}
+                    height={Math.max(0, available - GLOW_ROOM)}
                     rows={page.id === current ? undefined : Math.ceil(available / ROW_PITCH) + 1}
                     geometry={page.id === current ? geometry : undefined}
                     onScrollView={onScrollView}
@@ -108,48 +97,25 @@ export function Sidebar({ width }: { width: number }) {
               </SidebarRowLookContext.Provider>
             </View>
 
-            {footer ? (
-              <View style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: footer }}>
+            <View style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: footer, paddingLeft: space.l + space.hair, paddingRight: space.m, flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
                 <ContextMenuArea style={StyleSheet.absoluteFill} onContextMenu={() => void openSidebarMenu(windowId)} />
-                {dots ? <ProfileDots windowId={windowId} width={width} besideDownloads={footerDownloads} /> : null}
-                {footerDownloads ? (
-                  <View style={{ position: "absolute", left: layout.sidebarInset, bottom: SIDEBAR_FOOTER_DOWNLOADS.bottom }}>
-                    <DownloadsButton windowId={windowId} />
-                  </View>
-                ) : null}
+                <SidebarSlot name="profile"><View style={{ width: 24, height: 24 }} /></SidebarSlot>
+                <SidebarSlot name="workspaces"><WorkspaceSwitcher /></SidebarSlot>
+                <Button variant="icon" icon="gearshape" box={28} glyph={14} style={{ width: 28, height: 28 }} onPress={() => openSettings()} tooltip="Settings" />
               </View>
-            ) : null}
 
-            <View onLayout={(e) => setHeader(e.nativeEvent.layout.height)}>
+            <View style={{ height: header }}>
               <SidebarSlot name="trafficLights">
-              <ContextMenuArea style={{ height: 44 }} onContextMenu={() => void openSidebarMenu(windowId)}>
+              <ContextMenuArea style={{ height: 36 }} onContextMenu={() => void openSidebarMenu(windowId)}>
                 <WindowDragRegion style={StyleSheet.absoluteFill} />
               </ContextMenuArea>
               </SidebarSlot>
-              <SidebarSlot name="profile">
-              {addressBar ? (
-                <>
-                  <SidebarHeaderTools width={width} />
-                  <SidebarAddressRow width={width} />
-                </>
-              ) : (
-                <View pointerEvents="box-none" style={{ height: layout.sidebarHeader, flexDirection: "row", alignItems: "flex-start", paddingLeft: PROFILE_INDICATOR_X, paddingRight: HEADER_RIGHT, paddingTop: lightsY - 17 }}>
-                  <ProfileIndicator room={width - PROFILE_INDICATOR_X - HEADER_RIGHT - (hasDownloads ? 34 + 2 : 0)} />
-                  <View pointerEvents="none" style={{ flex: 1 }} />
-                  {hasDownloads ? <DownloadsButton windowId={windowId} /> : null}
-                </View>
-              )}
-              </SidebarSlot>
-              <SidebarSlot name="workspaces"><WorkspaceSwitcher /></SidebarSlot>
+              <SidebarHeaderTools width={width} />
             </View>
 
             <ResizeHandle windowId={windowId} />
             {ghost && !ghost.landing && nothingPinned ? (
-              addressBar ? (
-                <PinFieldZone top={SIDEBAR_FIELD.top} height={SIDEBAR_FIELD.height} />
-              ) : (
-                <PinSlotZone />
-              )
+              <PinSlotZone />
             ) : null}
             <FolderPanel windowId={windowId} />
             {ghost ? <DragGhost ghost={ghost} /> : null}

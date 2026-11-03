@@ -17,7 +17,7 @@ export function springAt(
 export const PEEK_ORIGIN: readonly [number, number] = [5, layout.cardInset];
 export const PEEK_BOTTOM = layout.cardInset;
 
-export const dockedCardLeft = (sidebarWidth: number) => sidebarWidth + layout.sidebarCardGap;
+export const dockedCardLeft = (sidebarWidth: number) => layout.cardInset + sidebarWidth + layout.sidebarCardGap;
 
 export const cardLeft = (dock: number, sidebarWidth: number, inset: number) => inset + (dockedCardLeft(sidebarWidth) - inset) * dock;
 

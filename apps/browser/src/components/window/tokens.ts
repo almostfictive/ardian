@@ -66,3 +66,5 @@ export const ARC_PEEK_OUT_MS = 150;
 export const ARC_HIDE_MS = duration.fast;
 
 export const PEEK_RADIUS = radius.panel;
+
+export const CONTENT_CARD_SHADOW = { color: "#0A060E", opacity: 0.25, radius: 28, offset: [0, 8] as [number, number] } as const;

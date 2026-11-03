@@ -218,7 +218,7 @@
  ],
  "empty grid": [
   {
-   "step": "begin t:c 26,205",
+   "step": "begin t:c 26,199",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -228,7 +228,7 @@
     "sequence": []
    },
    "gapKey": "tail:list",
-   "pitch": 37,
+   "pitch": 34,
    "into": null,
    "external": 0,
    "gridGrowth": 0,
@@ -246,7 +246,7 @@
     "t:c"
    ],
    "gaps": {
-    "tail:list": 37
+    "tail:list": 34
    }
   },
   {
@@ -264,7 +264,7 @@
    },
    "gapKey": "t:a",
    "gaps": {
-    "t:a": 37
+    "t:a": 34
    }
   },
   {
@@ -302,12 +302,12 @@
     "sequence": []
    },
    "gapKey": "tail:list",
-   "pitch": 37,
+   "pitch": 34,
    "pins": false,
    "pinCount": 0,
    "pinBefore": null,
    "gaps": {
-    "tail:list": 37
+    "tail:list": 34
    }
   },
   {
@@ -385,7 +385,7 @@
  ],
  "empty panel": [
   {
-   "step": "begin t:c 26,205",
+   "step": "begin t:c 26,199",
    "drop": {
     "type": "none"
    },
@@ -420,9 +420,9 @@
     "sequence": []
    },
    "gapKey": "tail:list",
-   "pitch": 37,
+   "pitch": 34,
    "gaps": {
-    "tail:list": 37
+    "tail:list": 34
    }
   },
   {
@@ -448,7 +448,7 @@
    },
    "gapKey": "tail:list",
    "gaps": {
-    "tail:list": 37
+    "tail:list": 34
    }
   },
   {
@@ -758,13 +758,13 @@
     "sequence": []
    },
    "gapKey": "tail:list",
-   "pitch": 105,
+   "pitch": 98,
    "gridGrowth": -47,
    "pins": false,
    "pinCount": 0,
    "pinBefore": null,
    "gaps": {
-    "tail:list": 105
+    "tail:list": 98
    }
   },
   {
@@ -779,7 +779,7 @@
    },
    "gapKey": "t:a",
    "gaps": {
-    "t:a": 105
+    "t:a": 98
    }
   },
   {
@@ -1264,14 +1264,14 @@
  ],
  "panel cancel": [
   {
-   "step": "begin fm:t2 46,167",
+   "step": "begin fm:t2 46,164",
    "drop": {
     "type": "folder",
     "ontoId": "t1",
     "beforeId": "t3"
    },
    "gapKey": "fm:t3",
-   "pitch": 37,
+   "pitch": 34,
    "into": null,
    "external": 0,
    "gridGrowth": 0,
@@ -1289,7 +1289,7 @@
     "fm:t2"
    ],
    "gaps": {
-    "fm:t3": 37
+    "fm:t3": 34
    }
   },
   {
@@ -1305,11 +1305,11 @@
    "gapKey": "tail:list",
    "folderAway": true,
    "gaps": {
-    "tail:list": 37
+    "tail:list": 34
    }
   },
   {
-   "step": "move 101,137",
+   "step": "move 101,136",
    "drop": {
     "type": "onto",
     "targetId": "a"
@@ -1419,7 +1419,7 @@
     "beforeId": "t2"
    },
    "gapKey": "fm:t2",
-   "pitch": 37,
+   "pitch": 34,
    "into": null,
    "external": 0,
    "gridGrowth": 0,
@@ -1437,11 +1437,11 @@
     "fm:t1"
    ],
    "gaps": {
-    "fm:t2": 37
+    "fm:t2": 34
    }
   },
   {
-   "step": "move 101,184",
+   "step": "move 101,180",
    "drop": {
     "type": "folder",
     "ontoId": "t2",
@@ -1449,7 +1449,7 @@
    },
    "gapKey": "fm:t3",
    "gaps": {
-    "fm:t3": 37
+    "fm:t3": 34
    }
   },
   {
@@ -1465,11 +1465,11 @@
    "gapKey": "tail:list",
    "folderAway": true,
    "gaps": {
-    "tail:list": 37
+    "tail:list": 34
    }
   },
   {
-   "step": "move 101,184",
+   "step": "move 101,180",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -1480,11 +1480,11 @@
    },
    "gapKey": "t:c",
    "gaps": {
-    "t:c": 37
+    "t:c": 34
    }
   },
   {
-   "step": "move 101,241",
+   "step": "move 101,234",
    "drop": {
     "type": "onto",
     "targetId": "c"
@@ -1504,7 +1504,7 @@
    "gapKey": "tail:list",
    "onto": null,
    "gaps": {
-    "tail:list": 37
+    "tail:list": 34
    }
   },
   {
@@ -1607,7 +1607,7 @@
     "beforeId": "t2"
    },
    "gapKey": "fm:t2",
-   "pitch": 37,
+   "pitch": 34,
    "into": null,
    "external": 0,
    "gridGrowth": 0,
@@ -1625,11 +1625,11 @@
     "fm:t1"
    ],
    "gaps": {
-    "fm:t2": 37
+    "fm:t2": 34
    }
   },
   {
-   "step": "move 101,184",
+   "step": "move 101,180",
    "drop": {
     "type": "folder",
     "ontoId": "t2",
@@ -1637,11 +1637,11 @@
    },
    "gapKey": "fm:t3",
    "gaps": {
-    "fm:t3": 37
+    "fm:t3": 34
    }
   },
   {
-   "step": "move 101,221",
+   "step": "move 101,214",
    "drop": {
     "type": "folder",
     "ontoId": "t2",
@@ -1649,11 +1649,24 @@
    },
    "gapKey": "tail:folder",
    "gaps": {
-    "tail:folder": 37
+    "tail:folder": 34
    }
   },
   {
-   "step": "move 101,241"
+   "step": "move 101,234",
+   "drop": {
+    "type": "tabs",
+    "placement": {
+     "pinned": false,
+     "beforeId": null
+    },
+    "sequence": []
+   },
+   "gapKey": "tail:list",
+   "folderAway": true,
+   "gaps": {
+    "tail:list": 34
+   }
   },
   {
    "step": "end true",
@@ -1662,6 +1675,7 @@
    },
    "gapKey": null,
    "pitch": 0,
+   "folderAway": false,
    "sources": [],
    "gaps": {}
   },
@@ -1671,12 +1685,12 @@
     "tabIds": [
      "t2",
      "t3",
-     "t1",
      "t4",
      "t5",
      "a",
      "b",
-     "c"
+     "c",
+     "t1"
     ],
     "tabs": {
      "t2": {
@@ -1686,12 +1700,6 @@
       "folder": "TF8"
      },
      "t3": {
-      "pinned": true,
-      "row": false,
-      "group": null,
-      "folder": "TF8"
-     },
-     "t1": {
       "pinned": true,
       "row": false,
       "group": null,
@@ -1726,18 +1734,22 @@
       "row": false,
       "group": null,
       "folder": null
+     },
+     "t1": {
+      "pinned": false,
+      "row": false,
+      "group": null,
+      "folder": null
      }
     },
     "groups": {},
     "pinnedArea": [],
     "anchors": [],
     "orderChoices": [
-     "place:t1",
      "place:t2",
      "place:t3",
      "place:t4",
      "place:t5",
-     "t1",
      "t2",
      "t3",
      "t4",
@@ -1749,7 +1761,7 @@
  ],
  "room clip": [
   {
-   "step": "begin t:c 26,205",
+   "step": "begin t:c 26,199",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -1759,7 +1771,7 @@
     "sequence": []
    },
    "gapKey": "tail:list",
-   "pitch": 37,
+   "pitch": 34,
    "into": null,
    "external": 0,
    "gridGrowth": 0,
@@ -1777,7 +1789,7 @@
     "t:c"
    ],
    "gaps": {
-    "tail:list": 37
+    "tail:list": 34
    }
   },
   {
@@ -1826,13 +1838,13 @@
     "sequence": []
    },
    "gapKey": "tail:list",
-   "pitch": 37,
+   "pitch": 34,
    "gridGrowth": 0,
    "pins": false,
    "pinCount": 0,
    "pinBefore": null,
    "gaps": {
-    "tail:list": 37
+    "tail:list": 34
    }
   },
   {
@@ -1911,14 +1923,14 @@
  ],
  "row into panel": [
   {
-   "step": "begin t:c 26,205",
+   "step": "begin t:c 26,199",
    "drop": {
     "type": "folder",
     "ontoId": "t1",
     "beforeId": "t3"
    },
    "gapKey": "fm:t3",
-   "pitch": 37,
+   "pitch": 34,
    "into": null,
    "external": 0,
    "gridGrowth": 0,
@@ -1936,7 +1948,7 @@
     "t:c"
    ],
    "gaps": {
-    "fm:t3": 37
+    "fm:t3": 34
    }
   },
   {
@@ -1951,7 +1963,7 @@
    },
    "gapKey": "tail:list",
    "gaps": {
-    "tail:list": 37
+    "tail:list": 34
    }
   },
   {
@@ -1963,7 +1975,7 @@
    },
    "gapKey": "fm:t1",
    "gaps": {
-    "fm:t1": 37
+    "fm:t1": 34
    }
   },
   {
@@ -1975,7 +1987,7 @@
    },
    "gapKey": "fm:t2",
    "gaps": {
-    "fm:t2": 37
+    "fm:t2": 34
    }
   },
   {
@@ -1987,7 +1999,7 @@
    },
    "gapKey": "fm:t3",
    "gaps": {
-    "fm:t3": 37
+    "fm:t3": 34
    }
   },
   {
@@ -2002,7 +2014,7 @@
    },
    "gapKey": "tail:list",
    "gaps": {
-    "tail:list": 37
+    "tail:list": 34
    }
   },
   {
@@ -2099,7 +2111,7 @@
  ],
  "row into tiles": [
   {
-   "step": "begin t:c 26,252",
+   "step": "begin t:c 26,246",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -2109,7 +2121,7 @@
     "sequence": []
    },
    "gapKey": "tail:list",
-   "pitch": 37,
+   "pitch": 34,
    "into": null,
    "external": 0,
    "gridGrowth": 0,
@@ -2127,7 +2139,7 @@
     "t:c"
    ],
    "gaps": {
-    "tail:list": 37
+    "tail:list": 34
    }
   },
   {
@@ -2145,7 +2157,7 @@
    },
    "gapKey": "t:b",
    "gaps": {
-    "t:b": 37
+    "t:b": 34
    }
   },
   {
@@ -2367,7 +2379,7 @@
     "sequence": []
    },
    "gapKey": "t:b",
-   "pitch": 37,
+   "pitch": 34,
    "into": null,
    "external": 0,
    "gridGrowth": 0,
@@ -2385,7 +2397,7 @@
     "t:a"
    ],
    "gaps": {
-    "t:b": 37
+    "t:b": 34
    }
   },
   {
@@ -2603,12 +2615,12 @@
     "sequence": []
    },
    "gapKey": "tail:list",
-   "pitch": 37,
+   "pitch": 34,
    "pins": false,
    "pinCount": 0,
    "pinBefore": null,
    "gaps": {
-    "tail:list": 37
+    "tail:list": 34
    }
   },
   {

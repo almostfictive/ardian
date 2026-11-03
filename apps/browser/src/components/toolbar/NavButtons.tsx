@@ -21,12 +21,14 @@ export const ReloadButton = memo(function ReloadButton({
   palette,
   place,
   onFocus,
+  glyphSize = GLYPH,
 }: {
   tab: Pick<Tab, "id" | "url" | "windowId">;
   loading: boolean;
   palette: ToolbarPalette;
   place?: NavPlace;
   onFocus: () => void;
+  glyphSize?: number;
 }) {
   const web = () => webviews.get(tab.id);
   const reloadHint = useShortcutHint("reload");
@@ -35,7 +37,7 @@ export const ReloadButton = memo(function ReloadButton({
       style={place?.style}
       palette={palette}
       icon={loading ? "xmark" : "arrow.clockwise"}
-      glyph={GLYPH}
+      glyph={glyphSize}
       hit={place?.hit}
       disabled={!tab.url}
       onPress={(m) => {
@@ -61,6 +63,7 @@ export const HistoryButton = memo(function HistoryButton({
   palette,
   place,
   onFocus,
+  glyphSize = GLYPH,
 }: {
   tabId: string;
   windowId: string;
@@ -69,6 +72,7 @@ export const HistoryButton = memo(function HistoryButton({
   palette: ToolbarPalette;
   place?: NavPlace;
   onFocus: () => void;
+  glyphSize?: number;
 }) {
   const historyHint = useShortcutHint(direction < 0 ? "back" : "forward");
   const openMenu = () => {
@@ -88,7 +92,7 @@ export const HistoryButton = memo(function HistoryButton({
       <Button variant="icon" toolbar
         palette={palette}
         icon={direction < 0 ? "chevron.left" : "chevron.right"}
-        glyph={GLYPH}
+        glyph={glyphSize}
         hit={place?.hit}
         disabled={disabled}
         onPress={onPress}
