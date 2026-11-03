@@ -2,7 +2,8 @@ import { Image, Pressable, View } from "react-native";
 import { useSettings, useWindow, useWindowId, useWindowProfileId } from "../../state/browser/hooks";
 import { closeMiniApp, MINI_APPS, openMiniApp, useMiniApps, type MiniAppId } from "../../state/mini-apps/store";
 import { useFavicon } from "../../state/favicons/favicons";
-import { capsule, radius, space, useTheme } from "../ui";
+import { radius, useTheme } from "../ui";
+import { SIDEBAR_TILE, SIDEBAR_TILE_LIGHT } from "../sidebar/tokens";
 import { closeSidePanel } from "../../state/extensions/sidePanels";
 import { miniAppBoxHeight, miniAppRows } from "./miniAppLayout";
 
@@ -17,8 +18,8 @@ export function TopAppDock() {
   const visible = enabled.filter((id): id is MiniAppId => Object.hasOwn(MINI_APPS, id));
   if (!visible.length) return null;
   const rows = miniAppRows(visible.length);
-  return <View style={{ paddingHorizontal: space.s, paddingTop: space.xs, gap: space.xs }}>
-    {rows.map((row, rowIndex) => <View key={rowIndex} style={{ flexDirection: "row", gap: space.xs }}>
+  return <View style={{ paddingHorizontal: 4, gap: 6 }}>
+    {rows.map((row, rowIndex) => <View key={rowIndex} style={{ flexDirection: "row", gap: 6 }}>
       {row.map((index) => { const id = visible[index]!; return <MiniAppDockButton key={id} id={id} profileId={profileId} selected={active === id} onPress={() => { if (active === id) closeMiniApp(windowId); else { closeSidePanel(windowId); openMiniApp(windowId, id); } }} />; })}
     </View>)}
   </View>;
@@ -29,7 +30,8 @@ function MiniAppDockButton({ id, profileId, selected, onPress }: { id: MiniAppId
   const definition = MINI_APPS[id];
   const faviconUrl = `${new URL(definition.url).origin}/favicon.ico`;
   const favicon = useFavicon(definition.url, faviconUrl, profileId);
-  return <Pressable accessibilityRole="button" accessibilityLabel={definition.title} accessibilityState={{ selected }} tooltip={definition.title} onPress={onPress} style={{ flex: 1, height: miniAppBoxHeight(32), maxHeight: 32, alignItems: "center", justifyContent: "center", borderRadius: radius.chrome, backgroundColor: selected ? theme.rowHover : undefined }}>
-    {favicon ? <Image source={{ uri: favicon.uri }} style={{ width: 16, height: 16, borderRadius: radius.hair }} /> : <View style={{ width: 12, height: 12, borderRadius: capsule(12), backgroundColor: theme.textTertiary }} />}
+  const tile = theme.dark ? SIDEBAR_TILE : SIDEBAR_TILE_LIGHT;
+  return <Pressable accessibilityRole="button" accessibilityLabel={definition.title} accessibilityState={{ selected }} tooltip={definition.title} onPress={onPress} style={{ flex: 1, height: miniAppBoxHeight(32), maxHeight: 32, alignItems: "center", justifyContent: "center", borderRadius: tile.radius, backgroundColor: selected ? theme.rowHover : tile.fill, borderColor: tile.border, borderWidth: 1 }}>
+    {favicon ? <Image source={{ uri: favicon.uri }} style={{ width: 20, height: 20, borderRadius: radius.hair }} /> : <View style={{ width: 16, height: 16, borderRadius: radius.hair, backgroundColor: theme.textTertiary }} />}
   </Pressable>;
 }
