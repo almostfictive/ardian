@@ -36,7 +36,7 @@ export const NewTabRow = memo(function NewTabRow({ windowId, shift = null, clip 
               style={[
                 {
                   height: layout.rowHeight,
-                  borderRadius: radius.chrome,
+                  borderRadius: radius.tile,
                   flexDirection: "row",
                   alignItems: "center",
                   paddingLeft: TAB_ROW.contentLeft,
