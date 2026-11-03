@@ -16,7 +16,7 @@ import { NewTabPage } from "../ntp/NewTabPage";
 import { EmptyCard } from "./EmptyCard";
 import { InternalPage } from "../pages";
 import { ShareBar } from "../media/ShareBar";
-import { Toolbar, ToolbarBackdrop } from "../toolbar/Toolbar";
+import { Toolbar } from "../toolbar/Toolbar";
 import { AutoHideBackdrop, AutoHideToolbar, useToolbarMode, useToolbarMotion } from "../toolbar/AutoHideToolbar";
 import { publishPaneChrome } from "../toolbar/WindowToolbar";
 import { revealToolbar } from "../../state/windows/toolbarAutoHide";
@@ -120,7 +120,7 @@ export const TabPane = memo(function TabPane({
       }}
     >
       {bar.kind === "toolbar" && <Toolbar tabId={tabId} geometry={geometry} windowId={windowId} inSplit={inSplit} focused={focused || !inSplit} />}
-      {bar.kind === "backdrop" && <ToolbarBackdrop tabId={tabId} />}
+      {bar.kind === "backdrop" && <View style={{ height: toolbarHeight }} />}
       {bar.kind === "spacer" && <View style={{ height: toolbarHeight }} />}
       {!autoLayout && bookmarksBar && <BookmarksBar tabId={tabId} placeholder={!visible} />}
       <Animated.View style={autoLayout ? motion.groupStyle : { flex: 1 }}>
@@ -148,7 +148,7 @@ export const TabPane = memo(function TabPane({
           </View>
         </View>
       </Animated.View>
-      {hideBar && <AutoHideBackdrop tabId={tabId} mode={mode} motion={motion} />}
+      {hideBar && bar.bar === "backdrop" && <AutoHideBackdrop tabId={tabId} mode={mode} motion={motion} />}
       {autoLayout && bar.bar === "pane" && <AutoHideToolbar tabId={tabId} geometry={geometry} windowId={windowId} inSplit={inSplit} focused={focused || !inSplit} mode={mode} motion={motion} />}
     </View>
   );

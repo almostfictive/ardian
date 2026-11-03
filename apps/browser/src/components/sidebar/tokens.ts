@@ -17,8 +17,8 @@ const DARK = {
   switcherFocus: "rgba(255,255,255,0.3)",
   switcherOutline: "rgba(255,255,255,0.15)",
   badge: "rgba(255,255,255,0.9)",
-  newTabLabel: "#FFFFFF8C",
-  newTabIcon: "#FFFFFF40",
+  newTabLabel: "#F5EEF080",
+  newTabIcon: "#F5EEF0B3",
   noGroupIcon: "#FFFFFF40",
   folderDropFill: "rgba(255,255,255,0.08)",
   folderMosaic: "rgba(255,255,255,0.1)",
@@ -81,7 +81,7 @@ export const SIDEBAR_MOTION = { liveFold: duration.long, fold: duration.base, li
 export const HOVER_CARD_IN_SPRING = { response: 0.25, damping: 0.75 } as const;
 export const HOVER_CARD_OUT_SPRING = { response: 0.2, damping: 0.6 } as const;
 
-export const TAB_ROW = { contentLeft: 8, trailing: 6, titleGap: 7, titleHeight: 15, compactTitleHeight: 15, closeSlot: 22 } as const;
+export const TAB_ROW = { contentLeft: 8, trailing: 8, titleGap: 7, titleHeight: 15, compactTitleHeight: 15, closeSlot: 22 } as const;
 
 export const TILE_RIM = 1;
 

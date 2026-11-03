@@ -174,7 +174,7 @@ export const layout = {
   rowGap: SIDEBAR_ROW.gap,
   cardInset: CARD_INSET,
   sidebarCardGap: 8,
-  cardRadius: 10,
+  cardRadius: radius.chrome,
   toolbarButton: 30,
   toolbarIconCenters: [21, 56, 92, 127],
   breadcrumbX: 153,

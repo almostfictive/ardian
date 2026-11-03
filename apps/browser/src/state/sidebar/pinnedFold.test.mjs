@@ -74,10 +74,10 @@ test("collapsed, the active pinned row is the one row the section shows; the oth
   const { pinned } = sidebarEntries(S(), w, "default");
   assert.deepEqual(pinned, [`t:${ids[0]}`, `t:${ids[1]}`]);
   S().activate(ids[1]);
-  assert.deepEqual(rowSpan(S(), w, "default", ids[1], false), { section: "pinnedGroups", top: 37, height: 34 });
+  assert.deepEqual(rowSpan(S(), w, "default", ids[1], false), { section: "pinnedGroups", top: 34, height: 32 });
   fold.setPinnedCollapsed("default", true);
   assert.equal(fold.pinnedKept(S(), w, "default", pinned), `t:${ids[1]}`);
-  assert.deepEqual(rowSpan(S(), w, "default", ids[1], false), { section: "pinnedGroups", top: 0, height: 34 });
+  assert.deepEqual(rowSpan(S(), w, "default", ids[1], false), { section: "pinnedGroups", top: 0, height: 32 });
   assert.equal(rowSpan(S(), w, "default", ids[0], false), null);
   S().activate(ids[3]);
   assert.equal(fold.pinnedKept(S(), w, "default", pinned), null);

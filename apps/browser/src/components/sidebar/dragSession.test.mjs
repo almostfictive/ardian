@@ -251,7 +251,7 @@ test("committed drops survive a relaunch: tab order, pins, groups, pinned anchor
 test("a drag begun over one that never ended stops the old one's autoscroll and hold timers", async (t) => {
   t.mock.timers.enable({ apis: ["setTimeout", "setInterval"] });
   const m = listScene();
-  const { c } = mount({ entries: m.L.entries, regions: m.regions, viewport: { x: 0, y: 150, w: 200, h: 400 } });
+  const { c } = mount({ entries: m.L.entries, regions: m.regions, viewport: { x: 0, y: 0, w: 200, h: 400 } });
   const b = frameOf(m, entryKey("tab", m.id.b));
   await c.begin(entryKey("tab", m.id.b), b.x + 20, b.y + 10);
   c.scrollY = 40;

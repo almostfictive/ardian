@@ -1,7 +1,7 @@
 {
  "away bounds": [
   {
-   "step": "begin t:c 26,614",
+   "step": "begin t:c 26,578",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -15,7 +15,7 @@
     ]
    },
    "gapKey": "tail:list",
-   "pitch": 37,
+   "pitch": 34,
    "into": null,
    "external": 0,
    "gridGrowth": 0,
@@ -33,16 +33,27 @@
     "t:c"
    ],
    "gaps": {
-    "tail:list": 37
+    "tail:list": 34
    }
   },
   {
    "step": "move 240,330",
    "drop": {
-    "type": "onto",
-    "targetId": "a"
+    "type": "tabs",
+    "placement": {
+     "pinned": false,
+     "beforeId": "g1"
+    },
+    "sequence": [
+     "t:p1",
+     "t:p2",
+     "g:G(PG)"
+    ]
    },
-   "onto": "t:a"
+   "gapKey": "g:G(G)",
+   "gaps": {
+    "g:G(G)": 34
+   }
   },
   {
    "step": "move 240.5,330",
@@ -50,23 +61,34 @@
     "type": "none"
    },
    "gapKey": null,
-   "onto": null,
    "gaps": {}
   },
   {
    "step": "move 60,330",
    "drop": {
-    "type": "onto",
-    "targetId": "a"
+    "type": "tabs",
+    "placement": {
+     "pinned": false,
+     "beforeId": "g1"
+    },
+    "sequence": [
+     "t:p1",
+     "t:p2",
+     "g:G(PG)"
+    ]
    },
-   "onto": "t:a"
+   "gapKey": "g:G(G)",
+   "gaps": {
+    "g:G(G)": 34
+   }
   },
   {
    "step": "move 241,220",
    "drop": {
     "type": "none"
    },
-   "onto": null
+   "gapKey": null,
+   "gaps": {}
   },
   {
    "step": "move 60,220",
@@ -86,7 +108,7 @@
    },
    "gapKey": "g:G(PG)",
    "gaps": {
-    "g:G(PG)": 37
+    "g:G(PG)": 34
    }
   },
   {
@@ -237,7 +259,7 @@
  ],
  "away left bound": [
   {
-   "step": "begin t:c 26,614",
+   "step": "begin t:c 26,578",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -251,7 +273,7 @@
     ]
    },
    "gapKey": "tail:list",
-   "pitch": 37,
+   "pitch": 34,
    "into": null,
    "external": 0,
    "gridGrowth": 0,
@@ -269,16 +291,27 @@
     "t:c"
    ],
    "gaps": {
-    "tail:list": 37
+    "tail:list": 34
    }
   },
   {
    "step": "move 60,330",
    "drop": {
-    "type": "onto",
-    "targetId": "a"
+    "type": "tabs",
+    "placement": {
+     "pinned": false,
+     "beforeId": "g1"
+    },
+    "sequence": [
+     "t:p1",
+     "t:p2",
+     "g:G(PG)"
+    ]
    },
-   "onto": "t:a"
+   "gapKey": "g:G(G)",
+   "gaps": {
+    "g:G(G)": 34
+   }
   },
   {
    "step": "move 10,330"
@@ -289,25 +322,36 @@
     "type": "none"
    },
    "gapKey": null,
-   "onto": null,
    "gaps": {}
   },
   {
    "step": "move 60,330",
    "drop": {
-    "type": "onto",
-    "targetId": "a"
+    "type": "tabs",
+    "placement": {
+     "pinned": false,
+     "beforeId": "g1"
+    },
+    "sequence": [
+     "t:p1",
+     "t:p2",
+     "g:G(PG)"
+    ]
    },
-   "onto": "t:a"
+   "gapKey": "g:G(G)",
+   "gaps": {
+    "g:G(G)": 34
+   }
   },
   {
    "step": "end true",
    "drop": {
     "type": "none"
    },
+   "gapKey": null,
    "pitch": 0,
-   "onto": null,
-   "sources": []
+   "sources": [],
+   "gaps": {}
   },
   {
    "step": "committed",
@@ -317,8 +361,8 @@
      "p2",
      "pg1",
      "a",
-     "c",
      "b",
+     "c",
      "g1",
      "h1",
      "g2",
@@ -350,13 +394,13 @@
       "group": null,
       "folder": null
      },
-     "c": {
+     "b": {
       "pinned": false,
       "row": false,
       "group": null,
       "folder": null
      },
-     "b": {
+     "c": {
       "pinned": false,
       "row": false,
       "group": null,
@@ -417,15 +461,6 @@
        "h1"
       ],
       "parent": "G(G)",
-      "pinned": false,
-      "collapsed": false
-     },
-     "G()": {
-      "tabIds": [
-       "a",
-       "c"
-      ],
-      "parent": null,
       "pinned": false,
       "collapsed": false
      }
@@ -453,7 +488,7 @@
  ],
  "away outside window": [
   {
-   "step": "begin t:c 26,614",
+   "step": "begin t:c 26,578",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -467,7 +502,7 @@
     ]
    },
    "gapKey": "tail:list",
-   "pitch": 37,
+   "pitch": 34,
    "into": null,
    "external": 0,
    "gridGrowth": 0,
@@ -485,16 +520,27 @@
     "t:c"
    ],
    "gaps": {
-    "tail:list": 37
+    "tail:list": 34
    }
   },
   {
    "step": "move 60,330",
    "drop": {
-    "type": "onto",
-    "targetId": "a"
+    "type": "tabs",
+    "placement": {
+     "pinned": false,
+     "beforeId": "g1"
+    },
+    "sequence": [
+     "t:p1",
+     "t:p2",
+     "g:G(PG)"
+    ]
    },
-   "onto": "t:a"
+   "gapKey": "g:G(G)",
+   "gaps": {
+    "g:G(G)": 34
+   }
   },
   {
    "step": "move 60,-3000",
@@ -502,25 +548,36 @@
     "type": "none"
    },
    "gapKey": null,
-   "onto": null,
    "gaps": {}
   },
   {
    "step": "move 60,330",
    "drop": {
-    "type": "onto",
-    "targetId": "a"
+    "type": "tabs",
+    "placement": {
+     "pinned": false,
+     "beforeId": "g1"
+    },
+    "sequence": [
+     "t:p1",
+     "t:p2",
+     "g:G(PG)"
+    ]
    },
-   "onto": "t:a"
+   "gapKey": "g:G(G)",
+   "gaps": {
+    "g:G(G)": 34
+   }
   },
   {
    "step": "end true",
    "drop": {
     "type": "none"
    },
+   "gapKey": null,
    "pitch": 0,
-   "onto": null,
-   "sources": []
+   "sources": [],
+   "gaps": {}
   },
   {
    "step": "committed",
@@ -530,8 +587,8 @@
      "p2",
      "pg1",
      "a",
-     "c",
      "b",
+     "c",
      "g1",
      "h1",
      "g2",
@@ -563,13 +620,13 @@
       "group": null,
       "folder": null
      },
-     "c": {
+     "b": {
       "pinned": false,
       "row": false,
       "group": null,
       "folder": null
      },
-     "b": {
+     "c": {
       "pinned": false,
       "row": false,
       "group": null,
@@ -632,15 +689,6 @@
       "parent": "G(G)",
       "pinned": false,
       "collapsed": false
-     },
-     "G()": {
-      "tabIds": [
-       "a",
-       "c"
-      ],
-      "parent": null,
-      "pinned": false,
-      "collapsed": false
      }
     },
     "pinnedArea": [
@@ -666,7 +714,7 @@
  ],
  "collapsed header": [
   {
-   "step": "begin t:c 26,577",
+   "step": "begin t:c 26,544",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -680,7 +728,7 @@
     ]
    },
    "gapKey": "tail:list",
-   "pitch": 37,
+   "pitch": 34,
    "into": null,
    "external": 0,
    "gridGrowth": 0,
@@ -698,7 +746,7 @@
     "t:c"
    ],
    "gaps": {
-    "tail:list": 37
+    "tail:list": 34
    }
   },
   {
@@ -714,7 +762,10 @@
    "step": "move 60,560"
   },
   {
-   "step": "move 60,530",
+   "step": "move 60,530"
+  },
+  {
+   "step": "move 60,500",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -729,30 +780,19 @@
    },
    "gapKey": "s:S(s1+s2)",
    "gaps": {
-    "s:S(s1+s2)": 37
-   }
-  },
-  {
-   "step": "move 60,500",
-   "drop": {
-    "type": "tabs",
-    "placement": {
-     "pinned": false,
-     "beforeId": "b"
-    },
-    "sequence": [
-     "t:p1",
-     "t:p2",
-     "g:G(PG)"
-    ]
-   },
-   "gapKey": "t:b",
-   "gaps": {
-    "t:b": 37
+    "s:S(s1+s2)": 34
    }
   },
   {
    "step": "move 60,480",
+   "drop": {
+    "type": "onto",
+    "targetId": "b"
+   },
+   "onto": "t:b"
+  },
+  {
+   "step": "move 60,460",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -767,12 +807,13 @@
     ]
    },
    "gapKey": "tail:group:G(G)",
+   "onto": null,
    "gaps": {
-    "tail:group:G(G)": 37
+    "tail:group:G(G)": 34
    }
   },
   {
-   "step": "move 60,460",
+   "step": "move 60,440",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -788,11 +829,11 @@
    },
    "gapKey": "t:g2",
    "gaps": {
-    "t:g2": 37
+    "t:g2": 34
    }
   },
   {
-   "step": "move 60,440",
+   "step": "move 60,420",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -812,7 +853,10 @@
    "gaps": {}
   },
   {
-   "step": "move 60,420",
+   "step": "move 60,405"
+  },
+  {
+   "step": "move 60,390",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -830,14 +874,11 @@
    "into": null,
    "dropInto": null,
    "gaps": {
-    "g:G(H)": 37
+    "g:G(H)": 34
    }
   },
   {
-   "step": "move 60,405"
-  },
-  {
-   "step": "move 60,390",
+   "step": "move 60,375",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -853,14 +894,14 @@
    },
    "gapKey": "t:g1",
    "gaps": {
-    "t:g1": 37
+    "t:g1": 34
    }
   },
   {
-   "step": "move 60,375"
+   "step": "move 60,360"
   },
   {
-   "step": "move 60,360",
+   "step": "move 60,345",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -875,14 +916,14 @@
    },
    "gapKey": "g:G(G)",
    "gaps": {
-    "g:G(G)": 37
+    "g:G(G)": 34
    }
   },
   {
-   "step": "move 60,345"
+   "step": "move 60,330"
   },
   {
-   "step": "move 60,330",
+   "step": "move 60,315",
    "drop": {
     "type": "onto",
     "targetId": "a"
@@ -890,7 +931,7 @@
    "onto": "t:a"
   },
   {
-   "step": "move 60,315",
+   "step": "move 60,300",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -906,11 +947,11 @@
    "gapKey": "t:a",
    "onto": null,
    "gaps": {
-    "t:a": 37
+    "t:a": 34
    }
   },
   {
-   "step": "move 60,300",
+   "step": "move 60,285",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -928,11 +969,11 @@
    },
    "gapKey": "tail:pinnedGroups",
    "gaps": {
-    "tail:pinnedGroups": 37
+    "tail:pinnedGroups": 34
    }
   },
   {
-   "step": "move 60,285",
+   "step": "move 60,270",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -948,11 +989,11 @@
    },
    "gapKey": "tail:group:G(PG)",
    "gaps": {
-    "tail:group:G(PG)": 37
+    "tail:group:G(PG)": 34
    }
   },
   {
-   "step": "move 60,270",
+   "step": "move 60,255",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -968,14 +1009,14 @@
    },
    "gapKey": "t:pg1",
    "gaps": {
-    "t:pg1": 37
+    "t:pg1": 34
    }
   },
   {
-   "step": "move 60,255"
+   "step": "move 60,240"
   },
   {
-   "step": "move 60,240",
+   "step": "move 60,215",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -992,11 +1033,8 @@
    },
    "gapKey": "g:G(PG)",
    "gaps": {
-    "g:G(PG)": 37
+    "g:G(PG)": 34
    }
-  },
-  {
-   "step": "move 60,215"
   },
   {
    "step": "move 60,200",
@@ -1025,7 +1063,7 @@
    "gapKey": "t:p2",
    "onto": null,
    "gaps": {
-    "t:p2": 37
+    "t:p2": 34
    }
   },
   {
@@ -1055,7 +1093,7 @@
    "gapKey": "t:p1",
    "onto": null,
    "gaps": {
-    "t:p1": 37
+    "t:p1": 34
    }
   },
   {
@@ -1206,7 +1244,7 @@
  ],
  "collapsed pinned header": [
   {
-   "step": "begin g:G(G) 26,318",
+   "step": "begin g:G(G) 26,306",
    "drop": {
     "type": "group",
     "groupId": "G(G)",
@@ -1222,7 +1260,7 @@
     ]
    },
    "gapKey": "t:b",
-   "pitch": 37,
+   "pitch": 34,
    "into": null,
    "external": 0,
    "gridGrowth": 0,
@@ -1240,7 +1278,7 @@
     "g:G(G)"
    ],
    "gaps": {
-    "t:b": 37
+    "t:b": 34
    }
   },
   {
@@ -1261,7 +1299,7 @@
    },
    "gapKey": "tail:list",
    "gaps": {
-    "tail:list": 37
+    "tail:list": 34
    }
   },
   {
@@ -1295,7 +1333,10 @@
    "step": "move 60,405"
   },
   {
-   "step": "move 60,390",
+   "step": "move 60,390"
+  },
+  {
+   "step": "move 60,375",
    "drop": {
     "type": "group",
     "groupId": "G(G)",
@@ -1312,14 +1353,14 @@
    },
    "gapKey": "t:c",
    "gaps": {
-    "t:c": 37
+    "t:c": 34
    }
   },
   {
-   "step": "move 60,375"
+   "step": "move 60,360"
   },
   {
-   "step": "move 60,360",
+   "step": "move 60,345",
    "drop": {
     "type": "group",
     "groupId": "G(G)",
@@ -1336,17 +1377,17 @@
    },
    "gapKey": "s:S(s1+s2)",
    "gaps": {
-    "s:S(s1+s2)": 37
+    "s:S(s1+s2)": 34
    }
-  },
-  {
-   "step": "move 60,345"
   },
   {
    "step": "move 60,330"
   },
   {
-   "step": "move 60,315",
+   "step": "move 60,315"
+  },
+  {
+   "step": "move 60,300",
    "drop": {
     "type": "group",
     "groupId": "G(G)",
@@ -1363,14 +1404,14 @@
    },
    "gapKey": "t:b",
    "gaps": {
-    "t:b": 37
+    "t:b": 34
    }
   },
   {
-   "step": "move 60,300"
+   "step": "move 60,285"
   },
   {
-   "step": "move 60,285",
+   "step": "move 60,270",
    "drop": {
     "type": "group",
     "groupId": "G(G)",
@@ -1387,11 +1428,11 @@
    },
    "gapKey": "t:a",
    "gaps": {
-    "t:a": 37
+    "t:a": 34
    }
   },
   {
-   "step": "move 60,270",
+   "step": "move 60,255",
    "drop": {
     "type": "group",
     "groupId": "G(G)",
@@ -1409,11 +1450,8 @@
    },
    "gapKey": "tail:pinnedGroups",
    "gaps": {
-    "tail:pinnedGroups": 37
+    "tail:pinnedGroups": 34
    }
-  },
-  {
-   "step": "move 60,255"
   },
   {
    "step": "move 60,240",
@@ -1457,11 +1495,14 @@
    "into": null,
    "dropInto": null,
    "gaps": {
-    "g:G(PG)": 37
+    "g:G(PG)": 34
    }
   },
   {
-   "step": "move 60,200",
+   "step": "move 60,200"
+  },
+  {
+   "step": "move 60,185",
    "drop": {
     "type": "group",
     "groupId": "G(G)",
@@ -1479,11 +1520,8 @@
    },
    "gapKey": "t:p2",
    "gaps": {
-    "t:p2": 37
+    "t:p2": 34
    }
-  },
-  {
-   "step": "move 60,185"
   },
   {
    "step": "move 60,160",
@@ -1504,7 +1542,7 @@
    },
    "gapKey": "t:p1",
    "gaps": {
-    "t:p1": 37
+    "t:p1": 34
    }
   },
   {
@@ -1520,10 +1558,7 @@
    "step": "move 60,185"
   },
   {
-   "step": "move 60,200"
-  },
-  {
-   "step": "move 60,215",
+   "step": "move 60,200",
    "drop": {
     "type": "group",
     "groupId": "G(G)",
@@ -1541,14 +1576,14 @@
    },
    "gapKey": "t:p2",
    "gaps": {
-    "t:p2": 37
+    "t:p2": 34
    }
   },
   {
-   "step": "move 60,240"
+   "step": "move 60,215"
   },
   {
-   "step": "move 60,255",
+   "step": "move 60,240",
    "drop": {
     "type": "group",
     "groupId": "G(G)",
@@ -1566,8 +1601,11 @@
    },
    "gapKey": "g:G(PG)",
    "gaps": {
-    "g:G(PG)": 37
+    "g:G(PG)": 34
    }
+  },
+  {
+   "step": "move 60,255"
   },
   {
    "step": "move 60,270",
@@ -1598,35 +1636,6 @@
     "placement": {
      "pinned": false,
      "parentId": null,
-     "beforeId": "a"
-    },
-    "sequence": [
-     "t:p1",
-     "t:p2",
-     "g:G(PG)"
-    ]
-   },
-   "gapKey": "t:a",
-   "into": null,
-   "dropInto": null,
-   "gaps": {
-    "t:a": 37
-   }
-  },
-  {
-   "step": "move 60,300"
-  },
-  {
-   "step": "move 60,315"
-  },
-  {
-   "step": "move 60,330",
-   "drop": {
-    "type": "group",
-    "groupId": "G(G)",
-    "placement": {
-     "pinned": false,
-     "parentId": null,
      "beforeId": "b"
     },
     "sequence": [
@@ -1636,18 +1645,26 @@
     ]
    },
    "gapKey": "t:b",
+   "into": null,
+   "dropInto": null,
    "gaps": {
-    "t:b": 37
+    "t:b": 34
    }
+  },
+  {
+   "step": "move 60,300"
+  },
+  {
+   "step": "move 60,315"
+  },
+  {
+   "step": "move 60,330"
   },
   {
    "step": "move 60,345"
   },
   {
-   "step": "move 60,360"
-  },
-  {
-   "step": "move 60,375",
+   "step": "move 60,360",
    "drop": {
     "type": "group",
     "groupId": "G(G)",
@@ -1664,14 +1681,14 @@
    },
    "gapKey": "s:S(s1+s2)",
    "gaps": {
-    "s:S(s1+s2)": 37
+    "s:S(s1+s2)": 34
    }
   },
   {
-   "step": "move 60,390"
+   "step": "move 60,375"
   },
   {
-   "step": "move 60,405",
+   "step": "move 60,390",
    "drop": {
     "type": "group",
     "groupId": "G(G)",
@@ -1688,14 +1705,14 @@
    },
    "gapKey": "t:c",
    "gaps": {
-    "t:c": 37
+    "t:c": 34
    }
   },
   {
-   "step": "move 60,420"
+   "step": "move 60,405"
   },
   {
-   "step": "move 60,440",
+   "step": "move 60,420",
    "drop": {
     "type": "group",
     "groupId": "G(G)",
@@ -1712,8 +1729,11 @@
    },
    "gapKey": "tail:list",
    "gaps": {
-    "tail:list": 37
+    "tail:list": 34
    }
+  },
+  {
+   "step": "move 60,440"
   },
   {
    "step": "move 60,460"
@@ -1885,7 +1905,7 @@
  ],
  "emptied ancestor": [
   {
-   "step": "begin g:G(Inner) 42,284",
+   "step": "begin g:G(Inner) 42,278",
    "drop": {
     "type": "group",
     "groupId": "G(Inner)",
@@ -1897,7 +1917,7 @@
     "sequence": []
    },
    "gapKey": "tail:group:G(Outer)",
-   "pitch": 37,
+   "pitch": 34,
    "into": null,
    "external": 0,
    "gridGrowth": 0,
@@ -1915,7 +1935,7 @@
     "g:G(Inner)"
    ],
    "gaps": {
-    "tail:group:G(Outer)": 37
+    "tail:group:G(Outer)": 34
    }
   },
   {
@@ -1981,69 +2001,7 @@
    "step": "move 60,285"
   },
   {
-   "step": "move 60,270",
-   "drop": {
-    "type": "group",
-    "groupId": "G(Inner)",
-    "placement": {
-     "pinned": false,
-     "parentId": "G(Outer)",
-     "beforeId": null
-    },
-    "sequence": []
-   },
-   "gapKey": "tail:group:G(Outer)",
-   "gaps": {
-    "tail:group:G(Outer)": 37
-   }
-  },
-  {
-   "step": "move 60,255",
-   "gapKey": null,
-   "into": "G(Outer)",
-   "dropInto": "G(Outer)",
-   "gaps": {}
-  },
-  {
-   "step": "move 60,240",
-   "drop": {
-    "type": "none"
-   },
-   "into": null,
-   "dropInto": null
-  },
-  {
-   "step": "move 60,215"
-  },
-  {
-   "step": "move 60,200"
-  },
-  {
-   "step": "move 60,185"
-  },
-  {
-   "step": "move 60,160"
-  },
-  {
-   "step": "move 60,140"
-  },
-  {
-   "step": "move 60,140"
-  },
-  {
-   "step": "move 60,160"
-  },
-  {
-   "step": "move 60,185"
-  },
-  {
-   "step": "move 60,200"
-  },
-  {
-   "step": "move 60,215"
-  },
-  {
-   "step": "move 60,240"
+   "step": "move 60,270"
   },
   {
    "step": "move 60,255",
@@ -2061,21 +2019,71 @@
    "dropInto": "G(Outer)"
   },
   {
-   "step": "move 60,270",
-   "gapKey": "tail:group:G(Outer)",
-   "into": null,
-   "dropInto": null,
-   "gaps": {
-    "tail:group:G(Outer)": 37
-   }
+   "step": "move 60,240"
   },
   {
-   "step": "move 60,285",
+   "step": "move 60,215",
    "drop": {
     "type": "none"
    },
-   "gapKey": null,
-   "gaps": {}
+   "into": null,
+   "dropInto": null
+  },
+  {
+   "step": "move 60,200"
+  },
+  {
+   "step": "move 60,185"
+  },
+  {
+   "step": "move 60,160"
+  },
+  {
+   "step": "move 60,140"
+  },
+  {
+   "step": "move 60,140"
+  },
+  {
+   "step": "move 60,160"
+  },
+  {
+   "step": "move 60,185"
+  },
+  {
+   "step": "move 60,200"
+  },
+  {
+   "step": "move 60,215"
+  },
+  {
+   "step": "move 60,240",
+   "drop": {
+    "type": "group",
+    "groupId": "G(Inner)",
+    "placement": {
+     "pinned": false,
+     "parentId": "G(Outer)",
+     "beforeId": null
+    },
+    "sequence": []
+   },
+   "into": "G(Outer)",
+   "dropInto": "G(Outer)"
+  },
+  {
+   "step": "move 60,255"
+  },
+  {
+   "step": "move 60,270",
+   "drop": {
+    "type": "none"
+   },
+   "into": null,
+   "dropInto": null
+  },
+  {
+   "step": "move 60,285"
   },
   {
    "step": "move 60,300"
@@ -2185,7 +2193,7 @@
  ],
  "equal heights": [
   {
-   "step": "begin t:z 26,395",
+   "step": "begin t:z 26,380",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -2195,7 +2203,7 @@
     "sequence": []
    },
    "gapKey": "tail:list",
-   "pitch": 37,
+   "pitch": 34,
    "into": null,
    "external": 0,
    "gridGrowth": 0,
@@ -2213,7 +2221,7 @@
     "t:z"
    ],
    "gaps": {
-    "tail:list": 37
+    "tail:list": 34
    }
   },
   {
@@ -2253,7 +2261,10 @@
    "step": "move 60,390"
   },
   {
-   "step": "move 60,375",
+   "step": "move 60,375"
+  },
+  {
+   "step": "move 60,360",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -2265,11 +2276,11 @@
    },
    "gapKey": "tail:group:G(Inner)",
    "gaps": {
-    "tail:group:G(Inner)": 37
+    "tail:group:G(Inner)": 34
    }
   },
   {
-   "step": "move 60,360",
+   "step": "move 60,345",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -2281,11 +2292,8 @@
    },
    "gapKey": "t:y",
    "gaps": {
-    "t:y": 37
+    "t:y": 34
    }
-  },
-  {
-   "step": "move 60,345"
   },
   {
    "step": "move 60,330"
@@ -2303,14 +2311,17 @@
    },
    "gapKey": "t:x",
    "gaps": {
-    "t:x": 37
+    "t:x": 34
    }
   },
   {
    "step": "move 60,300"
   },
   {
-   "step": "move 60,285",
+   "step": "move 60,285"
+  },
+  {
+   "step": "move 60,270",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -2322,11 +2333,8 @@
    },
    "gapKey": "tail:group:G(Outer)",
    "gaps": {
-    "tail:group:G(Outer)": 37
+    "tail:group:G(Outer)": 34
    }
-  },
-  {
-   "step": "move 60,270"
   },
   {
    "step": "move 60,255"
@@ -2343,7 +2351,7 @@
    },
    "gapKey": "g:G(Outer)",
    "gaps": {
-    "g:G(Outer)": 37
+    "g:G(Outer)": 34
    }
   },
   {
@@ -2367,7 +2375,7 @@
    "gapKey": "t:a",
    "onto": null,
    "gaps": {
-    "t:a": 37
+    "t:a": 34
    }
   },
   {
@@ -2471,7 +2479,7 @@
  ],
  "group edge": [
   {
-   "step": "begin g:G(G) 26,355",
+   "step": "begin g:G(G) 26,340",
    "drop": {
     "type": "group",
     "groupId": "G(G)",
@@ -2487,7 +2495,7 @@
     ]
    },
    "gapKey": "t:b",
-   "pitch": 37,
+   "pitch": 34,
    "into": null,
    "external": 0,
    "gridGrowth": 0,
@@ -2505,11 +2513,11 @@
     "g:G(G)"
    ],
    "gaps": {
-    "t:b": 37
+    "t:b": 34
    }
   },
   {
-   "step": "move 60,316",
+   "step": "move 60,304",
    "drop": {
     "type": "group",
     "groupId": "G(G)",
@@ -2526,17 +2534,17 @@
    },
    "gapKey": "t:a",
    "gaps": {
-    "t:a": 37
+    "t:a": 34
    }
   },
   {
-   "step": "move 60,313"
+   "step": "move 60,301"
   },
   {
-   "step": "move 60,309"
+   "step": "move 60,297"
   },
   {
-   "step": "move 60,307",
+   "step": "move 60,295",
    "drop": {
     "type": "group",
     "groupId": "G(G)",
@@ -2554,20 +2562,20 @@
    },
    "gapKey": "tail:pinnedGroups",
    "gaps": {
-    "tail:pinnedGroups": 37
+    "tail:pinnedGroups": 34
    }
   },
   {
-   "step": "move 60,303"
+   "step": "move 60,291"
   },
   {
-   "step": "move 60,301"
+   "step": "move 60,289"
   },
   {
-   "step": "move 60,303"
+   "step": "move 60,291"
   },
   {
-   "step": "move 60,309",
+   "step": "move 60,297",
    "drop": {
     "type": "group",
     "groupId": "G(G)",
@@ -2584,14 +2592,14 @@
    },
    "gapKey": "t:a",
    "gaps": {
-    "t:a": 37
+    "t:a": 34
    }
   },
   {
-   "step": "move 60,313"
+   "step": "move 60,301"
   },
   {
-   "step": "move 60,315"
+   "step": "move 60,303"
   },
   {
    "step": "end true",
@@ -2739,7 +2747,7 @@
  ],
  "group sweep": [
   {
-   "step": "begin g:G(G) 26,355",
+   "step": "begin g:G(G) 26,340",
    "drop": {
     "type": "group",
     "groupId": "G(G)",
@@ -2755,7 +2763,7 @@
     ]
    },
    "gapKey": "t:b",
-   "pitch": 37,
+   "pitch": 34,
    "into": null,
    "external": 0,
    "gridGrowth": 0,
@@ -2773,7 +2781,7 @@
     "g:G(G)"
    ],
    "gaps": {
-    "t:b": 37
+    "t:b": 34
    }
   },
   {
@@ -2795,7 +2803,7 @@
    },
    "gapKey": "t:p1",
    "gaps": {
-    "t:p1": 37
+    "t:p1": 34
    }
   },
   {
@@ -2805,10 +2813,7 @@
    "step": "move 60,185"
   },
   {
-   "step": "move 60,200"
-  },
-  {
-   "step": "move 60,215",
+   "step": "move 60,200",
    "drop": {
     "type": "group",
     "groupId": "G(G)",
@@ -2826,14 +2831,14 @@
    },
    "gapKey": "t:p2",
    "gaps": {
-    "t:p2": 37
+    "t:p2": 34
    }
   },
   {
-   "step": "move 60,240"
+   "step": "move 60,215"
   },
   {
-   "step": "move 60,255",
+   "step": "move 60,240",
    "drop": {
     "type": "group",
     "groupId": "G(G)",
@@ -2851,8 +2856,11 @@
    },
    "gapKey": "g:G(PG)",
    "gaps": {
-    "g:G(PG)": 37
+    "g:G(PG)": 34
    }
+  },
+  {
+   "step": "move 60,255"
   },
   {
    "step": "move 60,270",
@@ -2877,15 +2885,6 @@
   },
   {
    "step": "move 60,285",
-   "gapKey": "tail:group:G(PG)",
-   "into": null,
-   "dropInto": null,
-   "gaps": {
-    "tail:group:G(PG)": 37
-   }
-  },
-  {
-   "step": "move 60,300",
    "drop": {
     "type": "group",
     "groupId": "G(G)",
@@ -2902,12 +2901,14 @@
     ]
    },
    "gapKey": "tail:pinnedGroups",
+   "into": null,
+   "dropInto": null,
    "gaps": {
-    "tail:pinnedGroups": 37
+    "tail:pinnedGroups": 34
    }
   },
   {
-   "step": "move 60,315",
+   "step": "move 60,300",
    "drop": {
     "type": "group",
     "groupId": "G(G)",
@@ -2924,8 +2925,11 @@
    },
    "gapKey": "t:a",
    "gaps": {
-    "t:a": 37
+    "t:a": 34
    }
+  },
+  {
+   "step": "move 60,315"
   },
   {
    "step": "move 60,330"
@@ -2934,10 +2938,7 @@
    "step": "move 60,345"
   },
   {
-   "step": "move 60,360"
-  },
-  {
-   "step": "move 60,375",
+   "step": "move 60,360",
    "drop": {
     "type": "group",
     "groupId": "G(G)",
@@ -2954,14 +2955,14 @@
    },
    "gapKey": "t:b",
    "gaps": {
-    "t:b": 37
+    "t:b": 34
    }
   },
   {
-   "step": "move 60,390"
+   "step": "move 60,375"
   },
   {
-   "step": "move 60,405",
+   "step": "move 60,390",
    "drop": {
     "type": "group",
     "groupId": "G(G)",
@@ -2978,14 +2979,14 @@
    },
    "gapKey": "s:S(s1+s2)",
    "gaps": {
-    "s:S(s1+s2)": 37
+    "s:S(s1+s2)": 34
    }
   },
   {
-   "step": "move 60,420"
+   "step": "move 60,405"
   },
   {
-   "step": "move 60,440",
+   "step": "move 60,420",
    "drop": {
     "type": "group",
     "groupId": "G(G)",
@@ -3002,14 +3003,14 @@
    },
    "gapKey": "t:c",
    "gaps": {
-    "t:c": 37
+    "t:c": 34
    }
   },
   {
-   "step": "move 60,460"
+   "step": "move 60,440"
   },
   {
-   "step": "move 60,480",
+   "step": "move 60,460",
    "drop": {
     "type": "group",
     "groupId": "G(G)",
@@ -3026,8 +3027,11 @@
    },
    "gapKey": "tail:list",
    "gaps": {
-    "tail:list": 37
+    "tail:list": 34
    }
+  },
+  {
+   "step": "move 60,480"
   },
   {
    "step": "move 60,500"
@@ -3075,7 +3079,10 @@
    "step": "move 60,440"
   },
   {
-   "step": "move 60,420",
+   "step": "move 60,420"
+  },
+  {
+   "step": "move 60,405",
    "drop": {
     "type": "group",
     "groupId": "G(G)",
@@ -3092,14 +3099,14 @@
    },
    "gapKey": "t:c",
    "gaps": {
-    "t:c": 37
+    "t:c": 34
    }
   },
   {
-   "step": "move 60,405"
+   "step": "move 60,390"
   },
   {
-   "step": "move 60,390",
+   "step": "move 60,375",
    "drop": {
     "type": "group",
     "groupId": "G(G)",
@@ -3116,14 +3123,14 @@
    },
    "gapKey": "s:S(s1+s2)",
    "gaps": {
-    "s:S(s1+s2)": 37
+    "s:S(s1+s2)": 34
    }
   },
   {
-   "step": "move 60,375"
+   "step": "move 60,360"
   },
   {
-   "step": "move 60,360",
+   "step": "move 60,345",
    "drop": {
     "type": "group",
     "groupId": "G(G)",
@@ -3140,17 +3147,17 @@
    },
    "gapKey": "t:b",
    "gaps": {
-    "t:b": 37
+    "t:b": 34
    }
-  },
-  {
-   "step": "move 60,345"
   },
   {
    "step": "move 60,330"
   },
   {
-   "step": "move 60,315",
+   "step": "move 60,315"
+  },
+  {
+   "step": "move 60,300",
    "drop": {
     "type": "group",
     "groupId": "G(G)",
@@ -3167,11 +3174,11 @@
    },
    "gapKey": "t:a",
    "gaps": {
-    "t:a": 37
+    "t:a": 34
    }
   },
   {
-   "step": "move 60,300",
+   "step": "move 60,285",
    "drop": {
     "type": "group",
     "groupId": "G(G)",
@@ -3189,11 +3196,11 @@
    },
    "gapKey": "tail:pinnedGroups",
    "gaps": {
-    "tail:pinnedGroups": 37
+    "tail:pinnedGroups": 34
    }
   },
   {
-   "step": "move 60,285",
+   "step": "move 60,270",
    "drop": {
     "type": "group",
     "groupId": "G(G)",
@@ -3210,11 +3217,11 @@
    },
    "gapKey": "tail:group:G(PG)",
    "gaps": {
-    "tail:group:G(PG)": 37
+    "tail:group:G(PG)": 34
    }
   },
   {
-   "step": "move 60,270",
+   "step": "move 60,255",
    "drop": {
     "type": "group",
     "groupId": "G(G)",
@@ -3231,11 +3238,8 @@
    },
    "gapKey": "t:pg1",
    "gaps": {
-    "t:pg1": 37
+    "t:pg1": 34
    }
-  },
-  {
-   "step": "move 60,255"
   },
   {
    "step": "move 60,240",
@@ -3279,11 +3283,14 @@
    "into": null,
    "dropInto": null,
    "gaps": {
-    "g:G(PG)": 37
+    "g:G(PG)": 34
    }
   },
   {
-   "step": "move 60,200",
+   "step": "move 60,200"
+  },
+  {
+   "step": "move 60,185",
    "drop": {
     "type": "group",
     "groupId": "G(G)",
@@ -3301,11 +3308,8 @@
    },
    "gapKey": "t:p2",
    "gaps": {
-    "t:p2": 37
+    "t:p2": 34
    }
-  },
-  {
-   "step": "move 60,185"
   },
   {
    "step": "move 60,160",
@@ -3326,7 +3330,7 @@
    },
    "gapKey": "t:p1",
    "gaps": {
-    "t:p1": 37
+    "t:p1": 34
    }
   },
   {
@@ -3487,7 +3491,7 @@
  ],
  "list row cancelled": [
   {
-   "step": "begin t:c 26,614",
+   "step": "begin t:c 26,578",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -3501,7 +3505,7 @@
     ]
    },
    "gapKey": "tail:list",
-   "pitch": 37,
+   "pitch": 34,
    "into": null,
    "external": 0,
    "gridGrowth": 0,
@@ -3519,7 +3523,7 @@
     "t:c"
    ],
    "gaps": {
-    "tail:list": 37
+    "tail:list": 34
    }
   },
   {
@@ -3532,7 +3536,10 @@
    "step": "move 60,590"
   },
   {
-   "step": "move 60,560",
+   "step": "move 60,560"
+  },
+  {
+   "step": "move 60,530",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -3547,11 +3554,11 @@
    },
    "gapKey": "s:S(s1+s2)",
    "gaps": {
-    "s:S(s1+s2)": 37
+    "s:S(s1+s2)": 34
    }
   },
   {
-   "step": "move 60,530",
+   "step": "move 60,500",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -3566,11 +3573,11 @@
    },
    "gapKey": "t:b",
    "gaps": {
-    "t:b": 37
+    "t:b": 34
    }
   },
   {
-   "step": "move 60,500",
+   "step": "move 60,480",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -3586,11 +3593,11 @@
    },
    "gapKey": "t:g2",
    "gaps": {
-    "t:g2": 37
+    "t:g2": 34
    }
   },
   {
-   "step": "move 60,480",
+   "step": "move 60,460",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -3606,11 +3613,11 @@
    },
    "gapKey": "tail:group:G(H)",
    "gaps": {
-    "tail:group:G(H)": 37
+    "tail:group:G(H)": 34
    }
   },
   {
-   "step": "move 60,460",
+   "step": "move 60,440",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -3626,14 +3633,14 @@
    },
    "gapKey": "t:h1",
    "gaps": {
-    "t:h1": 37
+    "t:h1": 34
    }
   },
   {
-   "step": "move 60,440"
+   "step": "move 60,420"
   },
   {
-   "step": "move 60,420",
+   "step": "move 60,405",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -3649,14 +3656,14 @@
    },
    "gapKey": "g:G(H)",
    "gaps": {
-    "g:G(H)": 37
+    "g:G(H)": 34
    }
   },
   {
-   "step": "move 60,405"
+   "step": "move 60,390"
   },
   {
-   "step": "move 60,390",
+   "step": "move 60,375",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -3672,14 +3679,14 @@
    },
    "gapKey": "t:g1",
    "gaps": {
-    "t:g1": 37
+    "t:g1": 34
    }
   },
   {
-   "step": "move 60,375"
+   "step": "move 60,360"
   },
   {
-   "step": "move 60,360",
+   "step": "move 60,345",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -3694,11 +3701,8 @@
    },
    "gapKey": "g:G(G)",
    "gaps": {
-    "g:G(G)": 37
+    "g:G(G)": 34
    }
-  },
-  {
-   "step": "move 60,345"
   },
   {
    "step": "end false",
@@ -3845,7 +3849,7 @@
  ],
  "list row sweep": [
   {
-   "step": "begin t:c 26,614",
+   "step": "begin t:c 26,578",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -3859,7 +3863,7 @@
     ]
    },
    "gapKey": "tail:list",
-   "pitch": 37,
+   "pitch": 34,
    "into": null,
    "external": 0,
    "gridGrowth": 0,
@@ -3877,7 +3881,7 @@
     "t:c"
    ],
    "gaps": {
-    "tail:list": 37
+    "tail:list": 34
    }
   },
   {
@@ -3890,7 +3894,10 @@
    "step": "move 60,590"
   },
   {
-   "step": "move 60,560",
+   "step": "move 60,560"
+  },
+  {
+   "step": "move 60,530",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -3905,11 +3912,11 @@
    },
    "gapKey": "s:S(s1+s2)",
    "gaps": {
-    "s:S(s1+s2)": 37
+    "s:S(s1+s2)": 34
    }
   },
   {
-   "step": "move 60,530",
+   "step": "move 60,500",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -3924,11 +3931,11 @@
    },
    "gapKey": "t:b",
    "gaps": {
-    "t:b": 37
+    "t:b": 34
    }
   },
   {
-   "step": "move 60,500",
+   "step": "move 60,480",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -3944,11 +3951,11 @@
    },
    "gapKey": "t:g2",
    "gaps": {
-    "t:g2": 37
+    "t:g2": 34
    }
   },
   {
-   "step": "move 60,480",
+   "step": "move 60,460",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -3964,11 +3971,11 @@
    },
    "gapKey": "tail:group:G(H)",
    "gaps": {
-    "tail:group:G(H)": 37
+    "tail:group:G(H)": 34
    }
   },
   {
-   "step": "move 60,460",
+   "step": "move 60,440",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -3984,14 +3991,14 @@
    },
    "gapKey": "t:h1",
    "gaps": {
-    "t:h1": 37
+    "t:h1": 34
    }
   },
   {
-   "step": "move 60,440"
+   "step": "move 60,420"
   },
   {
-   "step": "move 60,420",
+   "step": "move 60,405",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -4007,14 +4014,14 @@
    },
    "gapKey": "g:G(H)",
    "gaps": {
-    "g:G(H)": 37
+    "g:G(H)": 34
    }
   },
   {
-   "step": "move 60,405"
+   "step": "move 60,390"
   },
   {
-   "step": "move 60,390",
+   "step": "move 60,375",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -4030,14 +4037,14 @@
    },
    "gapKey": "t:g1",
    "gaps": {
-    "t:g1": 37
+    "t:g1": 34
    }
   },
   {
-   "step": "move 60,375"
+   "step": "move 60,360"
   },
   {
-   "step": "move 60,360",
+   "step": "move 60,345",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -4052,14 +4059,14 @@
    },
    "gapKey": "g:G(G)",
    "gaps": {
-    "g:G(G)": 37
+    "g:G(G)": 34
    }
   },
   {
-   "step": "move 60,345"
+   "step": "move 60,330"
   },
   {
-   "step": "move 60,330",
+   "step": "move 60,315",
    "drop": {
     "type": "onto",
     "targetId": "a"
@@ -4067,7 +4074,7 @@
    "onto": "t:a"
   },
   {
-   "step": "move 60,315",
+   "step": "move 60,300",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -4083,11 +4090,11 @@
    "gapKey": "t:a",
    "onto": null,
    "gaps": {
-    "t:a": 37
+    "t:a": 34
    }
   },
   {
-   "step": "move 60,300",
+   "step": "move 60,285",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -4105,11 +4112,11 @@
    },
    "gapKey": "tail:pinnedGroups",
    "gaps": {
-    "tail:pinnedGroups": 37
+    "tail:pinnedGroups": 34
    }
   },
   {
-   "step": "move 60,285",
+   "step": "move 60,270",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -4125,11 +4132,11 @@
    },
    "gapKey": "tail:group:G(PG)",
    "gaps": {
-    "tail:group:G(PG)": 37
+    "tail:group:G(PG)": 34
    }
   },
   {
-   "step": "move 60,270",
+   "step": "move 60,255",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -4145,14 +4152,14 @@
    },
    "gapKey": "t:pg1",
    "gaps": {
-    "t:pg1": 37
+    "t:pg1": 34
    }
   },
   {
-   "step": "move 60,255"
+   "step": "move 60,240"
   },
   {
-   "step": "move 60,240",
+   "step": "move 60,215",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -4169,11 +4176,8 @@
    },
    "gapKey": "g:G(PG)",
    "gaps": {
-    "g:G(PG)": 37
+    "g:G(PG)": 34
    }
-  },
-  {
-   "step": "move 60,215"
   },
   {
    "step": "move 60,200",
@@ -4202,7 +4206,7 @@
    "gapKey": "t:p2",
    "onto": null,
    "gaps": {
-    "t:p2": 37
+    "t:p2": 34
    }
   },
   {
@@ -4232,7 +4236,7 @@
    "gapKey": "t:p1",
    "onto": null,
    "gaps": {
-    "t:p1": 37
+    "t:p1": 34
    }
   },
   {
@@ -4271,7 +4275,7 @@
    "gapKey": "t:p2",
    "onto": null,
    "gaps": {
-    "t:p2": 37
+    "t:p2": 34
    }
   },
   {
@@ -4301,14 +4305,11 @@
    "gapKey": "g:G(PG)",
    "onto": null,
    "gaps": {
-    "g:G(PG)": 37
+    "g:G(PG)": 34
    }
   },
   {
-   "step": "move 60,270"
-  },
-  {
-   "step": "move 60,285",
+   "step": "move 60,270",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -4324,8 +4325,11 @@
    },
    "gapKey": "t:pg1",
    "gaps": {
-    "t:pg1": 37
+    "t:pg1": 34
    }
+  },
+  {
+   "step": "move 60,285"
   },
   {
    "step": "move 60,300"
@@ -4347,7 +4351,7 @@
    },
    "gapKey": "tail:group:G(PG)",
    "gaps": {
-    "tail:group:G(PG)": 37
+    "tail:group:G(PG)": 34
    }
   },
   {
@@ -4366,7 +4370,7 @@
    },
    "gapKey": "t:a",
    "gaps": {
-    "t:a": 37
+    "t:a": 34
    }
   },
   {
@@ -4514,7 +4518,7 @@
  ],
  "live sweep": [
   {
-   "step": "begin lf:LF(Pull Requests) 26,197",
+   "step": "begin lf:LF(Pull Requests) 26,194",
    "drop": {
     "type": "live",
     "sequence": [
@@ -4525,7 +4529,7 @@
     ]
    },
    "gapKey": "t:p2",
-   "pitch": 37,
+   "pitch": 34,
    "into": null,
    "external": 0,
    "gridGrowth": 0,
@@ -4543,7 +4547,7 @@
     "lf:LF(Pull Requests)"
    ],
    "gaps": {
-    "t:p2": 37
+    "t:p2": 34
    }
   },
   {
@@ -4559,7 +4563,7 @@
    },
    "gapKey": "t:p1",
    "gaps": {
-    "t:p1": 37
+    "t:p1": 34
    }
   },
   {
@@ -4569,10 +4573,7 @@
    "step": "move 60,185"
   },
   {
-   "step": "move 60,200"
-  },
-  {
-   "step": "move 60,215",
+   "step": "move 60,200",
    "drop": {
     "type": "live",
     "sequence": [
@@ -4584,14 +4585,14 @@
    },
    "gapKey": "t:p2",
    "gaps": {
-    "t:p2": 37
+    "t:p2": 34
    }
   },
   {
-   "step": "move 60,240"
+   "step": "move 60,215"
   },
   {
-   "step": "move 60,255",
+   "step": "move 60,240",
    "drop": {
     "type": "live",
     "sequence": [
@@ -4603,14 +4604,14 @@
    },
    "gapKey": "lf:LF(Documents)",
    "gaps": {
-    "lf:LF(Documents)": 37
+    "lf:LF(Documents)": 34
    }
   },
   {
-   "step": "move 60,270"
+   "step": "move 60,255"
   },
   {
-   "step": "move 60,285",
+   "step": "move 60,270",
    "drop": {
     "type": "live",
     "sequence": [
@@ -4622,19 +4623,22 @@
    },
    "gapKey": "tail:pinnedGroups",
    "gaps": {
-    "tail:pinnedGroups": 37
+    "tail:pinnedGroups": 34
    }
   },
   {
-   "step": "move 60,300"
+   "step": "move 60,285"
   },
   {
-   "step": "move 60,315",
+   "step": "move 60,300",
    "drop": {
     "type": "none"
    },
    "gapKey": null,
    "gaps": {}
+  },
+  {
+   "step": "move 60,315"
   },
   {
    "step": "move 60,330"
@@ -4736,7 +4740,10 @@
    "step": "move 60,315"
   },
   {
-   "step": "move 60,300",
+   "step": "move 60,300"
+  },
+  {
+   "step": "move 60,285",
    "drop": {
     "type": "live",
     "sequence": [
@@ -4748,11 +4755,8 @@
    },
    "gapKey": "tail:pinnedGroups",
    "gaps": {
-    "tail:pinnedGroups": 37
+    "tail:pinnedGroups": 34
    }
-  },
-  {
-   "step": "move 60,285"
   },
   {
    "step": "move 60,270"
@@ -4761,7 +4765,10 @@
    "step": "move 60,255"
   },
   {
-   "step": "move 60,240",
+   "step": "move 60,240"
+  },
+  {
+   "step": "move 60,215",
    "drop": {
     "type": "live",
     "sequence": [
@@ -4773,14 +4780,14 @@
    },
    "gapKey": "lf:LF(Documents)",
    "gaps": {
-    "lf:LF(Documents)": 37
+    "lf:LF(Documents)": 34
    }
   },
   {
-   "step": "move 60,215"
+   "step": "move 60,200"
   },
   {
-   "step": "move 60,200",
+   "step": "move 60,185",
    "drop": {
     "type": "live",
     "sequence": [
@@ -4792,11 +4799,8 @@
    },
    "gapKey": "t:p2",
    "gaps": {
-    "t:p2": 37
+    "t:p2": 34
    }
-  },
-  {
-   "step": "move 60,185"
   },
   {
    "step": "move 60,160",
@@ -4811,7 +4815,7 @@
    },
    "gapKey": "t:p1",
    "gaps": {
-    "t:p1": 37
+    "t:p1": 34
    }
   },
   {
@@ -4889,7 +4893,7 @@
  ],
  "member sweep": [
   {
-   "step": "begin t:h1 58,466",
+   "step": "begin t:h1 58,442",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -4904,7 +4908,7 @@
     ]
    },
    "gapKey": "tail:group:G(H)",
-   "pitch": 37,
+   "pitch": 34,
    "into": null,
    "external": 0,
    "gridGrowth": 0,
@@ -4922,7 +4926,7 @@
     "t:h1"
    ],
    "gaps": {
-    "tail:group:G(H)": 37
+    "tail:group:G(H)": 34
    }
   },
   {
@@ -4941,22 +4945,20 @@
    },
    "gapKey": "tail:list",
    "gaps": {
-    "tail:list": 37
+    "tail:list": 34
    }
   },
   {
    "step": "move 60,620"
   },
   {
-   "step": "move 60,590",
-   "drop": {
-    "type": "onto",
-    "targetId": "c"
-   },
-   "onto": "t:c"
+   "step": "move 60,590"
   },
   {
-   "step": "move 60,560",
+   "step": "move 60,560"
+  },
+  {
+   "step": "move 60,530",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -4970,13 +4972,12 @@
     ]
    },
    "gapKey": "t:c",
-   "onto": null,
    "gaps": {
-    "t:c": 37
+    "t:c": 34
    }
   },
   {
-   "step": "move 60,530",
+   "step": "move 60,500",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -4991,30 +4992,19 @@
    },
    "gapKey": "s:S(s1+s2)",
    "gaps": {
-    "s:S(s1+s2)": 37
-   }
-  },
-  {
-   "step": "move 60,500",
-   "drop": {
-    "type": "tabs",
-    "placement": {
-     "pinned": false,
-     "beforeId": "b"
-    },
-    "sequence": [
-     "t:p1",
-     "t:p2",
-     "g:G(PG)"
-    ]
-   },
-   "gapKey": "t:b",
-   "gaps": {
-    "t:b": 37
+    "s:S(s1+s2)": 34
    }
   },
   {
    "step": "move 60,480",
+   "drop": {
+    "type": "onto",
+    "targetId": "b"
+   },
+   "onto": "t:b"
+  },
+  {
+   "step": "move 60,460",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -5029,12 +5019,13 @@
     ]
    },
    "gapKey": "tail:group:G(G)",
+   "onto": null,
    "gaps": {
-    "tail:group:G(G)": 37
+    "tail:group:G(G)": 34
    }
   },
   {
-   "step": "move 60,460",
+   "step": "move 60,440",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -5050,11 +5041,11 @@
    },
    "gapKey": "t:g2",
    "gaps": {
-    "t:g2": 37
+    "t:g2": 34
    }
   },
   {
-   "step": "move 60,440",
+   "step": "move 60,420",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -5070,11 +5061,11 @@
    },
    "gapKey": "tail:group:G(H)",
    "gaps": {
-    "tail:group:G(H)": 37
+    "tail:group:G(H)": 34
    }
   },
   {
-   "step": "move 60,420",
+   "step": "move 60,405",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -5090,14 +5081,14 @@
    },
    "gapKey": "g:G(H)",
    "gaps": {
-    "g:G(H)": 37
+    "g:G(H)": 34
    }
   },
   {
-   "step": "move 60,405"
+   "step": "move 60,390"
   },
   {
-   "step": "move 60,390",
+   "step": "move 60,375",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -5113,14 +5104,14 @@
    },
    "gapKey": "t:g1",
    "gaps": {
-    "t:g1": 37
+    "t:g1": 34
    }
   },
   {
-   "step": "move 60,375"
+   "step": "move 60,360"
   },
   {
-   "step": "move 60,360",
+   "step": "move 60,345",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -5135,14 +5126,14 @@
    },
    "gapKey": "g:G(G)",
    "gaps": {
-    "g:G(G)": 37
+    "g:G(G)": 34
    }
   },
   {
-   "step": "move 60,345"
+   "step": "move 60,330"
   },
   {
-   "step": "move 60,330",
+   "step": "move 60,315",
    "drop": {
     "type": "onto",
     "targetId": "a"
@@ -5150,7 +5141,7 @@
    "onto": "t:a"
   },
   {
-   "step": "move 60,315",
+   "step": "move 60,300",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -5166,11 +5157,11 @@
    "gapKey": "t:a",
    "onto": null,
    "gaps": {
-    "t:a": 37
+    "t:a": 34
    }
   },
   {
-   "step": "move 60,300",
+   "step": "move 60,285",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -5188,11 +5179,11 @@
    },
    "gapKey": "tail:pinnedGroups",
    "gaps": {
-    "tail:pinnedGroups": 37
+    "tail:pinnedGroups": 34
    }
   },
   {
-   "step": "move 60,285",
+   "step": "move 60,270",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -5208,11 +5199,11 @@
    },
    "gapKey": "tail:group:G(PG)",
    "gaps": {
-    "tail:group:G(PG)": 37
+    "tail:group:G(PG)": 34
    }
   },
   {
-   "step": "move 60,270",
+   "step": "move 60,255",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -5228,14 +5219,14 @@
    },
    "gapKey": "t:pg1",
    "gaps": {
-    "t:pg1": 37
+    "t:pg1": 34
    }
   },
   {
-   "step": "move 60,255"
+   "step": "move 60,240"
   },
   {
-   "step": "move 60,240",
+   "step": "move 60,215",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -5252,11 +5243,8 @@
    },
    "gapKey": "g:G(PG)",
    "gaps": {
-    "g:G(PG)": 37
+    "g:G(PG)": 34
    }
-  },
-  {
-   "step": "move 60,215"
   },
   {
    "step": "move 60,200",
@@ -5285,7 +5273,7 @@
    "gapKey": "t:p2",
    "onto": null,
    "gaps": {
-    "t:p2": 37
+    "t:p2": 34
    }
   },
   {
@@ -5315,7 +5303,7 @@
    "gapKey": "t:p1",
    "onto": null,
    "gaps": {
-    "t:p1": 37
+    "t:p1": 34
    }
   },
   {
@@ -5354,7 +5342,7 @@
    "gapKey": "t:p2",
    "onto": null,
    "gaps": {
-    "t:p2": 37
+    "t:p2": 34
    }
   },
   {
@@ -5384,14 +5372,11 @@
    "gapKey": "g:G(PG)",
    "onto": null,
    "gaps": {
-    "g:G(PG)": 37
+    "g:G(PG)": 34
    }
   },
   {
-   "step": "move 60,270"
-  },
-  {
-   "step": "move 60,285",
+   "step": "move 60,270",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -5407,8 +5392,11 @@
    },
    "gapKey": "t:pg1",
    "gaps": {
-    "t:pg1": 37
+    "t:pg1": 34
    }
+  },
+  {
+   "step": "move 60,285"
   },
   {
    "step": "move 60,300"
@@ -5430,7 +5418,7 @@
    },
    "gapKey": "tail:group:G(PG)",
    "gaps": {
-    "tail:group:G(PG)": 37
+    "tail:group:G(PG)": 34
    }
   },
   {
@@ -5449,14 +5437,11 @@
    },
    "gapKey": "t:a",
    "gaps": {
-    "t:a": 37
+    "t:a": 34
    }
   },
   {
-   "step": "move 60,345"
-  },
-  {
-   "step": "move 60,360",
+   "step": "move 60,345",
    "drop": {
     "type": "onto",
     "targetId": "a"
@@ -5464,7 +5449,7 @@
    "onto": "t:a"
   },
   {
-   "step": "move 60,375",
+   "step": "move 60,360",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -5480,14 +5465,14 @@
    "gapKey": "g:G(G)",
    "onto": null,
    "gaps": {
-    "g:G(G)": 37
+    "g:G(G)": 34
    }
   },
   {
-   "step": "move 60,390"
+   "step": "move 60,375"
   },
   {
-   "step": "move 60,405",
+   "step": "move 60,390",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -5503,14 +5488,14 @@
    },
    "gapKey": "t:g1",
    "gaps": {
-    "t:g1": 37
+    "t:g1": 34
    }
   },
   {
-   "step": "move 60,420"
+   "step": "move 60,405"
   },
   {
-   "step": "move 60,440",
+   "step": "move 60,420",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -5526,14 +5511,14 @@
    },
    "gapKey": "g:G(H)",
    "gaps": {
-    "g:G(H)": 37
+    "g:G(H)": 34
    }
   },
   {
-   "step": "move 60,460"
+   "step": "move 60,440"
   },
   {
-   "step": "move 60,480",
+   "step": "move 60,460",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -5549,11 +5534,11 @@
    },
    "gapKey": "tail:group:G(H)",
    "gaps": {
-    "tail:group:G(H)": 37
+    "tail:group:G(H)": 34
    }
   },
   {
-   "step": "move 60,500",
+   "step": "move 60,480",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -5569,11 +5554,11 @@
    },
    "gapKey": "t:g2",
    "gaps": {
-    "t:g2": 37
+    "t:g2": 34
    }
   },
   {
-   "step": "move 60,530",
+   "step": "move 60,500",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -5589,11 +5574,11 @@
    },
    "gapKey": "tail:group:G(G)",
    "gaps": {
-    "tail:group:G(G)": 37
+    "tail:group:G(G)": 34
    }
   },
   {
-   "step": "move 60,560",
+   "step": "move 60,530",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -5608,11 +5593,11 @@
    },
    "gapKey": "s:S(s1+s2)",
    "gaps": {
-    "s:S(s1+s2)": 37
+    "s:S(s1+s2)": 34
    }
   },
   {
-   "step": "move 60,590",
+   "step": "move 60,560",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -5627,11 +5612,11 @@
    },
    "gapKey": "t:c",
    "gaps": {
-    "t:c": 37
+    "t:c": 34
    }
   },
   {
-   "step": "move 60,620",
+   "step": "move 60,590",
    "drop": {
     "type": "onto",
     "targetId": "c"
@@ -5639,7 +5624,7 @@
    "onto": "t:c"
   },
   {
-   "step": "move 60,650",
+   "step": "move 60,620",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -5655,8 +5640,11 @@
    "gapKey": "tail:list",
    "onto": null,
    "gaps": {
-    "tail:list": 37
+    "tail:list": 34
    }
+  },
+  {
+   "step": "move 60,650"
   },
   {
    "step": "end true",
@@ -5794,7 +5782,7 @@
  ],
  "nested group sweep": [
   {
-   "step": "begin g:G(H) 42,429",
+   "step": "begin g:G(H) 42,408",
    "drop": {
     "type": "group",
     "groupId": "G(H)",
@@ -5810,7 +5798,7 @@
     ]
    },
    "gapKey": "t:g2",
-   "pitch": 37,
+   "pitch": 34,
    "into": null,
    "external": 0,
    "gridGrowth": 0,
@@ -5828,7 +5816,7 @@
     "g:G(H)"
    ],
    "gaps": {
-    "t:g2": 37
+    "t:g2": 34
    }
   },
   {
@@ -5850,7 +5838,7 @@
    },
    "gapKey": "t:p1",
    "gaps": {
-    "t:p1": 37
+    "t:p1": 34
    }
   },
   {
@@ -5860,10 +5848,7 @@
    "step": "move 60,185"
   },
   {
-   "step": "move 60,200"
-  },
-  {
-   "step": "move 60,215",
+   "step": "move 60,200",
    "drop": {
     "type": "group",
     "groupId": "G(H)",
@@ -5881,14 +5866,14 @@
    },
    "gapKey": "t:p2",
    "gaps": {
-    "t:p2": 37
+    "t:p2": 34
    }
   },
   {
-   "step": "move 60,240"
+   "step": "move 60,215"
   },
   {
-   "step": "move 60,255",
+   "step": "move 60,240",
    "drop": {
     "type": "group",
     "groupId": "G(H)",
@@ -5906,8 +5891,11 @@
    },
    "gapKey": "g:G(PG)",
    "gaps": {
-    "g:G(PG)": 37
+    "g:G(PG)": 34
    }
+  },
+  {
+   "step": "move 60,255"
   },
   {
    "step": "move 60,270",
@@ -5932,15 +5920,6 @@
   },
   {
    "step": "move 60,285",
-   "gapKey": "tail:group:G(PG)",
-   "into": null,
-   "dropInto": null,
-   "gaps": {
-    "tail:group:G(PG)": 37
-   }
-  },
-  {
-   "step": "move 60,300",
    "drop": {
     "type": "group",
     "groupId": "G(H)",
@@ -5957,12 +5936,14 @@
     ]
    },
    "gapKey": "tail:pinnedGroups",
+   "into": null,
+   "dropInto": null,
    "gaps": {
-    "tail:pinnedGroups": 37
+    "tail:pinnedGroups": 34
    }
   },
   {
-   "step": "move 60,315",
+   "step": "move 60,300",
    "drop": {
     "type": "group",
     "groupId": "G(H)",
@@ -5979,8 +5960,11 @@
    },
    "gapKey": "t:a",
    "gaps": {
-    "t:a": 37
+    "t:a": 34
    }
+  },
+  {
+   "step": "move 60,315"
   },
   {
    "step": "move 60,330"
@@ -5989,10 +5973,7 @@
    "step": "move 60,345"
   },
   {
-   "step": "move 60,360"
-  },
-  {
-   "step": "move 60,375",
+   "step": "move 60,360",
    "drop": {
     "type": "group",
     "groupId": "G(H)",
@@ -6009,11 +5990,11 @@
    },
    "gapKey": "g:G(G)",
    "gaps": {
-    "g:G(G)": 37
+    "g:G(G)": 34
    }
   },
   {
-   "step": "move 60,390",
+   "step": "move 60,375",
    "drop": {
     "type": "group",
     "groupId": "G(H)",
@@ -6034,7 +6015,7 @@
    "gaps": {}
   },
   {
-   "step": "move 60,405",
+   "step": "move 60,390",
    "drop": {
     "type": "group",
     "groupId": "G(H)",
@@ -6053,8 +6034,11 @@
    "into": null,
    "dropInto": null,
    "gaps": {
-    "t:g2": 37
+    "t:g2": 34
    }
+  },
+  {
+   "step": "move 60,405"
   },
   {
    "step": "move 60,420"
@@ -6063,10 +6047,7 @@
    "step": "move 60,440"
   },
   {
-   "step": "move 60,460"
-  },
-  {
-   "step": "move 60,480",
+   "step": "move 60,460",
    "drop": {
     "type": "group",
     "groupId": "G(H)",
@@ -6083,11 +6064,11 @@
    },
    "gapKey": "tail:group:G(G)",
    "gaps": {
-    "tail:group:G(G)": 37
+    "tail:group:G(G)": 34
    }
   },
   {
-   "step": "move 60,500",
+   "step": "move 60,480",
    "drop": {
     "type": "group",
     "groupId": "G(H)",
@@ -6104,11 +6085,11 @@
    },
    "gapKey": "t:b",
    "gaps": {
-    "t:b": 37
+    "t:b": 34
    }
   },
   {
-   "step": "move 60,530",
+   "step": "move 60,500",
    "drop": {
     "type": "group",
     "groupId": "G(H)",
@@ -6125,11 +6106,11 @@
    },
    "gapKey": "s:S(s1+s2)",
    "gaps": {
-    "s:S(s1+s2)": 37
+    "s:S(s1+s2)": 34
    }
   },
   {
-   "step": "move 60,560",
+   "step": "move 60,530",
    "drop": {
     "type": "group",
     "groupId": "G(H)",
@@ -6146,11 +6127,11 @@
    },
    "gapKey": "t:c",
    "gaps": {
-    "t:c": 37
+    "t:c": 34
    }
   },
   {
-   "step": "move 60,590",
+   "step": "move 60,560",
    "drop": {
     "type": "group",
     "groupId": "G(H)",
@@ -6167,8 +6148,11 @@
    },
    "gapKey": "tail:list",
    "gaps": {
-    "tail:list": 37
+    "tail:list": 34
    }
+  },
+  {
+   "step": "move 60,590"
   },
   {
    "step": "move 60,620"
@@ -6189,7 +6173,10 @@
    "step": "move 60,560"
   },
   {
-   "step": "move 60,530",
+   "step": "move 60,530"
+  },
+  {
+   "step": "move 60,500",
    "drop": {
     "type": "group",
     "groupId": "G(H)",
@@ -6206,11 +6193,11 @@
    },
    "gapKey": "t:c",
    "gaps": {
-    "t:c": 37
+    "t:c": 34
    }
   },
   {
-   "step": "move 60,500",
+   "step": "move 60,480",
    "drop": {
     "type": "group",
     "groupId": "G(H)",
@@ -6227,14 +6214,14 @@
    },
    "gapKey": "s:S(s1+s2)",
    "gaps": {
-    "s:S(s1+s2)": 37
+    "s:S(s1+s2)": 34
    }
   },
   {
-   "step": "move 60,480"
+   "step": "move 60,460"
   },
   {
-   "step": "move 60,460",
+   "step": "move 60,440",
    "drop": {
     "type": "group",
     "groupId": "G(H)",
@@ -6251,11 +6238,11 @@
    },
    "gapKey": "t:b",
    "gaps": {
-    "t:b": 37
+    "t:b": 34
    }
   },
   {
-   "step": "move 60,440",
+   "step": "move 60,420",
    "drop": {
     "type": "group",
     "groupId": "G(H)",
@@ -6272,11 +6259,11 @@
    },
    "gapKey": "tail:group:G(G)",
    "gaps": {
-    "tail:group:G(G)": 37
+    "tail:group:G(G)": 34
    }
   },
   {
-   "step": "move 60,420",
+   "step": "move 60,405",
    "drop": {
     "type": "group",
     "groupId": "G(H)",
@@ -6293,14 +6280,14 @@
    },
    "gapKey": "t:g2",
    "gaps": {
-    "t:g2": 37
+    "t:g2": 34
    }
   },
   {
-   "step": "move 60,405"
+   "step": "move 60,390"
   },
   {
-   "step": "move 60,390",
+   "step": "move 60,375",
    "drop": {
     "type": "group",
     "groupId": "G(H)",
@@ -6317,14 +6304,14 @@
    },
    "gapKey": "t:g1",
    "gaps": {
-    "t:g1": 37
+    "t:g1": 34
    }
   },
   {
-   "step": "move 60,375"
+   "step": "move 60,360"
   },
   {
-   "step": "move 60,360",
+   "step": "move 60,345",
    "drop": {
     "type": "group",
     "groupId": "G(H)",
@@ -6345,7 +6332,7 @@
    "gaps": {}
   },
   {
-   "step": "move 60,345",
+   "step": "move 60,330",
    "drop": {
     "type": "group",
     "groupId": "G(H)",
@@ -6364,14 +6351,14 @@
    "into": null,
    "dropInto": null,
    "gaps": {
-    "g:G(G)": 37
+    "g:G(G)": 34
    }
   },
   {
-   "step": "move 60,330"
+   "step": "move 60,315"
   },
   {
-   "step": "move 60,315",
+   "step": "move 60,300",
    "drop": {
     "type": "group",
     "groupId": "G(H)",
@@ -6388,29 +6375,7 @@
    },
    "gapKey": "t:a",
    "gaps": {
-    "t:a": 37
-   }
-  },
-  {
-   "step": "move 60,300",
-   "drop": {
-    "type": "group",
-    "groupId": "G(H)",
-    "placement": {
-     "pinned": true,
-     "parentId": null,
-     "beforeId": null
-    },
-    "sequence": [
-     "t:p1",
-     "t:p2",
-     "g:G(PG)",
-     "g:G(H)"
-    ]
-   },
-   "gapKey": "tail:pinnedGroups",
-   "gaps": {
-    "tail:pinnedGroups": 37
+    "t:a": 34
    }
   },
   {
@@ -6531,29 +6496,22 @@
        "h1"
       ],
       "parent": null,
-      "pinned": true,
+      "pinned": false,
       "collapsed": false
      }
     },
     "pinnedArea": [
      "t:p1",
      "t:p2",
-     "g:G(PG)",
-     "g:G(H)"
+     "g:G(PG)"
     ],
     "anchors": [
      [
       "G(PG)",
       "p2"
-     ],
-     [
-      "G(H)",
-      "p2"
      ]
     ],
     "orderChoices": [
-     "group:G(H)",
-     "place:h1",
      "place:p1",
      "place:p2",
      "p1",
@@ -6565,7 +6523,7 @@
  ],
  "nested smallest": [
   {
-   "step": "begin t:z 26,395",
+   "step": "begin t:z 26,380",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -6575,7 +6533,7 @@
     "sequence": []
    },
    "gapKey": "tail:list",
-   "pitch": 37,
+   "pitch": 34,
    "into": null,
    "external": 0,
    "gridGrowth": 0,
@@ -6593,7 +6551,7 @@
     "t:z"
    ],
    "gaps": {
-    "tail:list": 37
+    "tail:list": 34
    }
   },
   {
@@ -6633,7 +6591,10 @@
    "step": "move 60,390"
   },
   {
-   "step": "move 60,375",
+   "step": "move 60,375"
+  },
+  {
+   "step": "move 60,360",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -6645,11 +6606,11 @@
    },
    "gapKey": "tail:group:G(Inner)",
    "gaps": {
-    "tail:group:G(Inner)": 37
+    "tail:group:G(Inner)": 34
    }
   },
   {
-   "step": "move 60,360",
+   "step": "move 60,345",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -6661,11 +6622,8 @@
    },
    "gapKey": "t:y",
    "gaps": {
-    "t:y": 37
+    "t:y": 34
    }
-  },
-  {
-   "step": "move 60,345"
   },
   {
    "step": "move 60,330"
@@ -6683,14 +6641,17 @@
    },
    "gapKey": "t:x",
    "gaps": {
-    "t:x": 37
+    "t:x": 34
    }
   },
   {
    "step": "move 60,300"
   },
   {
-   "step": "move 60,285",
+   "step": "move 60,285"
+  },
+  {
+   "step": "move 60,270",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -6702,11 +6663,8 @@
    },
    "gapKey": "g:G(Inner)",
    "gaps": {
-    "g:G(Inner)": 37
+    "g:G(Inner)": 34
    }
-  },
-  {
-   "step": "move 60,270"
   },
   {
    "step": "move 60,255"
@@ -6723,7 +6681,7 @@
    },
    "gapKey": "g:G(Outer)",
    "gaps": {
-    "g:G(Outer)": 37
+    "g:G(Outer)": 34
    }
   },
   {
@@ -6747,7 +6705,7 @@
    "gapKey": "t:a",
    "onto": null,
    "gaps": {
-    "t:a": 37
+    "t:a": 34
    }
   },
   {
@@ -6851,7 +6809,7 @@
  ],
  "onto bounds": [
   {
-   "step": "begin t:c 26,614",
+   "step": "begin t:c 26,578",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -6865,7 +6823,7 @@
     ]
    },
    "gapKey": "tail:list",
-   "pitch": 37,
+   "pitch": 34,
    "into": null,
    "external": 0,
    "gridGrowth": 0,
@@ -6883,11 +6841,11 @@
     "t:c"
    ],
    "gaps": {
-    "tail:list": 37
+    "tail:list": 34
    }
   },
   {
-   "step": "move 60,325",
+   "step": "move 60,316",
    "drop": {
     "type": "onto",
     "targetId": "a"
@@ -6895,19 +6853,16 @@
    "onto": "t:a"
   },
   {
-   "step": "move 5,325"
+   "step": "move 5,316"
   },
   {
-   "step": "move 239,325"
+   "step": "move 239,316"
   },
   {
-   "step": "move 60,316.6"
+   "step": "move 60,308.1"
   },
   {
-   "step": "move 60,333.4"
-  },
-  {
-   "step": "move 60,333.5",
+   "step": "move 60,323.9",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -6923,11 +6878,14 @@
    "gapKey": "g:G(G)",
    "onto": null,
    "gaps": {
-    "g:G(G)": 37
+    "g:G(G)": 34
    }
   },
   {
-   "step": "move 60,325",
+   "step": "move 60,324.1"
+  },
+  {
+   "step": "move 60,316",
    "drop": {
     "type": "onto",
     "targetId": "a"
@@ -6935,24 +6893,7 @@
    "onto": "t:a"
   },
   {
-   "step": "move 60,316.5",
-   "drop": {
-    "type": "tabs",
-    "placement": {
-     "pinned": false,
-     "beforeId": "a"
-    },
-    "sequence": [
-     "t:p1",
-     "t:p2",
-     "g:G(PG)"
-    ]
-   },
-   "gapKey": "t:a",
-   "onto": null,
-   "gaps": {
-    "t:a": 37
-   }
+   "step": "move 60,307.9"
   },
   {
    "step": "end true",
@@ -6961,6 +6902,7 @@
    },
    "gapKey": null,
    "pitch": 0,
+   "onto": null,
    "sources": [],
    "gaps": {}
   },
@@ -6971,8 +6913,8 @@
      "p1",
      "p2",
      "pg1",
-     "c",
      "a",
+     "c",
      "b",
      "g1",
      "h1",
@@ -6999,13 +6941,13 @@
       "group": null,
       "folder": null
      },
-     "c": {
+     "a": {
       "pinned": false,
       "row": false,
       "group": null,
       "folder": null
      },
-     "a": {
+     "c": {
       "pinned": false,
       "row": false,
       "group": null,
@@ -7074,6 +7016,15 @@
       "parent": "G(G)",
       "pinned": false,
       "collapsed": false
+     },
+     "G()": {
+      "tabIds": [
+       "a",
+       "c"
+      ],
+      "parent": null,
+      "pinned": false,
+      "collapsed": false
      }
     },
     "pinnedArea": [
@@ -7099,7 +7050,7 @@
  ],
  "onto overlap": [
   {
-   "step": "begin t:c 26,284",
+   "step": "begin t:c 26,278",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -7109,7 +7060,7 @@
     "sequence": []
    },
    "gapKey": "tail:list",
-   "pitch": 37,
+   "pitch": 34,
    "into": null,
    "external": 0,
    "gridGrowth": 0,
@@ -7127,7 +7078,7 @@
     "t:c"
    ],
    "gaps": {
-    "tail:list": 37
+    "tail:list": 34
    }
   },
   {
@@ -7223,7 +7174,7 @@
     ]
    },
    "gapKey": "t:p2",
-   "pitch": 37,
+   "pitch": 34,
    "into": null,
    "external": 0,
    "gridGrowth": 0,
@@ -7241,7 +7192,7 @@
     "t:p1"
    ],
    "gaps": {
-    "t:p2": 37
+    "t:p2": 34
    }
   },
   {
@@ -7279,564 +7230,7 @@
    "gapKey": "g:G(PG)",
    "onto": null,
    "gaps": {
-    "g:G(PG)": 37
-   }
-  },
-  {
-   "step": "move 60,240"
-  },
-  {
-   "step": "move 60,255",
-   "drop": {
-    "type": "tabs",
-    "placement": {
-     "pinned": false,
-     "groupId": "G(PG)",
-     "beforeId": "pg1"
-    },
-    "sequence": [
-     "t:p2",
-     "g:G(PG)"
-    ]
-   },
-   "gapKey": "t:pg1",
-   "gaps": {
-    "t:pg1": 37
-   }
-  },
-  {
-   "step": "move 60,270"
-  },
-  {
-   "step": "move 60,285",
-   "drop": {
-    "type": "tabs",
-    "placement": {
-     "pinned": false,
-     "groupId": "G(PG)",
-     "beforeId": null
-    },
-    "sequence": [
-     "t:p2",
-     "g:G(PG)"
-    ]
-   },
-   "gapKey": "tail:group:G(PG)",
-   "gaps": {
-    "tail:group:G(PG)": 37
-   }
-  },
-  {
-   "step": "move 60,300",
-   "drop": {
-    "type": "tabs",
-    "placement": {
-     "pinned": true,
-     "row": true,
-     "beforeId": null,
-     "last": true
-    },
-    "sequence": [
-     "t:p2",
-     "g:G(PG)",
-     "t:p1"
-    ]
-   },
-   "gapKey": "tail:pinnedGroups",
-   "gaps": {
-    "tail:pinnedGroups": 37
-   }
-  },
-  {
-   "step": "move 60,315",
-   "drop": {
-    "type": "tabs",
-    "placement": {
-     "pinned": false,
-     "beforeId": "a"
-    },
-    "sequence": [
-     "t:p2",
-     "g:G(PG)"
-    ]
-   },
-   "gapKey": "t:a",
-   "gaps": {
-    "t:a": 37
-   }
-  },
-  {
-   "step": "move 60,330",
-   "drop": {
-    "type": "onto",
-    "targetId": "a"
-   },
-   "onto": "t:a"
-  },
-  {
-   "step": "move 60,345",
-   "drop": {
-    "type": "tabs",
-    "placement": {
-     "pinned": false,
-     "beforeId": "g1"
-    },
-    "sequence": [
-     "t:p2",
-     "g:G(PG)"
-    ]
-   },
-   "gapKey": "g:G(G)",
-   "onto": null,
-   "gaps": {
-    "g:G(G)": 37
-   }
-  },
-  {
-   "step": "move 60,360"
-  },
-  {
-   "step": "move 60,375",
-   "drop": {
-    "type": "tabs",
-    "placement": {
-     "pinned": false,
-     "groupId": "G(G)",
-     "beforeId": "g1"
-    },
-    "sequence": [
-     "t:p2",
-     "g:G(PG)"
-    ]
-   },
-   "gapKey": "t:g1",
-   "gaps": {
-    "t:g1": 37
-   }
-  },
-  {
-   "step": "move 60,390"
-  },
-  {
-   "step": "move 60,405",
-   "drop": {
-    "type": "tabs",
-    "placement": {
-     "pinned": false,
-     "groupId": "G(G)",
-     "beforeId": "h1"
-    },
-    "sequence": [
-     "t:p2",
-     "g:G(PG)"
-    ]
-   },
-   "gapKey": "g:G(H)",
-   "gaps": {
-    "g:G(H)": 37
-   }
-  },
-  {
-   "step": "move 60,420"
-  },
-  {
-   "step": "move 60,440",
-   "drop": {
-    "type": "tabs",
-    "placement": {
-     "pinned": false,
-     "groupId": "G(H)",
-     "beforeId": "h1"
-    },
-    "sequence": [
-     "t:p2",
-     "g:G(PG)"
-    ]
-   },
-   "gapKey": "t:h1",
-   "gaps": {
-    "t:h1": 37
-   }
-  },
-  {
-   "step": "move 60,460"
-  },
-  {
-   "step": "move 60,480",
-   "drop": {
-    "type": "tabs",
-    "placement": {
-     "pinned": false,
-     "groupId": "G(H)",
-     "beforeId": null
-    },
-    "sequence": [
-     "t:p2",
-     "g:G(PG)"
-    ]
-   },
-   "gapKey": "tail:group:G(H)",
-   "gaps": {
-    "tail:group:G(H)": 37
-   }
-  },
-  {
-   "step": "move 60,500",
-   "drop": {
-    "type": "tabs",
-    "placement": {
-     "pinned": false,
-     "groupId": "G(G)",
-     "beforeId": "g2"
-    },
-    "sequence": [
-     "t:p2",
-     "g:G(PG)"
-    ]
-   },
-   "gapKey": "t:g2",
-   "gaps": {
-    "t:g2": 37
-   }
-  },
-  {
-   "step": "move 60,530",
-   "drop": {
-    "type": "tabs",
-    "placement": {
-     "pinned": false,
-     "beforeId": "b"
-    },
-    "sequence": [
-     "t:p2",
-     "g:G(PG)"
-    ]
-   },
-   "gapKey": "t:b",
-   "gaps": {
-    "t:b": 37
-   }
-  },
-  {
-   "step": "move 60,560",
-   "drop": {
-    "type": "tabs",
-    "placement": {
-     "pinned": false,
-     "beforeId": "s1"
-    },
-    "sequence": [
-     "t:p2",
-     "g:G(PG)"
-    ]
-   },
-   "gapKey": "s:S(s1+s2)",
-   "gaps": {
-    "s:S(s1+s2)": 37
-   }
-  },
-  {
-   "step": "move 60,590",
-   "drop": {
-    "type": "tabs",
-    "placement": {
-     "pinned": false,
-     "beforeId": "c"
-    },
-    "sequence": [
-     "t:p2",
-     "g:G(PG)"
-    ]
-   },
-   "gapKey": "t:c",
-   "gaps": {
-    "t:c": 37
-   }
-  },
-  {
-   "step": "move 60,620",
-   "drop": {
-    "type": "onto",
-    "targetId": "c"
-   },
-   "onto": "t:c"
-  },
-  {
-   "step": "move 60,650",
-   "drop": {
-    "type": "tabs",
-    "placement": {
-     "pinned": false,
-     "beforeId": null
-    },
-    "sequence": [
-     "t:p2",
-     "g:G(PG)"
-    ]
-   },
-   "gapKey": "tail:list",
-   "onto": null,
-   "gaps": {
-    "tail:list": 37
-   }
-  },
-  {
-   "step": "move 60,650"
-  },
-  {
-   "step": "move 60,620"
-  },
-  {
-   "step": "move 60,590",
-   "drop": {
-    "type": "onto",
-    "targetId": "c"
-   },
-   "onto": "t:c"
-  },
-  {
-   "step": "move 60,560",
-   "drop": {
-    "type": "tabs",
-    "placement": {
-     "pinned": false,
-     "beforeId": "c"
-    },
-    "sequence": [
-     "t:p2",
-     "g:G(PG)"
-    ]
-   },
-   "gapKey": "t:c",
-   "onto": null,
-   "gaps": {
-    "t:c": 37
-   }
-  },
-  {
-   "step": "move 60,530",
-   "drop": {
-    "type": "tabs",
-    "placement": {
-     "pinned": false,
-     "beforeId": "s1"
-    },
-    "sequence": [
-     "t:p2",
-     "g:G(PG)"
-    ]
-   },
-   "gapKey": "s:S(s1+s2)",
-   "gaps": {
-    "s:S(s1+s2)": 37
-   }
-  },
-  {
-   "step": "move 60,500",
-   "drop": {
-    "type": "tabs",
-    "placement": {
-     "pinned": false,
-     "beforeId": "b"
-    },
-    "sequence": [
-     "t:p2",
-     "g:G(PG)"
-    ]
-   },
-   "gapKey": "t:b",
-   "gaps": {
-    "t:b": 37
-   }
-  },
-  {
-   "step": "move 60,480",
-   "drop": {
-    "type": "tabs",
-    "placement": {
-     "pinned": false,
-     "groupId": "G(G)",
-     "beforeId": null
-    },
-    "sequence": [
-     "t:p2",
-     "g:G(PG)"
-    ]
-   },
-   "gapKey": "tail:group:G(G)",
-   "gaps": {
-    "tail:group:G(G)": 37
-   }
-  },
-  {
-   "step": "move 60,460",
-   "drop": {
-    "type": "tabs",
-    "placement": {
-     "pinned": false,
-     "groupId": "G(G)",
-     "beforeId": "g2"
-    },
-    "sequence": [
-     "t:p2",
-     "g:G(PG)"
-    ]
-   },
-   "gapKey": "t:g2",
-   "gaps": {
-    "t:g2": 37
-   }
-  },
-  {
-   "step": "move 60,440",
-   "drop": {
-    "type": "tabs",
-    "placement": {
-     "pinned": false,
-     "groupId": "G(H)",
-     "beforeId": null
-    },
-    "sequence": [
-     "t:p2",
-     "g:G(PG)"
-    ]
-   },
-   "gapKey": "tail:group:G(H)",
-   "gaps": {
-    "tail:group:G(H)": 37
-   }
-  },
-  {
-   "step": "move 60,420",
-   "drop": {
-    "type": "tabs",
-    "placement": {
-     "pinned": false,
-     "groupId": "G(H)",
-     "beforeId": "h1"
-    },
-    "sequence": [
-     "t:p2",
-     "g:G(PG)"
-    ]
-   },
-   "gapKey": "t:h1",
-   "gaps": {
-    "t:h1": 37
-   }
-  },
-  {
-   "step": "move 60,405"
-  },
-  {
-   "step": "move 60,390",
-   "drop": {
-    "type": "tabs",
-    "placement": {
-     "pinned": false,
-     "groupId": "G(G)",
-     "beforeId": "h1"
-    },
-    "sequence": [
-     "t:p2",
-     "g:G(PG)"
-    ]
-   },
-   "gapKey": "g:G(H)",
-   "gaps": {
-    "g:G(H)": 37
-   }
-  },
-  {
-   "step": "move 60,375"
-  },
-  {
-   "step": "move 60,360",
-   "drop": {
-    "type": "tabs",
-    "placement": {
-     "pinned": false,
-     "groupId": "G(G)",
-     "beforeId": "g1"
-    },
-    "sequence": [
-     "t:p2",
-     "g:G(PG)"
-    ]
-   },
-   "gapKey": "t:g1",
-   "gaps": {
-    "t:g1": 37
-   }
-  },
-  {
-   "step": "move 60,345"
-  },
-  {
-   "step": "move 60,330"
-  },
-  {
-   "step": "move 60,315",
-   "drop": {
-    "type": "tabs",
-    "placement": {
-     "pinned": false,
-     "beforeId": "g1"
-    },
-    "sequence": [
-     "t:p2",
-     "g:G(PG)"
-    ]
-   },
-   "gapKey": "g:G(G)",
-   "gaps": {
-    "g:G(G)": 37
-   }
-  },
-  {
-   "step": "move 60,300",
-   "drop": {
-    "type": "tabs",
-    "placement": {
-     "pinned": true,
-     "row": true,
-     "beforeId": null,
-     "last": true
-    },
-    "sequence": [
-     "t:p2",
-     "g:G(PG)",
-     "t:p1"
-    ]
-   },
-   "gapKey": "tail:pinnedGroups",
-   "gaps": {
-    "tail:pinnedGroups": 37
-   }
-  },
-  {
-   "step": "move 60,285"
-  },
-  {
-   "step": "move 60,270"
-  },
-  {
-   "step": "move 60,255",
-   "drop": {
-    "type": "tabs",
-    "placement": {
-     "pinned": false,
-     "groupId": "G(PG)",
-     "beforeId": null
-    },
-    "sequence": [
-     "t:p2",
-     "g:G(PG)"
-    ]
-   },
-   "gapKey": "tail:group:G(PG)",
-   "gaps": {
-    "tail:group:G(PG)": 37
+    "g:G(PG)": 34
    }
   },
   {
@@ -7855,14 +7249,562 @@
    },
    "gapKey": "t:pg1",
    "gaps": {
-    "t:pg1": 37
+    "t:pg1": 34
    }
   },
   {
-   "step": "move 60,215"
+   "step": "move 60,255"
+  },
+  {
+   "step": "move 60,270",
+   "drop": {
+    "type": "tabs",
+    "placement": {
+     "pinned": false,
+     "groupId": "G(PG)",
+     "beforeId": null
+    },
+    "sequence": [
+     "t:p2",
+     "g:G(PG)"
+    ]
+   },
+   "gapKey": "tail:group:G(PG)",
+   "gaps": {
+    "tail:group:G(PG)": 34
+   }
+  },
+  {
+   "step": "move 60,285",
+   "drop": {
+    "type": "tabs",
+    "placement": {
+     "pinned": true,
+     "row": true,
+     "beforeId": null,
+     "last": true
+    },
+    "sequence": [
+     "t:p2",
+     "g:G(PG)",
+     "t:p1"
+    ]
+   },
+   "gapKey": "tail:pinnedGroups",
+   "gaps": {
+    "tail:pinnedGroups": 34
+   }
+  },
+  {
+   "step": "move 60,300"
+  },
+  {
+   "step": "move 60,315",
+   "drop": {
+    "type": "onto",
+    "targetId": "a"
+   },
+   "onto": "t:a"
+  },
+  {
+   "step": "move 60,330",
+   "drop": {
+    "type": "tabs",
+    "placement": {
+     "pinned": false,
+     "beforeId": "g1"
+    },
+    "sequence": [
+     "t:p2",
+     "g:G(PG)"
+    ]
+   },
+   "gapKey": "g:G(G)",
+   "onto": null,
+   "gaps": {
+    "g:G(G)": 34
+   }
+  },
+  {
+   "step": "move 60,345"
+  },
+  {
+   "step": "move 60,360",
+   "drop": {
+    "type": "tabs",
+    "placement": {
+     "pinned": false,
+     "groupId": "G(G)",
+     "beforeId": "g1"
+    },
+    "sequence": [
+     "t:p2",
+     "g:G(PG)"
+    ]
+   },
+   "gapKey": "t:g1",
+   "gaps": {
+    "t:g1": 34
+   }
+  },
+  {
+   "step": "move 60,375"
+  },
+  {
+   "step": "move 60,390",
+   "drop": {
+    "type": "tabs",
+    "placement": {
+     "pinned": false,
+     "groupId": "G(G)",
+     "beforeId": "h1"
+    },
+    "sequence": [
+     "t:p2",
+     "g:G(PG)"
+    ]
+   },
+   "gapKey": "g:G(H)",
+   "gaps": {
+    "g:G(H)": 34
+   }
+  },
+  {
+   "step": "move 60,405"
+  },
+  {
+   "step": "move 60,420",
+   "drop": {
+    "type": "tabs",
+    "placement": {
+     "pinned": false,
+     "groupId": "G(H)",
+     "beforeId": "h1"
+    },
+    "sequence": [
+     "t:p2",
+     "g:G(PG)"
+    ]
+   },
+   "gapKey": "t:h1",
+   "gaps": {
+    "t:h1": 34
+   }
+  },
+  {
+   "step": "move 60,440"
+  },
+  {
+   "step": "move 60,460",
+   "drop": {
+    "type": "tabs",
+    "placement": {
+     "pinned": false,
+     "groupId": "G(H)",
+     "beforeId": null
+    },
+    "sequence": [
+     "t:p2",
+     "g:G(PG)"
+    ]
+   },
+   "gapKey": "tail:group:G(H)",
+   "gaps": {
+    "tail:group:G(H)": 34
+   }
+  },
+  {
+   "step": "move 60,480",
+   "drop": {
+    "type": "tabs",
+    "placement": {
+     "pinned": false,
+     "groupId": "G(G)",
+     "beforeId": "g2"
+    },
+    "sequence": [
+     "t:p2",
+     "g:G(PG)"
+    ]
+   },
+   "gapKey": "t:g2",
+   "gaps": {
+    "t:g2": 34
+   }
+  },
+  {
+   "step": "move 60,500",
+   "drop": {
+    "type": "tabs",
+    "placement": {
+     "pinned": false,
+     "beforeId": "b"
+    },
+    "sequence": [
+     "t:p2",
+     "g:G(PG)"
+    ]
+   },
+   "gapKey": "t:b",
+   "gaps": {
+    "t:b": 34
+   }
+  },
+  {
+   "step": "move 60,530",
+   "drop": {
+    "type": "tabs",
+    "placement": {
+     "pinned": false,
+     "beforeId": "s1"
+    },
+    "sequence": [
+     "t:p2",
+     "g:G(PG)"
+    ]
+   },
+   "gapKey": "s:S(s1+s2)",
+   "gaps": {
+    "s:S(s1+s2)": 34
+   }
+  },
+  {
+   "step": "move 60,560",
+   "drop": {
+    "type": "tabs",
+    "placement": {
+     "pinned": false,
+     "beforeId": "c"
+    },
+    "sequence": [
+     "t:p2",
+     "g:G(PG)"
+    ]
+   },
+   "gapKey": "t:c",
+   "gaps": {
+    "t:c": 34
+   }
+  },
+  {
+   "step": "move 60,590",
+   "drop": {
+    "type": "onto",
+    "targetId": "c"
+   },
+   "onto": "t:c"
+  },
+  {
+   "step": "move 60,620",
+   "drop": {
+    "type": "tabs",
+    "placement": {
+     "pinned": false,
+     "beforeId": null
+    },
+    "sequence": [
+     "t:p2",
+     "g:G(PG)"
+    ]
+   },
+   "gapKey": "tail:list",
+   "onto": null,
+   "gaps": {
+    "tail:list": 34
+   }
+  },
+  {
+   "step": "move 60,650"
+  },
+  {
+   "step": "move 60,650"
+  },
+  {
+   "step": "move 60,620"
+  },
+  {
+   "step": "move 60,590"
+  },
+  {
+   "step": "move 60,560"
+  },
+  {
+   "step": "move 60,530",
+   "drop": {
+    "type": "tabs",
+    "placement": {
+     "pinned": false,
+     "beforeId": "c"
+    },
+    "sequence": [
+     "t:p2",
+     "g:G(PG)"
+    ]
+   },
+   "gapKey": "t:c",
+   "gaps": {
+    "t:c": 34
+   }
+  },
+  {
+   "step": "move 60,500",
+   "drop": {
+    "type": "tabs",
+    "placement": {
+     "pinned": false,
+     "beforeId": "s1"
+    },
+    "sequence": [
+     "t:p2",
+     "g:G(PG)"
+    ]
+   },
+   "gapKey": "s:S(s1+s2)",
+   "gaps": {
+    "s:S(s1+s2)": 34
+   }
+  },
+  {
+   "step": "move 60,480",
+   "drop": {
+    "type": "onto",
+    "targetId": "b"
+   },
+   "onto": "t:b"
+  },
+  {
+   "step": "move 60,460",
+   "drop": {
+    "type": "tabs",
+    "placement": {
+     "pinned": false,
+     "groupId": "G(G)",
+     "beforeId": null
+    },
+    "sequence": [
+     "t:p2",
+     "g:G(PG)"
+    ]
+   },
+   "gapKey": "tail:group:G(G)",
+   "onto": null,
+   "gaps": {
+    "tail:group:G(G)": 34
+   }
+  },
+  {
+   "step": "move 60,440",
+   "drop": {
+    "type": "tabs",
+    "placement": {
+     "pinned": false,
+     "groupId": "G(G)",
+     "beforeId": "g2"
+    },
+    "sequence": [
+     "t:p2",
+     "g:G(PG)"
+    ]
+   },
+   "gapKey": "t:g2",
+   "gaps": {
+    "t:g2": 34
+   }
+  },
+  {
+   "step": "move 60,420",
+   "drop": {
+    "type": "tabs",
+    "placement": {
+     "pinned": false,
+     "groupId": "G(H)",
+     "beforeId": null
+    },
+    "sequence": [
+     "t:p2",
+     "g:G(PG)"
+    ]
+   },
+   "gapKey": "tail:group:G(H)",
+   "gaps": {
+    "tail:group:G(H)": 34
+   }
+  },
+  {
+   "step": "move 60,405",
+   "drop": {
+    "type": "tabs",
+    "placement": {
+     "pinned": false,
+     "groupId": "G(H)",
+     "beforeId": "h1"
+    },
+    "sequence": [
+     "t:p2",
+     "g:G(PG)"
+    ]
+   },
+   "gapKey": "t:h1",
+   "gaps": {
+    "t:h1": 34
+   }
+  },
+  {
+   "step": "move 60,390"
+  },
+  {
+   "step": "move 60,375",
+   "drop": {
+    "type": "tabs",
+    "placement": {
+     "pinned": false,
+     "groupId": "G(G)",
+     "beforeId": "h1"
+    },
+    "sequence": [
+     "t:p2",
+     "g:G(PG)"
+    ]
+   },
+   "gapKey": "g:G(H)",
+   "gaps": {
+    "g:G(H)": 34
+   }
+  },
+  {
+   "step": "move 60,360"
+  },
+  {
+   "step": "move 60,345",
+   "drop": {
+    "type": "tabs",
+    "placement": {
+     "pinned": false,
+     "groupId": "G(G)",
+     "beforeId": "g1"
+    },
+    "sequence": [
+     "t:p2",
+     "g:G(PG)"
+    ]
+   },
+   "gapKey": "t:g1",
+   "gaps": {
+    "t:g1": 34
+   }
+  },
+  {
+   "step": "move 60,330"
+  },
+  {
+   "step": "move 60,315"
+  },
+  {
+   "step": "move 60,300",
+   "drop": {
+    "type": "tabs",
+    "placement": {
+     "pinned": false,
+     "beforeId": "g1"
+    },
+    "sequence": [
+     "t:p2",
+     "g:G(PG)"
+    ]
+   },
+   "gapKey": "g:G(G)",
+   "gaps": {
+    "g:G(G)": 34
+   }
+  },
+  {
+   "step": "move 60,285",
+   "drop": {
+    "type": "tabs",
+    "placement": {
+     "pinned": true,
+     "row": true,
+     "beforeId": null,
+     "last": true
+    },
+    "sequence": [
+     "t:p2",
+     "g:G(PG)",
+     "t:p1"
+    ]
+   },
+   "gapKey": "tail:pinnedGroups",
+   "gaps": {
+    "tail:pinnedGroups": 34
+   }
+  },
+  {
+   "step": "move 60,270"
+  },
+  {
+   "step": "move 60,255"
+  },
+  {
+   "step": "move 60,240",
+   "drop": {
+    "type": "tabs",
+    "placement": {
+     "pinned": false,
+     "groupId": "G(PG)",
+     "beforeId": null
+    },
+    "sequence": [
+     "t:p2",
+     "g:G(PG)"
+    ]
+   },
+   "gapKey": "tail:group:G(PG)",
+   "gaps": {
+    "tail:group:G(PG)": 34
+   }
+  },
+  {
+   "step": "move 60,215",
+   "drop": {
+    "type": "tabs",
+    "placement": {
+     "pinned": false,
+     "groupId": "G(PG)",
+     "beforeId": "pg1"
+    },
+    "sequence": [
+     "t:p2",
+     "g:G(PG)"
+    ]
+   },
+   "gapKey": "t:pg1",
+   "gaps": {
+    "t:pg1": 34
+   }
   },
   {
    "step": "move 60,200",
+   "drop": {
+    "type": "tabs",
+    "placement": {
+     "pinned": true,
+     "row": true,
+     "beforeId": null,
+     "last": true
+    },
+    "sequence": [
+     "t:p2",
+     "g:G(PG)",
+     "t:p1"
+    ]
+   },
+   "gapKey": "tail:pinnedGroups",
+   "gaps": {
+    "tail:pinnedGroups": 34
+   }
+  },
+  {
+   "step": "move 60,185",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -7878,11 +7820,8 @@
    },
    "gapKey": "g:G(PG)",
    "gaps": {
-    "g:G(PG)": 37
+    "g:G(PG)": 34
    }
-  },
-  {
-   "step": "move 60,185"
   },
   {
    "step": "move 60,160",
@@ -7910,7 +7849,7 @@
    "gapKey": "t:p2",
    "onto": null,
    "gaps": {
-    "t:p2": 37
+    "t:p2": 34
    }
   },
   {
@@ -8058,7 +7997,7 @@
  ],
  "row hysteresis": [
   {
-   "step": "begin t:c 26,614",
+   "step": "begin t:c 26,578",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -8072,7 +8011,7 @@
     ]
    },
    "gapKey": "tail:list",
-   "pitch": 37,
+   "pitch": 34,
    "into": null,
    "external": 0,
    "gridGrowth": 0,
@@ -8090,11 +8029,11 @@
     "t:c"
    ],
    "gaps": {
-    "tail:list": 37
+    "tail:list": 34
    }
   },
   {
-   "step": "move 60,316",
+   "step": "move 60,304",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -8109,23 +8048,23 @@
    },
    "gapKey": "t:a",
    "gaps": {
-    "t:a": 37
+    "t:a": 34
    }
   },
   {
-   "step": "move 60,313"
+   "step": "move 60,301"
   },
   {
-   "step": "move 60,309"
+   "step": "move 60,297"
   },
   {
-   "step": "move 60,307"
+   "step": "move 60,295"
   },
   {
-   "step": "move 60,303"
+   "step": "move 60,291"
   },
   {
-   "step": "move 60,301",
+   "step": "move 60,289",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -8143,20 +8082,20 @@
    },
    "gapKey": "tail:pinnedGroups",
    "gaps": {
-    "tail:pinnedGroups": 37
+    "tail:pinnedGroups": 34
    }
   },
   {
-   "step": "move 60,303"
+   "step": "move 60,291"
   },
   {
-   "step": "move 60,309"
+   "step": "move 60,297"
   },
   {
-   "step": "move 60,313"
+   "step": "move 60,301"
   },
   {
-   "step": "move 60,315",
+   "step": "move 60,303",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -8171,7 +8110,7 @@
    },
    "gapKey": "t:a",
    "gaps": {
-    "t:a": 37
+    "t:a": 34
    }
   },
   {
@@ -8319,7 +8258,7 @@
  ],
  "row past live": [
   {
-   "step": "begin t:a 26,318",
+   "step": "begin t:a 26,306",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -8334,7 +8273,7 @@
     ]
    },
    "gapKey": "t:b",
-   "pitch": 37,
+   "pitch": 34,
    "into": null,
    "external": 0,
    "gridGrowth": 0,
@@ -8352,7 +8291,7 @@
     "t:a"
    ],
    "gaps": {
-    "t:b": 37
+    "t:b": 34
    }
   },
   {
@@ -8372,7 +8311,7 @@
    },
    "gapKey": "tail:list",
    "gaps": {
-    "tail:list": 37
+    "tail:list": 34
    }
   },
   {
@@ -8418,7 +8357,10 @@
    "step": "move 60,345"
   },
   {
-   "step": "move 60,330",
+   "step": "move 60,330"
+  },
+  {
+   "step": "move 60,315",
    "drop": {
     "type": "onto",
     "targetId": "b"
@@ -8426,7 +8368,7 @@
    "onto": "t:b"
   },
   {
-   "step": "move 60,315",
+   "step": "move 60,300",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -8443,11 +8385,11 @@
    "gapKey": "t:b",
    "onto": null,
    "gaps": {
-    "t:b": 37
+    "t:b": 34
    }
   },
   {
-   "step": "move 60,300",
+   "step": "move 60,285",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -8466,14 +8408,14 @@
    },
    "gapKey": "tail:pinnedGroups",
    "gaps": {
-    "tail:pinnedGroups": 37
+    "tail:pinnedGroups": 34
    }
   },
   {
-   "step": "move 60,285"
+   "step": "move 60,270"
   },
   {
-   "step": "move 60,270",
+   "step": "move 60,255",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -8492,11 +8434,8 @@
    },
    "gapKey": "lf:LF(Documents)",
    "gaps": {
-    "lf:LF(Documents)": 37
+    "lf:LF(Documents)": 34
    }
-  },
-  {
-   "step": "move 60,255"
   },
   {
    "step": "move 60,240",
@@ -8526,11 +8465,14 @@
    "gapKey": "t:p2",
    "onto": null,
    "gaps": {
-    "t:p2": 37
+    "t:p2": 34
    }
   },
   {
-   "step": "move 60,200",
+   "step": "move 60,200"
+  },
+  {
+   "step": "move 60,185",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -8548,11 +8490,8 @@
    },
    "gapKey": "lf:LF(Pull Requests)",
    "gaps": {
-    "lf:LF(Pull Requests)": 37
+    "lf:LF(Pull Requests)": 34
    }
-  },
-  {
-   "step": "move 60,185"
   },
   {
    "step": "move 60,160",
@@ -8582,7 +8521,7 @@
    "gapKey": "t:p1",
    "onto": null,
    "gaps": {
-    "t:p1": 37
+    "t:p1": 34
    }
   },
   {
@@ -8660,7 +8599,7 @@
  ],
  "selection sweep": [
   {
-   "step": "begin t:c 26,614",
+   "step": "begin t:c 26,578",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -8674,7 +8613,7 @@
     ]
    },
    "gapKey": "tail:list",
-   "pitch": 105,
+   "pitch": 98,
    "into": null,
    "external": 0,
    "gridGrowth": 0,
@@ -8694,7 +8633,7 @@
     "t:c"
    ],
    "gaps": {
-    "tail:list": 105
+    "tail:list": 98
    }
   },
   {
@@ -8713,7 +8652,10 @@
    "step": "move 60,530"
   },
   {
-   "step": "move 60,500",
+   "step": "move 60,500"
+  },
+  {
+   "step": "move 60,480",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -8728,11 +8670,11 @@
    },
    "gapKey": "s:S(s1+s2)",
    "gaps": {
-    "s:S(s1+s2)": 105
+    "s:S(s1+s2)": 98
    }
   },
   {
-   "step": "move 60,480",
+   "step": "move 60,460",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -8748,11 +8690,11 @@
    },
    "gapKey": "tail:group:G(G)",
    "gaps": {
-    "tail:group:G(G)": 105
+    "tail:group:G(G)": 98
    }
   },
   {
-   "step": "move 60,460",
+   "step": "move 60,440",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -8768,11 +8710,11 @@
    },
    "gapKey": "t:g2",
    "gaps": {
-    "t:g2": 105
+    "t:g2": 98
    }
   },
   {
-   "step": "move 60,440",
+   "step": "move 60,420",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -8788,11 +8730,11 @@
    },
    "gapKey": "tail:group:G(H)",
    "gaps": {
-    "tail:group:G(H)": 105
+    "tail:group:G(H)": 98
    }
   },
   {
-   "step": "move 60,420",
+   "step": "move 60,405",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -8808,14 +8750,14 @@
    },
    "gapKey": "t:h1",
    "gaps": {
-    "t:h1": 105
+    "t:h1": 98
    }
   },
   {
-   "step": "move 60,405"
+   "step": "move 60,390"
   },
   {
-   "step": "move 60,390",
+   "step": "move 60,375",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -8831,14 +8773,14 @@
    },
    "gapKey": "g:G(H)",
    "gaps": {
-    "g:G(H)": 105
+    "g:G(H)": 98
    }
   },
   {
-   "step": "move 60,375"
+   "step": "move 60,360"
   },
   {
-   "step": "move 60,360",
+   "step": "move 60,345",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -8854,17 +8796,17 @@
    },
    "gapKey": "t:g1",
    "gaps": {
-    "t:g1": 105
+    "t:g1": 98
    }
-  },
-  {
-   "step": "move 60,345"
   },
   {
    "step": "move 60,330"
   },
   {
-   "step": "move 60,315",
+   "step": "move 60,315"
+  },
+  {
+   "step": "move 60,300",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -8879,11 +8821,11 @@
    },
    "gapKey": "g:G(G)",
    "gaps": {
-    "g:G(G)": 105
+    "g:G(G)": 98
    }
   },
   {
-   "step": "move 60,300",
+   "step": "move 60,285",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -8903,11 +8845,11 @@
    },
    "gapKey": "tail:pinnedGroups",
    "gaps": {
-    "tail:pinnedGroups": 105
+    "tail:pinnedGroups": 98
    }
   },
   {
-   "step": "move 60,285",
+   "step": "move 60,270",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -8923,11 +8865,11 @@
    },
    "gapKey": "tail:group:G(PG)",
    "gaps": {
-    "tail:group:G(PG)": 105
+    "tail:group:G(PG)": 98
    }
   },
   {
-   "step": "move 60,270",
+   "step": "move 60,255",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -8943,14 +8885,14 @@
    },
    "gapKey": "t:pg1",
    "gaps": {
-    "t:pg1": 105
+    "t:pg1": 98
    }
   },
   {
-   "step": "move 60,255"
+   "step": "move 60,240"
   },
   {
-   "step": "move 60,240",
+   "step": "move 60,215",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -8969,11 +8911,8 @@
    },
    "gapKey": "g:G(PG)",
    "gaps": {
-    "g:G(PG)": 105
+    "g:G(PG)": 98
    }
-  },
-  {
-   "step": "move 60,215"
   },
   {
    "step": "move 60,200",
@@ -9004,7 +8943,7 @@
    "gapKey": "t:p2",
    "onto": null,
    "gaps": {
-    "t:p2": 105
+    "t:p2": 98
    }
   },
   {
@@ -9036,7 +8975,7 @@
    "gapKey": "t:p1",
    "onto": null,
    "gaps": {
-    "t:p1": 105
+    "t:p1": 98
    }
   },
   {
@@ -9193,7 +9132,7 @@
  ],
  "split sweep": [
   {
-   "step": "begin s:S(s1+s2) 26,577",
+   "step": "begin s:S(s1+s2) 26,544",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -9207,7 +9146,7 @@
     ]
    },
    "gapKey": "t:c",
-   "pitch": 37,
+   "pitch": 34,
    "into": null,
    "external": 0,
    "gridGrowth": 0,
@@ -9225,7 +9164,7 @@
     "s:S(s1+s2)"
    ],
    "gaps": {
-    "t:c": 37
+    "t:c": 34
    }
   },
   {
@@ -9244,7 +9183,7 @@
    },
    "gapKey": "tail:list",
    "gaps": {
-    "tail:list": 37
+    "tail:list": 34
    }
   },
   {
@@ -9254,7 +9193,10 @@
    "step": "move 60,590"
   },
   {
-   "step": "move 60,560",
+   "step": "move 60,560"
+  },
+  {
+   "step": "move 60,530",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -9269,11 +9211,11 @@
    },
    "gapKey": "t:c",
    "gaps": {
-    "t:c": 37
+    "t:c": 34
    }
   },
   {
-   "step": "move 60,530",
+   "step": "move 60,500",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -9288,11 +9230,11 @@
    },
    "gapKey": "t:b",
    "gaps": {
-    "t:b": 37
+    "t:b": 34
    }
   },
   {
-   "step": "move 60,500",
+   "step": "move 60,480",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -9308,11 +9250,11 @@
    },
    "gapKey": "t:g2",
    "gaps": {
-    "t:g2": 37
+    "t:g2": 34
    }
   },
   {
-   "step": "move 60,480",
+   "step": "move 60,460",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -9328,11 +9270,11 @@
    },
    "gapKey": "tail:group:G(H)",
    "gaps": {
-    "tail:group:G(H)": 37
+    "tail:group:G(H)": 34
    }
   },
   {
-   "step": "move 60,460",
+   "step": "move 60,440",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -9348,14 +9290,14 @@
    },
    "gapKey": "t:h1",
    "gaps": {
-    "t:h1": 37
+    "t:h1": 34
    }
   },
   {
-   "step": "move 60,440"
+   "step": "move 60,420"
   },
   {
-   "step": "move 60,420",
+   "step": "move 60,405",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -9371,14 +9313,14 @@
    },
    "gapKey": "g:G(H)",
    "gaps": {
-    "g:G(H)": 37
+    "g:G(H)": 34
    }
   },
   {
-   "step": "move 60,405"
+   "step": "move 60,390"
   },
   {
-   "step": "move 60,390",
+   "step": "move 60,375",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -9394,14 +9336,14 @@
    },
    "gapKey": "t:g1",
    "gaps": {
-    "t:g1": 37
+    "t:g1": 34
    }
   },
   {
-   "step": "move 60,375"
+   "step": "move 60,360"
   },
   {
-   "step": "move 60,360",
+   "step": "move 60,345",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -9416,17 +9358,17 @@
    },
    "gapKey": "g:G(G)",
    "gaps": {
-    "g:G(G)": 37
+    "g:G(G)": 34
    }
-  },
-  {
-   "step": "move 60,345"
   },
   {
    "step": "move 60,330"
   },
   {
-   "step": "move 60,315",
+   "step": "move 60,315"
+  },
+  {
+   "step": "move 60,300",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -9441,11 +9383,11 @@
    },
    "gapKey": "t:a",
    "gaps": {
-    "t:a": 37
+    "t:a": 34
    }
   },
   {
-   "step": "move 60,300",
+   "step": "move 60,285",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -9463,11 +9405,11 @@
    },
    "gapKey": "tail:pinnedGroups",
    "gaps": {
-    "tail:pinnedGroups": 37
+    "tail:pinnedGroups": 34
    }
   },
   {
-   "step": "move 60,285",
+   "step": "move 60,270",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -9483,11 +9425,11 @@
    },
    "gapKey": "tail:group:G(PG)",
    "gaps": {
-    "tail:group:G(PG)": 37
+    "tail:group:G(PG)": 34
    }
   },
   {
-   "step": "move 60,270",
+   "step": "move 60,255",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -9503,14 +9445,14 @@
    },
    "gapKey": "t:pg1",
    "gaps": {
-    "t:pg1": 37
+    "t:pg1": 34
    }
   },
   {
-   "step": "move 60,255"
+   "step": "move 60,240"
   },
   {
-   "step": "move 60,240",
+   "step": "move 60,215",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -9527,14 +9469,14 @@
    },
    "gapKey": "g:G(PG)",
    "gaps": {
-    "g:G(PG)": 37
+    "g:G(PG)": 34
    }
   },
   {
-   "step": "move 60,215"
+   "step": "move 60,200"
   },
   {
-   "step": "move 60,200",
+   "step": "move 60,185",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -9551,11 +9493,8 @@
    },
    "gapKey": "t:p2",
    "gaps": {
-    "t:p2": 37
+    "t:p2": 34
    }
-  },
-  {
-   "step": "move 60,185"
   },
   {
    "step": "move 60,160",
@@ -9575,7 +9514,7 @@
    },
    "gapKey": "t:p1",
    "gaps": {
-    "t:p1": 37
+    "t:p1": 34
    }
   },
   {
@@ -9591,10 +9530,7 @@
    "step": "move 60,185"
   },
   {
-   "step": "move 60,200"
-  },
-  {
-   "step": "move 60,215",
+   "step": "move 60,200",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -9611,14 +9547,14 @@
    },
    "gapKey": "t:p2",
    "gaps": {
-    "t:p2": 37
+    "t:p2": 34
    }
   },
   {
-   "step": "move 60,240"
+   "step": "move 60,215"
   },
   {
-   "step": "move 60,255",
+   "step": "move 60,240",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -9635,14 +9571,14 @@
    },
    "gapKey": "g:G(PG)",
    "gaps": {
-    "g:G(PG)": 37
+    "g:G(PG)": 34
    }
   },
   {
-   "step": "move 60,270"
+   "step": "move 60,255"
   },
   {
-   "step": "move 60,285",
+   "step": "move 60,270",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -9658,8 +9594,11 @@
    },
    "gapKey": "t:pg1",
    "gaps": {
-    "t:pg1": 37
+    "t:pg1": 34
    }
+  },
+  {
+   "step": "move 60,285"
   },
   {
    "step": "move 60,300"
@@ -9681,7 +9620,7 @@
    },
    "gapKey": "tail:group:G(PG)",
    "gaps": {
-    "tail:group:G(PG)": 37
+    "tail:group:G(PG)": 34
    }
   },
   {
@@ -9700,17 +9639,14 @@
    },
    "gapKey": "t:a",
    "gaps": {
-    "t:a": 37
+    "t:a": 34
    }
   },
   {
    "step": "move 60,345"
   },
   {
-   "step": "move 60,360"
-  },
-  {
-   "step": "move 60,375",
+   "step": "move 60,360",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -9725,11 +9661,31 @@
    },
    "gapKey": "g:G(G)",
    "gaps": {
-    "g:G(G)": 37
+    "g:G(G)": 34
    }
   },
   {
-   "step": "move 60,390"
+   "step": "move 60,375"
+  },
+  {
+   "step": "move 60,390",
+   "drop": {
+    "type": "tabs",
+    "placement": {
+     "pinned": false,
+     "groupId": "G(G)",
+     "beforeId": "g1"
+    },
+    "sequence": [
+     "t:p1",
+     "t:p2",
+     "g:G(PG)"
+    ]
+   },
+   "gapKey": "t:g1",
+   "gaps": {
+    "t:g1": 34
+   }
   },
   {
    "step": "end true",
@@ -9836,6 +9792,8 @@
      },
      "G(G)": {
       "tabIds": [
+       "s1",
+       "s2",
        "g1",
        "h1",
        "g2"
@@ -9886,7 +9844,7 @@
     "sequence": []
    },
    "gapKey": "t:b",
-   "pitch": 37,
+   "pitch": 34,
    "into": null,
    "external": 0,
    "gridGrowth": 0,
@@ -9904,11 +9862,11 @@
     "t:a"
    ],
    "gaps": {
-    "t:b": 37
+    "t:b": 34
    }
   },
   {
-   "step": "move 60,291",
+   "step": "move 60,290",
    "drop": {
     "type": "onto",
     "targetId": "c"
@@ -9916,7 +9874,7 @@
    "onto": "t:c"
   },
   {
-   "step": "move 60,291.01"
+   "step": "move 60,290.01"
   },
   {
    "step": "move 60,300",
@@ -9931,7 +9889,7 @@
    "gapKey": "tail:list",
    "onto": null,
    "gaps": {
-    "tail:list": 37
+    "tail:list": 34
    }
   },
   {

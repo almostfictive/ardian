@@ -4,6 +4,7 @@ const { useBrowser } = await import("../browser/store.ts");
 const { sidebarEntries } = await import("./entries.ts");
 const { entriesHeight, entriesWithin, entryHeight, firstPaintEntries, rowSpan, startsOffScreen, FIRST_PAINT_HEIGHT } = await import("./geometry.ts");
 const { groupEntries } = await import("./entries.ts");
+const { SIDEBAR_ROW } = await import("../../lib/sidebarMetrics.ts");
 await import("../../test-native/index.ts");
 
 const S = () => useBrowser.getState();
@@ -31,7 +32,7 @@ test("entriesWithin counts the entries that start inside the height, a group as 
   const list = hydrate();
   assert.deepEqual(list.slice(0, 4), ["t:t0", "t:t1", "g:g", "t:t7"]);
   const s = S();
-  const pitch = entryHeight(s, "w", "default", "t:t0") + 3;
+  const pitch = entryHeight(s, "w", "default", "t:t0") + SIDEBAR_ROW.gap;
   assert.equal(entriesWithin(s, "w", "default", list, 0), 0);
   assert.equal(entriesWithin(s, "w", "default", list, 1), 1);
   assert.equal(entriesWithin(s, "w", "default", list, pitch), 1);
@@ -39,8 +40,8 @@ test("entriesWithin counts the entries that start inside the height, a group as 
   const group = entryHeight(s, "w", "default", "g:g");
   assert.ok(group > 5 * pitch);
   assert.equal(entriesWithin(s, "w", "default", list, 2 * pitch + 1), 3);
-  assert.equal(entriesWithin(s, "w", "default", list, 2 * pitch + group + 3), 3);
-  assert.equal(entriesWithin(s, "w", "default", list, 2 * pitch + group + 4), 4);
+  assert.equal(entriesWithin(s, "w", "default", list, 2 * pitch + group + SIDEBAR_ROW.gap), 3);
+  assert.equal(entriesWithin(s, "w", "default", list, 2 * pitch + group + SIDEBAR_ROW.gap + 1), 4);
   assert.equal(entriesWithin(s, "w", "default", list, 1e6), list.length);
 });
 
@@ -49,8 +50,8 @@ test("the entries within a height cover it: the rest start below it", () => {
   const s = S();
   for (const height of [10, 100, 333, 800, 1300]) {
     const n = entriesWithin(s, "w", "default", list, height);
-    assert.ok(n === list.length || entriesHeight(s, "w", "default", list.slice(0, n)) + 3 >= height, `height ${height}`);
-    assert.ok(n === 0 || entriesHeight(s, "w", "default", list.slice(0, n - 1)) + (n > 1 ? 3 : 0) < height, `height ${height}`);
+    assert.ok(n === list.length || entriesHeight(s, "w", "default", list.slice(0, n)) + SIDEBAR_ROW.gap >= height, `height ${height}`);
+    assert.ok(n === 0 || entriesHeight(s, "w", "default", list.slice(0, n - 1)) + (n > 1 ? SIDEBAR_ROW.gap : 0) < height, `height ${height}`);
   }
 });
 
@@ -74,20 +75,22 @@ test("lazySidebarRows off: 64 entries at first, and no page waits", () => {
 });
 
 test("a nested group first in its parent sits a row gap below the parent's header, in the height and in the rows' positions", () => {
-  for (const [nested, gap] of [[["t2", "t3"], 3], [["t5", "t6"], 0]]) {
+  for (const [nested, gap] of [[["t2", "t3"], SIDEBAR_ROW.gap], [["t5", "t6"], 0]]) {
     hydrate({ nested });
     const s = S();
     const members = groupEntries(s, "g");
     assert.equal(members[0], gap ? "g:n" : "t:t2");
-    assert.equal(entryHeight(s, "w", "default", "g:g"), 1 + 34 + gap + entriesHeight(s, "w", "default", members));
-    assert.equal(rowSpan(s, "w", "default", "t4", false).top, 2 * 37 + 0.5 + 34 + gap + (gap ? entryHeight(s, "w", "default", "g:n") + 3 : 2 * 37));
+    assert.equal(entryHeight(s, "w", "default", "g:g"), 1 + SIDEBAR_ROW.height + gap + entriesHeight(s, "w", "default", members));
+    const pitch = SIDEBAR_ROW.height + SIDEBAR_ROW.gap;
+    assert.equal(rowSpan(s, "w", "default", "t4", false).top, 2 * pitch + 0.5 + SIDEBAR_ROW.height + gap + (gap ? entryHeight(s, "w", "default", "g:n") + SIDEBAR_ROW.gap : 2 * pitch));
   }
 });
 
 test("a collapsed group keeps its active nested group a row gap below its header", () => {
   hydrate({ collapsed: true, nested: ["t2", "t3"], active: "t3" });
   const s = S();
-  assert.equal(entryHeight(s, "w", "default", "g:n"), 1 + 34 + 34);
-  assert.equal(entryHeight(s, "w", "default", "g:g"), 1 + 34 + 3 + entryHeight(s, "w", "default", "g:n"));
-  assert.equal(rowSpan(s, "w", "default", "t3", false).top, 2 * 37 + 0.5 + 34 + 3 + 0.5 + 34);
+  assert.equal(entryHeight(s, "w", "default", "g:n"), 1 + SIDEBAR_ROW.height + SIDEBAR_ROW.height);
+  assert.equal(entryHeight(s, "w", "default", "g:g"), 1 + SIDEBAR_ROW.height + SIDEBAR_ROW.gap + entryHeight(s, "w", "default", "g:n"));
+  const pitch = SIDEBAR_ROW.height + SIDEBAR_ROW.gap;
+  assert.equal(rowSpan(s, "w", "default", "t3", false).top, 2 * pitch + 0.5 + SIDEBAR_ROW.height + SIDEBAR_ROW.gap + 0.5 + SIDEBAR_ROW.height);
 });

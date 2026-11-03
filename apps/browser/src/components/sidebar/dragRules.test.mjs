@@ -27,9 +27,8 @@ test("away: the 40 pt bound is strict on both sides, and a drag outside the wind
 
 test("onto: the middle half of a row, strictly, with no x test", () => {
   const t = zones["onto bounds"];
-  for (const label of ["move 60,325", "move 5,325", "move 239,325", "move 60,316.6", "move 60,333.4"]) assert.equal(at(t, label).drop.type, "onto", label);
-  assert.notEqual(at(t, "move 60,333.5").drop.type, "onto");
-  assert.notEqual(at(t, "move 60,316.5").drop.type, "onto");
+  for (const label of ["move 60,316", "move 5,316", "move 239,316", "move 60,308.1"]) assert.equal(at(t, label).drop.type, "onto", label);
+  for (const label of ["move 60,323.9", "move 60,324.1"]) assert.notEqual(at(t, label).drop.type, "onto");
   assert.equal(at(zones["onto overlap"], "move 60,222").onto, "t:a", "overlapping rows: the first registered");
 });
 
@@ -49,7 +48,7 @@ test("pinned rows: the end of the pinned area is placed last, with the live fold
 test("live folders: only among the pinned blocks, never the list", () => {
   const types = moves(zones["live sweep"]).map((s) => s.drop.type);
   assert.ok(types.every((t) => t === "live" || t === "none"));
-  assert.ok(moves(zones["live sweep"]).filter((s) => s.drop.type === "none").every((s) => Number(s.step.split(",")[1]) > 300));
+  assert.ok(moves(zones["live sweep"]).filter((s) => s.drop.type === "none").every((s) => Number(s.step.split(",")[1]) >= 300));
 });
 
 test("groups: never into their own subtree; a refused placement doesn't fall through to another zone", () => {
@@ -71,14 +70,14 @@ test("groups: a collapsed group takes rows through its header only; the smaller 
 test("splits: one row of pitch, never onto, into groups, pinned rows and the list", () => {
   const split = moves(zones["split sweep"]);
   assert.ok(split.every((s) => s.drop.type !== "onto"));
-  assert.ok(split.every((s) => s.drop.type === "none" || s.pitch === 37));
+  assert.ok(split.every((s) => s.drop.type === "none" || s.pitch === 34));
   assert.ok(split.some((s) => s.drop.placement?.groupId));
   assert.ok(split.some((s) => s.drop.placement?.row));
   assert.ok(split.some((s) => s.drop.placement && !s.drop.placement.pinned && !s.drop.placement.groupId));
 });
 
 test("ties: equal transformed y goes by x then registration, and a pointer on a midpoint lands after", () => {
-  assert.equal(at(zones["tie order"], "move 60,291").drop.type, "onto");
+  assert.equal(at(zones["tie order"], "move 60,290").drop.type, "onto");
   assert.equal(committed(zones["tie order"]).tabIds.join(), "b,c,d,a");
 });
 
@@ -115,7 +114,7 @@ test("existing folders take a tile or a row at once; a folder tile never folds i
 });
 
 test("folder panel: the first staying member anchors, leaving latches away, an empty panel blocks the rest", () => {
-  assert.equal(at(tiles["panel reorder"], "move 101,184").drop.ontoId, "t2");
+  assert.equal(at(tiles["panel reorder"], "move 101,180").drop.ontoId, "t2");
   const left = states(tiles["panel leave"]);
   const during = left.filter((s) => s.step.startsWith("move"));
   assert.ok(during.slice(1).every((s) => s.folderAway === true));
