@@ -27,8 +27,9 @@ import { ZoomIndicator } from "../site/ZoomControls";
 import { useShortcutHint, withShortcut } from "../../state/commands/commandShortcuts";
 import { curve } from "../ui/motion";
 import { HistoryButton, ReloadButton } from "./NavButtons";
+import { CHROME_BUTTON } from "./tokens";
 import { ProgressBar, TabProgressBar } from "./ProgressBar";
-import { ADDRESS_BAR, TOOLBAR_MOTION } from "./tokens";
+import { ADDRESS_BAR, ADDRESS_BAR_PALETTE, TOOLBAR_MOTION } from "./tokens";
 import { useToolbarRow } from "./useToolbarRow";
 import { withLivePage } from "../../state/tabs/livePage";
 import { shareTab } from "../../state/site/share";
@@ -65,7 +66,8 @@ export function Toolbar({
   const theme = useTheme();
   const tab = useToolbarTab(tabId);
   const isLoading = useTabLive(tabId, (l) => l.isLoading);
-  const palette = useSitePalette(tabId);
+  const sitePalette = useSitePalette(tabId);
+  const palette = bare ? ADDRESS_BAR_PALETTE : sitePalette;
   const band = useEasedColor(bare ? null : palette.background);
   const row = useToolbarRow();
   const extensionsWidth = useToolbarExtensionsWidth(windowId, Infinity);
@@ -131,13 +133,13 @@ function CardUtilities({ tab, palette, onFocus, loading, center }: { tab: Toolba
     });
   return (
     <View style={{ position: "absolute", top: center - ADDRESS_BAR.buttonOffset, right: ADDRESS_BAR.utilityRight, flexDirection: "row", gap: ADDRESS_BAR.utilityGap, zIndex: 2 }}>
-      <Button variant="icon" toolbar size="s" style={utility} palette={palette} icon={loading ? "xmark" : "arrow.clockwise"} onPress={() => { onFocus(); void withLivePage(tab.id, (page) => page.reload()); }} tooltip="Reload" />
-      <Button variant="icon" toolbar size="s" style={utility} palette={palette} icon="puzzlepiece.extension" onPress={() => openManageExtensions(tab.windowId)} tooltip="Extensions" />
+      <Button variant="icon" toolbar box={ADDRESS_BAR.button} glyph={CHROME_BUTTON.glyph} radius={CHROME_BUTTON.radius} style={utility} palette={palette} icon={loading ? "xmark" : "arrow.clockwise"} onPress={() => { onFocus(); void withLivePage(tab.id, (page) => page.reload()); }} tooltip="Reload" />
+      <Button variant="icon" toolbar box={ADDRESS_BAR.button} glyph={CHROME_BUTTON.glyph} radius={CHROME_BUTTON.radius} style={utility} palette={palette} icon="puzzlepiece.extension" onPress={() => openManageExtensions(tab.windowId)} tooltip="Extensions" />
       <View ref={target}>
-        <Button variant="icon" toolbar size="s" style={utility} palette={palette} icon="square.and.arrow.up" onPress={share} tooltip="Share" />
+        <Button variant="icon" toolbar box={ADDRESS_BAR.button} glyph={CHROME_BUTTON.glyph} radius={CHROME_BUTTON.radius} style={utility} palette={palette} icon="square.and.arrow.up" onPress={share} tooltip="Share" />
       </View>
-      <Button variant="icon" toolbar size="s" style={utility} palette={palette} icon={bookmarked ? "bookmark.fill" : "bookmark"} onPress={() => toggleBookmarkOfTab(tab.windowId, tab.id)} tooltip="Bookmark" />
-      <Button variant="icon" toolbar size="s" style={utility} palette={palette} icon="ellipsis" onPress={() => void showUrlBarMenu(tab)} tooltip="More" />
+      <Button variant="icon" toolbar box={ADDRESS_BAR.button} glyph={CHROME_BUTTON.glyph} radius={CHROME_BUTTON.radius} style={utility} palette={palette} icon={bookmarked ? "bookmark.fill" : "bookmark"} onPress={() => toggleBookmarkOfTab(tab.windowId, tab.id)} tooltip="Bookmark" />
+      <Button variant="icon" toolbar box={ADDRESS_BAR.button} glyph={CHROME_BUTTON.glyph} radius={CHROME_BUTTON.radius} style={utility} palette={palette} icon="ellipsis" onPress={() => void showUrlBarMenu(tab)} tooltip="More" />
     </View>
   );
 }

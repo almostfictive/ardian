@@ -1,6 +1,8 @@
 import { useCallback, useLayoutEffect, useRef, useState } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
-import { Button, ContextMenuArea, WindowDragRegion, space } from "../ui";
+import { Button, ContextMenuArea, WindowDragRegion } from "../ui";
+import { SIDEBAR_FOOTER } from "./tokens";
+import { SidebarSlot } from "./SidebarSlots";
 import { useWindowId, useWindowProfileId } from "../../state/browser/hooks";
 import { useNoTiles } from "../../state/sidebar/hooks";
 import { openSettings } from "../../state/settings/settingsWindows";
@@ -21,10 +23,10 @@ import { GLOW_ROOM, ROW_PITCH, type SidebarGeometry } from "./pageLayout";
 import { SidebarPage } from "./SidebarPage";
 import { SidebarRowLookContext, useSidebarRowLookSource } from "./rowLook";
 import { useRevealTabs } from "./useRevealTabs";
-import { WorkspaceSwitcher } from "../workspaces/WorkspaceSwitcher";
-import { SidebarSlot } from "./SidebarSlots";
 
-const FOOTER_HEIGHT = 32;
+import { WorkspaceSwitcher } from "../workspaces/WorkspaceSwitcher";
+
+const FOOTER_HEIGHT = SIDEBAR_FOOTER.height;
 
 export function Sidebar({ width }: { width: number }) {
   const windowId = useWindowId();
@@ -35,7 +37,7 @@ export function Sidebar({ width }: { width: number }) {
   const scroll = useRef<ScrollView>(null);
   const scrollY = useRef(0);
   const geometry = useRef<SidebarGeometry>({ viewport: 0, regions: { pinnedGroups: 0, list: 0 }, newTabAtTop: false, tilesFixed: true });
-  const header = 36;
+  const header = 45;
   const footer = FOOTER_HEIGHT;
   const nothingPinned = useNoTiles(windowId, current);
   const rowLook = useSidebarRowLookSource();
@@ -72,7 +74,7 @@ export function Sidebar({ width }: { width: number }) {
                 left: 0,
                 right: 0,
                 top: header - GLOW_ROOM,
-                bottom: footer,
+                bottom: footer + SIDEBAR_FOOTER.bottom,
                 overflow: paging ? "hidden" : "visible",
               }}
               onLayout={(e) => setAvailable(e.nativeEvent.layout.height)}
@@ -97,19 +99,17 @@ export function Sidebar({ width }: { width: number }) {
               </SidebarRowLookContext.Provider>
             </View>
 
-            <View style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: footer, paddingLeft: space.m + 1, paddingRight: space.s, flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-                <ContextMenuArea style={StyleSheet.absoluteFill} onContextMenu={() => void openSidebarMenu(windowId)} />
-                <SidebarSlot name="profile"><View style={{ width: 28, height: 28 }} /></SidebarSlot>
-                <SidebarSlot name="workspaces"><WorkspaceSwitcher /></SidebarSlot>
-                <Button variant="icon" icon="gearshape" box={28} glyph={14} style={{ width: 28, height: 28 }} onPress={() => openSettings()} tooltip="Settings" />
-              </View>
+            <View style={{ position: "absolute", left: SIDEBAR_FOOTER.inset, right: SIDEBAR_FOOTER.inset, bottom: SIDEBAR_FOOTER.bottom, height: footer, paddingLeft: SIDEBAR_FOOTER.paddingLeft, paddingRight: SIDEBAR_FOOTER.paddingRight, flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+              <ContextMenuArea style={StyleSheet.absoluteFill} onContextMenu={() => void openSidebarMenu(windowId)} />
+              <SidebarSlot name="profile"><View style={{ width: SIDEBAR_FOOTER.profileBox, height: SIDEBAR_FOOTER.profileBox }} /></SidebarSlot>
+              <SidebarSlot name="workspaces"><WorkspaceSwitcher /></SidebarSlot>
+              <Button variant="icon" icon="gearshape" size="s" box={SIDEBAR_FOOTER.gearBox} glyph={SIDEBAR_FOOTER.gearGlyph} radius={SIDEBAR_FOOTER.gearRadius} style={{ width: SIDEBAR_FOOTER.gearBox, height: SIDEBAR_FOOTER.gearBox }} onPress={() => openSettings()} tooltip="Settings" />
+            </View>
 
             <View style={{ height: header }}>
-              <SidebarSlot name="trafficLights">
-              <ContextMenuArea style={{ height: 36 }} onContextMenu={() => void openSidebarMenu(windowId)}>
+              <SidebarSlot name="trafficLights"><ContextMenuArea style={{ height: header }} onContextMenu={() => void openSidebarMenu(windowId)}>
                 <WindowDragRegion style={StyleSheet.absoluteFill} />
-              </ContextMenuArea>
-              </SidebarSlot>
+              </ContextMenuArea></SidebarSlot>
               <SidebarHeaderTools width={width} />
             </View>
 

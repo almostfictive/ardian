@@ -83,6 +83,7 @@ export function Surface({ shadowColor, shadowOpacity, shadowRadius, shadowOffset
 }
 
 export type VisualEffectProps = ViewProps & {
+  appearance?: "auto" | "light" | "dark";
   material?: string;
   blendingMode?: "withinWindow" | "behindWindow";
   cornerRadius?: number;
