@@ -53,3 +53,5 @@ dist/
 
 scripts/.notary.env
 *.p8
+
+Private/
