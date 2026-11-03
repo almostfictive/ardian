@@ -1,6 +1,6 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, type ReactNode } from "react";
 import { Animated, StyleSheet, View } from "react-native";
-import { DockSelection, radius, Surface } from "../ui";
+import { DockSelection, Surface } from "../ui";
 import { hex, layout, useTheme } from "../ui/theme";
 import { useTileTheme, type TileTheme } from "../../state/favicons/tileTheme";
 import { useTab } from "../../state/browser/hooks";
@@ -8,11 +8,11 @@ import { GlassFill, useGlass } from "../ui/Glass";
 import { SLIDE } from "../tabstrip/tokens";
 import { TabBadges } from "../media/TabBadges";
 import { TabIcon } from "./TabIcon";
-import { sidebarTokens, TILE_GLOW, TILE_RIM, useSidebarTokens } from "./tokens";
+import { SIDEBAR_TILE, SIDEBAR_TILE_LIGHT, sidebarTokens, TILE_GLOW, TILE_RIM, useSidebarTokens } from "./tokens";
 
 const SELECTION_STROKE = 3;
 const GLASS_RING = 2;
-export const TILE_RADIUS = radius.chrome;
+export const TILE_RADIUS = SIDEBAR_TILE.radius;
 
 type FaceState = { width: number; active: boolean; selected: boolean; hovered: boolean; pressed: boolean };
 
@@ -25,7 +25,7 @@ export function TileFace({ tabId, badge, ...state }: FaceState & { tabId: string
   const { width, active } = state;
   const icon = (
     <View>
-      <TabIcon tabId={tab.id} url={tab.url} favicon={tab.favicon} icon={tab.customIcon} />
+      <TabIcon tabId={tab.id} url={tab.url} favicon={tab.favicon} icon={tab.customIcon} size={18} />
       <TabBadges tabId={tabId} />
     </View>
   );
@@ -98,6 +98,7 @@ export function TileFace({ tabId, badge, ...state }: FaceState & { tabId: string
 export function RestingTile({ width, selected, hovered, pressed, children }: Omit<FaceState, "active"> & { children: ReactNode }) {
   const theme = useTheme();
   const tokens = useSidebarTokens();
+  const tile = theme.dark ? SIDEBAR_TILE : SIDEBAR_TILE_LIGHT;
   if (useGlass())
     return (
       <GlassTile width={width} active={false} selected={selected} hovered={hovered} pressed={pressed} tileTheme={null}>
@@ -110,9 +111,9 @@ export function RestingTile({ width, selected, hovered, pressed, children }: Omi
         width,
         height: layout.pinnedHeight,
         borderRadius: TILE_RADIUS,
-        borderWidth: selected ? 1 : StyleSheet.hairlineWidth,
-        borderColor: selected ? tokens.dragBorder : theme.pinnedRestingStroke,
-        backgroundColor: pressed ? theme.tabPressed : hovered || selected ? theme.tabHover : theme.pinnedResting,
+        borderWidth: 1,
+        borderColor: selected ? tokens.dragBorder : tile.border,
+        backgroundColor: pressed ? theme.tabPressed : hovered || selected ? theme.tabHover : tile.fill,
         alignItems: "center",
         justifyContent: "center",
       }}

@@ -69,7 +69,7 @@
    }
   },
   {
-   "step": "move 60,201",
+   "step": "move 60,192",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -100,8 +100,8 @@
     ]
    },
    "gapKey": "t:t2",
-   "pitch": 47,
-   "gridGrowth": 47,
+   "pitch": 38,
+   "gridGrowth": 38,
    "pins": true,
    "pinCount": 2,
    "pinBefore": "t:t2",
@@ -113,7 +113,7 @@
    "pinCount": 3
   },
   {
-   "step": "move 60,235",
+   "step": "move 60,226",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -157,7 +157,7 @@
  ],
  "external lifecycle": [
   {
-   "step": "move 60,201",
+   "step": "move 60,192",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -318,7 +318,7 @@
      "landing": false,
      "at": {
       "x": 6,
-      "y": 199
+      "y": 190
      }
     },
     {
@@ -329,7 +329,7 @@
      "landing": true,
      "at": {
       "x": 6,
-      "y": 199
+      "y": 190
      }
     },
     null
@@ -397,7 +397,7 @@
    "landed": {
     "key": "t:a",
     "x": 6,
-    "y": 233
+    "y": 224
    },
    "ghosts": [
     {
@@ -408,7 +408,7 @@
      "landing": true,
      "at": {
       "x": 6,
-      "y": 233
+      "y": 224
      }
     },
     null
@@ -444,7 +444,7 @@
    "landed": {
     "key": "t:c",
     "x": 6,
-    "y": 87
+    "y": 78
    },
    "ghosts": [
     {
@@ -455,7 +455,7 @@
      "landing": true,
      "at": {
       "x": 6,
-      "y": 87
+      "y": 78
      }
     },
     null
@@ -517,7 +517,7 @@
    "landed": {
     "key": "t:b",
     "x": 6,
-    "y": 199
+    "y": 190
    },
    "ghosts": [
     {
@@ -528,7 +528,7 @@
      "landing": true,
      "at": {
       "x": 6,
-      "y": 199
+      "y": 190
      }
     },
     null
@@ -550,7 +550,7 @@
    "landed": {
     "key": "t:b",
     "x": 6,
-    "y": 199
+    "y": 190
    },
    "ghosts": [
     {
@@ -561,7 +561,7 @@
      "landing": true,
      "at": {
       "x": 6,
-      "y": 199
+      "y": 190
      }
     },
     null
@@ -570,7 +570,7 @@
  ],
  "landing token": [
   {
-   "step": "begin t:b 26,209",
+   "step": "begin t:b 26,200",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -604,7 +604,7 @@
    }
   },
   {
-   "step": "move 60,297",
+   "step": "move 60,288",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -632,7 +632,7 @@
    "gaps": {}
   },
   {
-   "step": "begin t:a 26,175",
+   "step": "begin t:a 26,166",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -657,7 +657,7 @@
    "step": "old landing finished"
   },
   {
-   "step": "move 60,263",
+   "step": "move 60,254",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -701,7 +701,7 @@
      "landing": false,
      "at": {
       "x": 6,
-      "y": 199
+      "y": 190
      }
     },
     {
@@ -712,7 +712,7 @@
      "landing": true,
      "at": {
       "x": 6,
-      "y": 199
+      "y": 190
      }
     },
     {
@@ -723,7 +723,7 @@
      "landing": false,
      "at": {
       "x": 6,
-      "y": 233
+      "y": 224
      }
     },
     {
@@ -734,7 +734,7 @@
      "landing": true,
      "at": {
       "x": 6,
-      "y": 233
+      "y": 224
      }
     },
     null
@@ -1599,7 +1599,7 @@
  ],
  "tiles laid out token": [
   {
-   "step": "begin t:b 26,209",
+   "step": "begin t:b 26,200",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -1715,7 +1715,7 @@
    }
   },
   {
-   "step": "begin t:a 26,175",
+   "step": "begin t:a 26,166",
    "drop": {
     "type": "tabs",
     "placement": {
@@ -1729,7 +1729,7 @@
     ]
    },
    "gapKey": "t:t1",
-   "pitch": 47,
+   "pitch": 38,
    "pins": true,
    "pinCount": 1,
    "pinBefore": "t:t1",

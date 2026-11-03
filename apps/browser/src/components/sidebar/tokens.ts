@@ -87,6 +87,7 @@ export const TILE_RIM = 1;
 
 export const SIDEBAR_TILE = { height: 32, radius: 10, fill: "rgba(255,255,255,0.07)", border: "rgba(255,255,255,0.08)" } as const;
 export const SIDEBAR_TILE_LIGHT = { height: 32, radius: 10, fill: "rgba(0,0,0,0.05)", border: "rgba(0,0,0,0.08)" } as const;
+export const SIDEBAR_SEPARATOR = { height: 1, paddingX: 4, dark: "rgba(255,255,255,0.08)", light: "rgba(0,0,0,0.08)" } as const;
 
 export const TABULAR_NUMS: ("tabular-nums")[] = ["tabular-nums"];
 
