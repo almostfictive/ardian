@@ -144,7 +144,7 @@ function CardUtilities({ tab, palette, onFocus, loading, center }: { tab: Toolba
   );
 }
 
-function useUrlField(tab: ToolbarTab, windowId: string, onFocus: () => void) {
+function useUrlField(tab: ToolbarTab, windowId: string, onFocus: () => void, overlay = false) {
   const showFullUrl = useSettings((s) => s.showFullUrl);
   const insecure = usePage(tab.id, insecureLevel);
   const popover = usePages((p) => p.popover[tab.id] ?? null);
@@ -158,7 +158,7 @@ function useUrlField(tab: ToolbarTab, windowId: string, onFocus: () => void) {
     onFocus();
     setPopover(tab.id, currentPopover(tab.id) === "siteControls" ? null : "siteControls");
   };
-  return { insecure, popover, hovered, hoverProps, openPanel, toggleSiteControls, host: pageHostLabel(tab.url), trail: urlTrail(tab.url, tab.title, { hovered, showFullUrl }) };
+  return { insecure, popover, hovered, hoverProps, openPanel, toggleSiteControls, host: pageHostLabel(tab.url), trail: urlTrail(tab.url, tab.title, { hovered, showFullUrl: overlay || showFullUrl }) };
 }
 
 type UrlFieldProps = { tab: ToolbarTab; palette: ToolbarPalette; windowId: string; onFocus: () => void };
@@ -167,7 +167,7 @@ export const ToolbarUrlField = memo(function ToolbarUrlField({ tab, palette, win
   const theme = useTheme();
   const row = useToolbarRow();
   const splitHint = useShortcutHint("openSplitPane");
-  const field = useUrlField(tab, windowId, onFocus);
+  const field = useUrlField(tab, windowId, onFocus, true);
   const { insecure, hovered, popover, toggleSiteControls } = field;
   const glass = useGlass();
 
@@ -180,7 +180,7 @@ export const ToolbarUrlField = memo(function ToolbarUrlField({ tab, palette, win
           <Symbol
             name={insecure ? "lock.open.trianglebadge.exclamationmark.fill" : "lock.fill"}
             size={ADDRESS_BAR.lockSize}
-            color={insecure === "certificateError" ? theme.destructive : palette.secondary}
+            color={insecure === "certificateError" ? theme.destructive : ADDRESS_BAR.lockColor}
             style={{ width: ADDRESS_BAR.lockSize, height: row.field }}
           />
       </Pressable>

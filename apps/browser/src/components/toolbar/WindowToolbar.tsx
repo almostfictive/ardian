@@ -34,7 +34,7 @@ export function WindowToolbar({ windowId, tabId, geometry, autoHide }: { windowI
   if (!autoHide) {
     return (
       <View pointerEvents="box-none" style={frame}>
-        <Panel pointerEvents="none" fill={theme.dark ? ADDRESS_BAR.fill.dark : ADDRESS_BAR.fill.light} radius={ADDRESS_BAR.radius} material="hudWindow" materialAppearance="light" border={theme.dark ? ADDRESS_BAR.border.dark : ADDRESS_BAR.border.light} borderWidth={0.5} shadow={ADDRESS_BAR.shadow} style={{ position: "absolute", top: 2, left: 2, right: 2, height: ADDRESS_BAR.height }} />
+        <Panel pointerEvents="none" fill={theme.dark ? ADDRESS_BAR.fill.dark : ADDRESS_BAR.fill.light} radius={ADDRESS_BAR.radius} material="popover" materialAppearance="light" border={theme.dark ? ADDRESS_BAR.border.dark : ADDRESS_BAR.border.light} borderWidth={0.5} shadow={ADDRESS_BAR.shadow} style={{ position: "absolute", top: 2, left: 2, right: 2, height: ADDRESS_BAR.height }} />
         <Toolbar tabId={tabId} geometry={geometry} windowId={windowId} inSplit={false} focused bare />
       </View>
     );
