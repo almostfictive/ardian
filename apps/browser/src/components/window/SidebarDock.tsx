@@ -281,7 +281,7 @@ function SidebarDock({
         pointerEvents={fullscreen || moving || (!open && !peeking) ? "none" : "auto"}
         style={{
           position: "absolute",
-          left: away ? -10_000 : peeking ? PEEK_ORIGIN[0] : 0,
+          left: away ? -10_000 : peeking ? PEEK_ORIGIN[0] : layout.cardInset,
           top: peeking ? PEEK_ORIGIN[1] : 0,
           bottom: peeking ? PEEK_BOTTOM : 0,
           width,
