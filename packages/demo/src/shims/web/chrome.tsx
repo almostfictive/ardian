@@ -81,9 +81,9 @@ const MATERIAL_FILL: Record<string, string> = {
   underWindowBackground: "rgba(240,240,240,0.4)",
 };
 
-export type VisualEffectProps = ViewProps & { material?: string; blendingMode?: "withinWindow" | "behindWindow"; cornerRadius?: number };
+export type VisualEffectProps = ViewProps & { material?: string; appearance?: "auto" | "light" | "dark"; blendingMode?: "withinWindow" | "behindWindow"; cornerRadius?: number };
 
-export function VisualEffect({ material = "popover", cornerRadius, style, ...props }: VisualEffectProps) {
+export function VisualEffect({ material = "popover", appearance, cornerRadius, style, ...props }: VisualEffectProps) {
   const glass: Style = {
     backgroundColor: MATERIAL_FILL[material] ?? "rgba(246,246,246,0.6)",
     backdropFilter: "blur(24px) saturate(180%)",
