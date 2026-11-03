@@ -26,7 +26,7 @@ const darkRoles = {
 
   tabHover: "rgba(255,255,255,0.18)",
   tabPressed: "rgba(255,255,255,0.31)",
-  tabSelected: "rgba(255,255,255,0.12)",
+  tabSelected: "rgba(255,255,255,0.14)",
   tabSelectedHover: "rgba(255,255,255,0.18)",
   tabSelectedText: "#FFFFFF",
   tabSelectedBorder: ["rgba(255,255,255,0.15)", "rgba(255,255,255,0.15)"] as [string, string],
