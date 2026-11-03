@@ -61,7 +61,7 @@ export const TabRow = memo(function TabRow({ tabId, onto = false, shift = null }
   const { hovered, hoverProps } = useRowHover(windowId, renaming ? null : { kind: "tab", id: tabId });
   const [moved, movedRef] = useShift(shift, useCallback((v: View | null) => registerRow(windowId, tabId, v), [windowId, tabId]));
   const backToPin = useHover();
-  const closeControl = useTabCloseControlWhile(tabId, hovered && !renaming);
+  const closeControl = useTabCloseControlWhile(tabId, (hovered || active) && !renaming);
   const { backToPinHint } = useSidebarRowLook();
   if (!tab) return null;
   const resettable = (isPinnedRow(tab) || !tab.pin) && awayFromPin(tab);
@@ -121,10 +121,10 @@ export const TabRow = memo(function TabRow({ tabId, onto = false, shift = null }
                 onDone={(text) => (text === null ? endRename({ kind: "tab", id: tabId }) : commitRename({ kind: "tab", id: tabId }, text))}
               />
             ) : (
-              <SidebarRowLabel text={title} color={active ? theme.tabSelectedText : theme.textTab} />
+            <SidebarRowLabel text={title} color={active ? theme.tabSelectedText : theme.textTab} weight={active ? "medium" : "regular"} compact />
             )}
             <HoverSlot
-              hovered={hovered && !renaming}
+              hovered={(hovered || active) && !renaming}
               reserve="hover"
               hover={closeControl && <Button variant="icon" icon={closeControl.icon} size="s" weight="semibold" onPress={() => pressTabClose(tab.id)} tooltip={closeControl.tooltip} />}
             >

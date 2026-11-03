@@ -72,20 +72,21 @@ test("the peek panel's ends line up with the card's and its corners cover the ca
 
 test("with the address field in the sidebar the lights sit on Arc's header row, docked, sliding and in the peek", () => {
   const arc = dm.ARC_LIGHTS_CENTER;
-  assert.deepEqual(arc, [dm.LIGHTS_CENTER[0], 24]);
-  assert.deepEqual(dm.lightsCenter(0, 0, arc), [25, 24], "docked: placed, not left at AppKit's default");
-  assert.deepEqual(dm.lightsCenter(95, 0, arc), [25 - 95, 24], "half way out on the same row");
+  assert.deepEqual(arc, [dm.LIGHTS_CENTER[0], 27]);
+  assert.deepEqual(dm.lightsCenter(0, 0, arc), [25, 27], "docked: placed, not left at AppKit's default");
+  assert.deepEqual(dm.lightsCenter(95, 0, arc), [25 - 95, 27], "half way out on the same row");
   const [px, py] = dm.PEEK_ORIGIN;
-  assert.deepEqual(dm.lightsCenter(-px, py, arc), [25 + px, 24 + py], "in the peek panel");
+  assert.deepEqual(dm.lightsCenter(-px, py, arc), [25 + px, 27 + py], "in the peek panel");
 });
 
-test("the card's left edge runs from the window inset to 9 pt past the sidebar's rows, the same air as on every other side", async () => {
+test("the card starts 8 pt after the 184 pt sidebar and keeps the 9 pt window inset when hidden", async () => {
   const { layout } = await import("../ui/theme.ts");
   assert.equal(layout.cardInset, 9);
-  assert.equal(dm.dockedCardLeft(190) - (190 - layout.sidebarInset), layout.cardInset);
-  assert.equal(dm.cardLeft(1, 190, 9), 193);
+  assert.equal(dm.dockedCardLeft(184) - (layout.cardInset + 184), layout.sidebarCardGap);
+  assert.equal(dm.dockedCardLeft(184), 201);
+  assert.equal(dm.cardLeft(1, 184, 9), 201);
   assert.equal(dm.cardLeft(0, 190, 9), 9);
-  assert.equal(dm.cardLeft(0.5, 190, 9), 101);
+  assert.equal(dm.cardLeft(0.5, 184, 9), 105);
 });
 
 test("the motion flag is per window, and ending it twice is harmless", () => {

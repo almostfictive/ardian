@@ -5,6 +5,9 @@ import type { ToolbarGeometry } from "../window/geometry";
 import type { ToolbarMode } from "../../state/windows/toolbarAutoHide";
 import { Toolbar } from "./Toolbar";
 import { useToolbarRow } from "./useToolbarRow";
+import { Panel } from "../ui";
+import { ADDRESS_BAR } from "./tokens";
+import { useTheme } from "../ui/theme";
 
 type PaneChrome = { tabId: string; mode: ToolbarMode; bar: Animated.Value; fade: Animated.Value };
 
@@ -23,6 +26,7 @@ export function publishPaneChrome(windowId: string, chrome: PaneChrome) {
 }
 
 export function WindowToolbar({ windowId, tabId, geometry, autoHide }: { windowId: string; tabId: string; geometry: ToolbarGeometry; autoHide: boolean }) {
+  const theme = useTheme();
   const chrome = useSyncExternalStore(subscribe, () => chromes.get(windowId));
   useEffect(() => () => void chromes.delete(windowId), [windowId]);
   const height = useToolbarRow().height;
@@ -30,6 +34,7 @@ export function WindowToolbar({ windowId, tabId, geometry, autoHide }: { windowI
   if (!autoHide) {
     return (
       <View pointerEvents="box-none" style={frame}>
+        <Panel pointerEvents="none" fill={theme.dark ? ADDRESS_BAR.fill.dark : ADDRESS_BAR.fill.light} radius={ADDRESS_BAR.radius} material="hudWindow" border={theme.dark ? ADDRESS_BAR.border.dark : ADDRESS_BAR.border.light} borderWidth={0.5} shadow={ADDRESS_BAR.shadow} style={{ position: "absolute", top: 2, left: 2, right: 2, height: ADDRESS_BAR.height }} />
         <Toolbar tabId={tabId} geometry={geometry} windowId={windowId} inSplit={false} focused bare />
       </View>
     );

@@ -53,7 +53,7 @@ test("collapsed pinned group: a group nests through its header only", (t) =>
 
 test("onto: only the middle half of a row, no x test", (t) =>
   sweep(t, "onto bounds", mixedScene, (m) => entryKey("tab", m.id.c), [
-    { x: 60, y: 325 }, { x: 5, y: 325 }, { x: 239, y: 325 }, { x: 60, y: 316.6 }, { x: 60, y: 333.4 }, { x: 60, y: 333.5 }, { x: 60, y: 325 }, { x: 60, y: 316.5 },
+    { x: 60, y: 316 }, { x: 5, y: 316 }, { x: 239, y: 316 }, { x: 60, y: 308.1 }, { x: 60, y: 323.9 }, { x: 60, y: 324.1 }, { x: 60, y: 316 }, { x: 60, y: 307.9 },
   ]));
 
 test("away: 40 pt past either side of the sidebar, strictly; back in resumes", async (t) => {
