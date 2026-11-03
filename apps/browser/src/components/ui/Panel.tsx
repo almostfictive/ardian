@@ -13,10 +13,11 @@ export type PanelProps = Omit<SurfaceProps, "fill" | "cornerRadius" | "borderCol
   borderWidth?: number;
   shadow?: PanelShadow;
   material?: string;
+  materialAppearance?: "auto" | "light" | "dark";
   glass?: boolean;
 };
 
-export function Panel({ fill, radius, border, borderWidth = hairline.panel, borderColors, shadow, material, glass, children, ...rest }: PanelProps) {
+export function Panel({ fill, radius, border, borderWidth = hairline.panel, borderColors, shadow, material, materialAppearance, glass, children, ...rest }: PanelProps) {
   const theme = useTheme();
   const paneGlass = useGlass("panes");
   const fillColor = fill ?? theme.panel;
@@ -41,7 +42,7 @@ export function Panel({ fill, radius, border, borderWidth = hairline.panel, bord
       shadowRadius={shadow?.radius}
       shadowOffset={shadow?.offset}
     >
-      {material ? <VisualEffect material={material} cornerRadius={radius} style={StyleSheet.absoluteFill} /> : null}
+      {material ? <VisualEffect material={material} appearance={materialAppearance} cornerRadius={radius} style={StyleSheet.absoluteFill} /> : null}
       {children}
     </Surface>
   );

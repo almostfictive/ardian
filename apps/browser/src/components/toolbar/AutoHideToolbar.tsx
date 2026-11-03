@@ -10,7 +10,7 @@ import { revealToolbar, setToolbarPeek, STRIP_HEIGHT, toolbarMode, useToolbarAut
 import { Toolbar } from "./Toolbar";
 import { curve } from "../ui/motion";
 import { Divider, Panel, reduceMotion } from "../ui";
-import { ADDRESS_BAR, TOOLBAR_MOTION } from "./tokens";
+import { ADDRESS_BAR, TOOLBAR_FADE, TOOLBAR_MOTION } from "./tokens";
 import { motionStep, tallPage, type MotionValue, type TallPage } from "./toolbarMotion";
 import { useToolbarRow } from "./useToolbarRow";
 
@@ -83,13 +83,20 @@ export function useToolbarMotion({
   }, []);
   const was = useRef(mode);
   useLayoutEffect(() => {
-    const step = motionStep(was.current, mode, reduceMotion() === true);
+    const reduced = reduceMotion() === true;
+    const step = motionStep(was.current, mode, reduced);
     was.current = mode;
     if (!step) return;
     for (const [name, value] of Object.entries(step.set)) v[name as MotionValue].setValue(value);
-    const glides = Object.entries(step.glide).map(([name, value]) =>
-      Animated.timing(v[name as MotionValue], { toValue: value, duration: step.show ? SHOW_MS : HIDE_MS, easing: step.show ? SHOW_EASING : HIDE_EASING, useNativeDriver: true }),
-    );
+    if (reduced && step.glide.fade !== undefined) v.fade.setValue(step.glide.fade);
+    const glides = Object.entries(step.glide)
+      .filter(([name]) => !(reduced && name === "fade"))
+      .map(([name, value]) => Animated.timing(v[name as MotionValue], {
+        toValue: value,
+        duration: name === "fade" ? TOOLBAR_MOTION.hide : step.show ? SHOW_MS : HIDE_MS,
+        easing: name === "fade" ? curve.linear : step.show ? SHOW_EASING : HIDE_EASING,
+        useNativeDriver: true,
+      }));
     if (glides.length) Animated.parallel(glides).start(({ finished }) => finished && step.fit === "afterGlide" && fitShownPage());
     if (step.fit === "now") fitShownPage();
   }, [mode]);
@@ -188,7 +195,7 @@ export function AutoHideToolbar({
   const anim = useMemo(
     () =>
       moved && {
-        controls: fade.interpolate({ inputRange: [0, 0.2, 0.4, 0.6, 1], outputRange: [1, 0.45, 0.15, 0, 0] }),
+        controls: fade.interpolate(TOOLBAR_FADE),
       },
     [moved, bar, fade, H],
   );
@@ -201,7 +208,7 @@ export function AutoHideToolbar({
         onMouseLeave={() => modeNow.current === "peek" && peekLater(false, UNPEEK_DELAY)}
         style={{ position: "absolute", left: 0, right: 0, top: 0, height: H, opacity: anim ? anim.controls : 1 }}
       >
-        <Panel pointerEvents="none" fill={theme.dark ? ADDRESS_BAR.fill.dark : ADDRESS_BAR.fill.light} radius={ADDRESS_BAR.radius} material="hudWindow" border={theme.dark ? ADDRESS_BAR.border.dark : ADDRESS_BAR.border.light} borderWidth={0.5} shadow={ADDRESS_BAR.shadow} style={{ position: "absolute", top: 2, left: 2, right: 2, height: ADDRESS_BAR.height }} />
+        <Panel pointerEvents="none" fill={theme.dark ? ADDRESS_BAR.fill.dark : ADDRESS_BAR.fill.light} radius={ADDRESS_BAR.radius} material="hudWindow" materialAppearance="light" border={theme.dark ? ADDRESS_BAR.border.dark : ADDRESS_BAR.border.light} borderWidth={0.5} shadow={ADDRESS_BAR.shadow} style={{ position: "absolute", top: 2, left: 2, right: 2, height: ADDRESS_BAR.height }} />
         <Toolbar tabId={tabId} geometry={geometry} windowId={windowId} inSplit={inSplit} focused={focused} bare />
       </Animated.View>
       {anim && (
