@@ -16,6 +16,7 @@ export const ADDRESS_BAR = {
   utilityTextRoom: 158,
   lockInset: 8,
   lockSize: 11,
+  lockColor: "#3A342EB3",
   pathGap: 6,
   fill: { dark: "rgba(255,255,255,0.03)", light: "rgba(0,0,0,0.025)" },
   border: { dark: "rgba(255,255,255,0.2)", light: "rgba(0,0,0,0.16)" },
@@ -24,4 +25,4 @@ export const ADDRESS_BAR = {
 
 export const TOOLBAR_MOTION = { dim: duration.base, progress: duration.base, hide: 200, show: 200, settle: 0 } as const;
 
-export const ADDRESS_BAR_PALETTE = { background: null, text: "#3A342E", secondary: "rgba(58,52,46,0.72)", icon: "rgba(58,52,46,0.85)", iconDisabled: "rgba(58,52,46,0.35)", hover: "rgba(58,52,46,0.06)", pressed: "rgba(58,52,46,0.14)", pill: "rgba(58,52,46,0.04)", divider: "rgba(58,52,46,0.08)" } as const;
+export const ADDRESS_BAR_PALETTE = { background: null, text: "#3A342E", secondary: "#3A342EB8", icon: "#3A342ED9", iconDisabled: "#3A342E59", hover: "rgba(58,52,46,0.06)", pressed: "rgba(58,52,46,0.14)", pill: "rgba(58,52,46,0.04)", divider: "rgba(58,52,46,0.08)" } as const;

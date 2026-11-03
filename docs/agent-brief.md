@@ -335,3 +335,5 @@ also need `ARDIA_BACKGROUND`. A build from before ArdiaLaunchConfig gets the old
 3. How you verified it (commands + results).
 4. Anything unfinished, known bugs, or changes you need from other areas (pod install,
    files owned by others, integration points, a new engine framework).
+
+Test previews may pass `ARDIA_TEST=windowSize=1440x900` to size their own window beyond the visible work area. The test-instance gate ignores this value in distribution builds.
