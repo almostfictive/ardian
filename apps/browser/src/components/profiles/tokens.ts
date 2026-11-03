@@ -17,3 +17,5 @@ export const profileSwitcher = {
   dots: { selected: 0.85, hovered: 0.4, idle: 0.2 },
   icons: { selected: 1, hovered: 0.7, idle: 0.42 },
 } as const;
+
+export const PROFILE_FOOTER = { box: 28, photo: 24, radius: 4, initial: 13 } as const;
