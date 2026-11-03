@@ -91,6 +91,7 @@ export const TAB_CLOSE_GLYPH = { size: 12, dark: "#FFFFFF99", light: "#00000099"
 export const SIDEBAR_TILE = { height: 32, radius: 10, fill: "rgba(255,255,255,0.07)", border: "rgba(255,255,255,0.08)" } as const;
 export const SIDEBAR_TILE_LIGHT = { height: 32, radius: 10, fill: "rgba(0,0,0,0.05)", border: "rgba(0,0,0,0.08)" } as const;
 export const MINI_APP_TILE = { gap: 6, padding: 4, icon: 20 } as const;
+export const SIDEBAR_SEPARATOR = { height: 1, paddingX: 12, dark: "rgba(255,255,255,0.08)", light: "rgba(0,0,0,0.08)" } as const;
 
 export const TABULAR_NUMS: ("tabular-nums")[] = ["tabular-nums"];
 

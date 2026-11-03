@@ -1,7 +1,7 @@
 import { memo, useEffect, useLayoutEffect, useMemo, useRef, useState, type ReactNode, type RefObject } from "react";
 import { Animated, ScrollView, View, type LayoutChangeEvent, type NativeScrollEvent, type NativeSyntheticEvent } from "react-native";
 import { switchOn } from "../../state/app/switches";
-import { ContextMenuArea, space, WindowDragRegion } from "../ui";
+import { ContextMenuArea, space, useTheme, WindowDragRegion } from "../ui";
 import { layout } from "../ui/theme";
 import { ThemeScope } from "../window/ThemeScope";
 import { PageProfileContext, useSettings, useWindowId } from "../../state/browser/hooks";
@@ -21,6 +21,8 @@ import { toggleNewTabBar } from "../../state/omnibox/newTabBar";
 import { DOCK_SHARE, DOCKED_BOTTOM, GLOW_ROOM, pageLayout, tilesFitDock, type SidebarGeometry } from "./pageLayout";
 import { PageRows } from "./PageRows";
 import { NewTabRow } from "./NewTabRow";
+import { SidebarSlot } from "./SidebarSlots";
+import { SIDEBAR_SEPARATOR } from "./tokens";
 
 const NONE: string[] = [];
 const LIST_PAD = GLOW_ROOM + SCROLL_EDGE.inset;
@@ -41,6 +43,7 @@ type PageProps = {
 
 export const SidebarPage = memo(function SidebarPage({ profileId, slot, width, current, resting, dockAbove, height, rows, geometry, onScrollView, onScrollY }: PageProps) {
   const windowId = useWindowId();
+  const theme = useTheme();
   const topGap = listTopGap(useAddressBarInSidebar());
   const pageStyle = usePageStyle(windowId, slot, width);
   const [lazy] = useState(() => switchOn("lazySidebarRows"));
@@ -127,10 +130,11 @@ export const SidebarPage = memo(function SidebarPage({ profileId, slot, width, c
               {(controller) => (
                 <>
                   <View onLayout={onFixedLayout} style={{ paddingTop: GLOW_ROOM, zIndex: fixedTiles.length ? 1 : 0 }}>
+                    <View style={{ paddingTop: space.l, paddingBottom: space.xs }}><View style={{ height: SIDEBAR_SEPARATOR.height, marginHorizontal: SIDEBAR_SEPARATOR.paddingX, backgroundColor: theme.dark ? SIDEBAR_SEPARATOR.dark : SIDEBAR_SEPARATOR.light }} /></View>
                     <View style={[{ paddingHorizontal: layout.sidebarInset }, capped ? { maxHeight: topGap + dockRoom, overflow: "hidden" } : null]}>
-                      {dockFixed ? <PinnedGrid tabs={fixedTiles} innerWidth={innerWidth} /> : null}
+                      {dockFixed ? <SidebarSlot name="pinnedTabs"><PinnedGrid tabs={fixedTiles} innerWidth={innerWidth} /></SidebarSlot> : null}
                     </View>
-                    <View style={{ height: fixedTiles.length ? SCROLL_EDGE.gap : topGap - SCROLL_EDGE.inset - SCROLL_EDGE.line }} />
+                    <View style={{ height: fixedTiles.length ? space.s : topGap - SCROLL_EDGE.inset - SCROLL_EDGE.line }} />
                     <ScrollEdgeLine opacity={scrollEdge.opacity} />
                   </View>
                   <Animated.View style={{ flex: 1, marginTop: -GLOW_ROOM, overflow: "hidden", transform: [{ translateY: edge }] }}>

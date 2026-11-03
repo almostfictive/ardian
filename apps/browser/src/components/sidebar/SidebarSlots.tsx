@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { View } from "react-native";
 
-export const SIDEBAR_SLOTS = ["trafficLights", "profile", "miniApps", "workspaces"] as const;
+export const SIDEBAR_SLOTS = ["trafficLights", "profile", "miniApps", "pinnedTabs", "workspaces"] as const;
 export type SidebarSlotName = typeof SIDEBAR_SLOTS[number];
 
 export function SidebarSlot({ name, children }: { name: SidebarSlotName; children: ReactNode }) {

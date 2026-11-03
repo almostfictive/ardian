@@ -82,9 +82,9 @@ test("ties: equal transformed y goes by x then registration, and a pointer on a 
 });
 
 test("tiles: a slot's pitch, no per-cell gap springs, and the grid grows by a row only when one is added", () => {
-  for (const s of moves(tiles["tile sweep"])) if (s.drop.placement?.pinned && s.drop.placement.row === false) assert.equal(s.pitch, 47, s.step);
+  for (const s of moves(tiles["tile sweep"])) if (s.drop.placement?.pinned && s.drop.placement.row === false) assert.equal(s.pitch, 38, s.step);
   for (const s of states(tiles["tile sweep"])) assert.deepEqual(Object.keys(s.gaps).filter((k) => k.startsWith("t:t")), [], s.step);
-  assert.ok(states(tiles["row into tiles"]).some((s) => s.gridGrowth === 47));
+  assert.ok(states(tiles["row into tiles"]).some((s) => s.gridGrowth === 38));
   assert.ok(states(tiles["room clip"]).every((s) => s.gridGrowth <= 10));
   assert.ok(states(tiles["folder tile reorder"]).every((s) => s.gridGrowth <= 0), "a folder takes one cell");
 });

@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { test } from "node:test";
 const { overPins, pinGrid, pinGridHeight, pinSlot, PIN_ZONE_HYSTERESIS } = await import("./pinZone.ts");
 
-const TILE = 41;
+const TILE = 32;
 const grid = { x: 6, y: 54, w: 178 };
 
 test("the grid lays out the count it will have after the drop", () => {
@@ -11,6 +11,11 @@ test("the grid lays out the count it will have after the drop", () => {
   assert.deepEqual(pinGrid(2, 178), { columns: 2, width: 86 });
   assert.deepEqual(pinGrid(4, 240), { columns: 4, width: 55.5 });
   assert.deepEqual(pinGrid(0, 178), { columns: 1, width: 178 });
+});
+
+test("six pinned tiles form three columns and two rows of 32 points", () => {
+  assert.equal(pinGrid(6, 176).columns, 3);
+  assert.equal(pinGridHeight(6, 176, TILE), 70);
 });
 
 test("balanced rows keep Arc's layout, at most four across", () => {
@@ -45,8 +50,8 @@ test("balanced slots and height follow the balanced grid", () => {
   assert.equal(pinSlot(grid, 4, TILE, 155, 120, true), 3);
   assert.equal(pinSlot(grid, 5, TILE, 155, 74, true), 2);
   assert.equal(pinSlot(grid, 5, TILE, 155, 160, true), 4);
-  assert.equal(pinGridHeight(4, 178, TILE, true), 88);
-  assert.equal(pinGridHeight(9, 400, TILE, true), 135);
+  assert.equal(pinGridHeight(4, 178, TILE, true), 70);
+  assert.equal(pinGridHeight(9, 400, TILE, true), 108);
 });
 
 test("a full row never overflows the grid", () => {
@@ -93,9 +98,9 @@ test("the pin zone reaches the list, and the boundary doesn't flip-flop", () => 
 });
 
 test("the grid's height is its row count after the drop", () => {
-  assert.equal(pinGridHeight(3, 178, TILE), 41);
-  assert.equal(pinGridHeight(4, 178, TILE), 88);
-  assert.equal(pinGridHeight(2, 178, TILE), 41);
-  assert.equal(pinGridHeight(0, 178, TILE), 41);
-  assert.equal(pinGridHeight(7, 178, TILE), 135);
+  assert.equal(pinGridHeight(3, 178, TILE), 32);
+  assert.equal(pinGridHeight(4, 178, TILE), 70);
+  assert.equal(pinGridHeight(2, 178, TILE), 32);
+  assert.equal(pinGridHeight(0, 178, TILE), 32);
+  assert.equal(pinGridHeight(7, 178, TILE), 108);
 });
