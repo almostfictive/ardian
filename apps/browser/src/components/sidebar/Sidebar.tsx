@@ -1,6 +1,6 @@
 import { useCallback, useLayoutEffect, useRef, useState } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
-import { Button, ContextMenuArea, WindowDragRegion } from "../ui";
+import { Button, ContextMenuArea, WindowDragRegion, space } from "../ui";
 import { SIDEBAR_FOOTER } from "./tokens";
 import { SidebarSlot } from "./SidebarSlots";
 import { useWindowId, useWindowProfileId } from "../../state/browser/hooks";
@@ -27,6 +27,10 @@ import { useRevealTabs } from "./useRevealTabs";
 import { ProfilePopover } from "../profiles-popover/ProfilePopover";
 import { ProfileFooter } from "../profiles/ProfileFooter";
 
+import { WorkspaceSwitcher } from "../workspaces/WorkspaceSwitcher";
+
+import { TopAppDock } from "../mini-apps/TopAppDock";
+
 const FOOTER_HEIGHT = SIDEBAR_FOOTER.height;
 
 export function Sidebar({ width }: { width: number }) {
@@ -38,7 +42,7 @@ export function Sidebar({ width }: { width: number }) {
   const scroll = useRef<ScrollView>(null);
   const scrollY = useRef(0);
   const geometry = useRef<SidebarGeometry>({ viewport: 0, regions: { pinnedGroups: 0, list: 0 }, newTabAtTop: false, tilesFixed: true });
-  const header = 45;
+  const [header, setHeader] = useState(45);
   const footer = FOOTER_HEIGHT;
   const nothingPinned = useNoTiles(windowId, current);
   const rowLook = useSidebarRowLookSource();
@@ -103,15 +107,16 @@ export function Sidebar({ width }: { width: number }) {
             <View style={{ position: "absolute", left: SIDEBAR_FOOTER.inset, right: SIDEBAR_FOOTER.inset, bottom: SIDEBAR_FOOTER.bottom, height: footer, paddingLeft: SIDEBAR_FOOTER.paddingLeft, paddingRight: SIDEBAR_FOOTER.paddingRight, flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
               <ContextMenuArea style={StyleSheet.absoluteFill} onContextMenu={() => void openSidebarMenu(windowId)} />
               <SidebarSlot name="profile"><ProfileFooter /></SidebarSlot>
-              <SidebarSlot name="workspaces"><View style={{ width: SIDEBAR_FOOTER.workspaceBox, height: SIDEBAR_FOOTER.profileBox }} /></SidebarSlot>
+              <SidebarSlot name="workspaces"><WorkspaceSwitcher /></SidebarSlot>
               <Button variant="icon" icon="gearshape" size="s" box={SIDEBAR_FOOTER.gearBox} glyph={SIDEBAR_FOOTER.gearGlyph} radius={SIDEBAR_FOOTER.gearRadius} style={{ width: SIDEBAR_FOOTER.gearBox, height: SIDEBAR_FOOTER.gearBox }} onPress={() => openSettings()} tooltip="Settings" />
             </View>
 
-            <View style={{ height: header }}>
-              <SidebarSlot name="trafficLights"><ContextMenuArea style={{ height: header }} onContextMenu={() => void openSidebarMenu(windowId)}>
+            <View onLayout={(e) => setHeader(e.nativeEvent.layout.height)}>
+              <SidebarSlot name="trafficLights"><ContextMenuArea style={{ height: 45 }} onContextMenu={() => void openSidebarMenu(windowId)}>
                 <WindowDragRegion style={StyleSheet.absoluteFill} />
               </ContextMenuArea></SidebarSlot>
               <SidebarHeaderTools width={width} />
+              <View style={{ paddingTop: space.m }}><SidebarSlot name="miniApps"><TopAppDock /></SidebarSlot></View>
             </View>
 
             <ProfilePopover />

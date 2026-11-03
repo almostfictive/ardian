@@ -3,6 +3,7 @@ import type { BrowserState } from "./store";
 import { DEFAULT_PROFILE_ID } from "../settings/settings";
 import type { BrowserWindow, Navigation, Profile, Tab, TabGroup, TabLive, TabPin, TabSnapshot } from "./types";
 import { pinnedGroupMembers } from "./structure";
+import { activeWorkspaceId, tabWorkspaceId } from "../workspaces/model";
 
 
 const launch = Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
@@ -102,7 +103,7 @@ export function viewTabIds(s: BrowserState, windowId: string, profileId?: string
   const w = s.windows[windowId];
   if (!w) return [];
   const profile = profileId ?? w.profileId;
-  return w.tabIds.filter((id) => s.tabs[id]?.profileId === profile);
+  return w.tabIds.filter((id) => { const tab = s.tabs[id]; return tab?.profileId === profile && tabWorkspaceId(tab) === activeWorkspaceId(w, profile); });
 }
 
 export function pinnedItemsRemain(s: BrowserState, id: string): boolean {

@@ -1,3 +1,4 @@
+import { workspaceWindowFromDisk } from "../workspaces/session";
 import { removeDownloadStaging, type Download } from "../../platform/downloads";
 import { documentSaved, readDocument, writeDocument } from "../../platform/documents";
 import { SESSION_DOCUMENT } from "./sessionDocument";
@@ -132,7 +133,7 @@ export function parseSession(json: string | null | undefined): SavedSession | nu
     orphanedProfileData: strings(raw.orphanedProfileData),
     settings: isFields(raw.settings) ? (raw.settings as HydrateData["settings"]) : undefined,
     settingsMeta: parseSettingsMeta(raw.settingsMeta),
-    windows: byId(rows<BrowserWindow & { incognito?: unknown }>(raw.windows, windowOk).map(({ incognito: _i, ...w }): BrowserWindow => ({ ...w, kind: "main" }))),
+    windows: byId(rows<BrowserWindow & { incognito?: unknown }>(raw.windows, windowOk).map(({ incognito: _i, ...w }): BrowserWindow => workspaceWindowFromDisk({ ...w, kind: "main" }))),
     windowOrder: strings(raw.windowOrder),
     focusedWindowId: nullableString(raw.focusedWindowId),
     lastProfileId: nullableString(raw.lastProfileId),
