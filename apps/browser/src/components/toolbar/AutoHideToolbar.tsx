@@ -21,7 +21,6 @@ const SHOW_MS = TOOLBAR_MOTION.show;
 const SHOW_EASING = curve.enter;
 const PEEK_DELAY = 150;
 const UNPEEK_DELAY = 250;
-const SHRINK = 0.94;
 
 export function useToolbarMode(tabId: string, windowId: string, enabled: boolean): ToolbarMode {
   const scrolledDown = useStoreWhile(useToolbarAutoHide, enabled, (s) => !!s.scrolledDown[tabId]);
@@ -194,10 +193,6 @@ export function AutoHideToolbar({
       moved && {
         controls: fade.interpolate({ inputRange: [0, 0.2, 0.4, 0.6, 1], outputRange: [1, 0.45, 0.15, 0, 0] }),
         label: fade.interpolate({ inputRange: [0, 0.5, 1], outputRange: [0, 0, 1] }),
-        shrink: [
-          { translateY: bar.interpolate({ inputRange: [0, 1], outputRange: [0, -((1 - SHRINK) * H) / 2 - 3] }) },
-          { scale: bar.interpolate({ inputRange: [0, 1], outputRange: [1, SHRINK] }) },
-        ],
       },
     [moved, bar, fade, H],
   );
@@ -209,7 +204,7 @@ export function AutoHideToolbar({
         pointerEvents={collapsed ? "none" : "box-none"}
         onMouseEnter={() => modeNow.current === "peek" && clearTimeout(peekTimer.current)}
         onMouseLeave={() => modeNow.current === "peek" && peekLater(false, UNPEEK_DELAY)}
-        style={{ position: "absolute", left: 0, right: 0, top: 0, height: H, opacity: anim ? anim.controls : 1, transform: anim ? anim.shrink : undefined }}
+        style={{ position: "absolute", left: 0, right: 0, top: 0, height: H, opacity: anim ? anim.controls : 1 }}
       >
         <Toolbar tabId={tabId} geometry={geometry} windowId={windowId} inSplit={inSplit} focused={focused} bare />
       </Animated.View>
