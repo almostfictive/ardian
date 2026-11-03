@@ -1,7 +1,6 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { Animated, Pressable, StyleSheet, View, type ViewStyle } from "react-native";
 import { useTheme } from "../ui/theme";
-import { pageHostLabel } from "../../lib/url";
 import { useSettings, useTab, useTabLive } from "../../state/browser/hooks";
 import { useBrowserWhile, useStoreWhile } from "../../state/tabs/tabWatch";
 import type { ToolbarGeometry } from "../window/geometry";
@@ -10,8 +9,8 @@ import { useToolbarHeld } from "../../state/app/transientUi";
 import { revealToolbar, setToolbarPeek, STRIP_HEIGHT, toolbarMode, useToolbarAutoHide, type ToolbarMode } from "../../state/windows/toolbarAutoHide";
 import { Toolbar } from "./Toolbar";
 import { curve } from "../ui/motion";
-import { Divider, reduceMotion, space, Text } from "../ui";
-import { TOOLBAR_MOTION } from "./tokens";
+import { Divider, Panel, reduceMotion } from "../ui";
+import { ADDRESS_BAR, TOOLBAR_MOTION } from "./tokens";
 import { motionStep, tallPage, type MotionValue, type TallPage } from "./toolbarMotion";
 import { useToolbarRow } from "./useToolbarRow";
 
@@ -54,7 +53,7 @@ export function useToolbarMotion({
 }): ToolbarMotion {
   const collapsed = mode !== "shown";
   const shownTop = useToolbarRow().height + extra;
-  const room = shownTop - STRIP_HEIGHT;
+  const room = shownTop;
   const [tallState, setTall] = useState<TallPage>({ on: collapsed, doc });
   const tall = tallPage(tallState, { enabled, collapsed, doc });
   if (tall !== tallState) setTall(tall);
@@ -77,7 +76,6 @@ export function useToolbarMotion({
     for (const a of [page, bar, fade]) a.addListener(() => {});
   }
   const v = values.current;
-  const translateY = useMemo(() => Animated.multiply(Animated.subtract(v.laid, v.page), room), [room]);
   const bottomShift = useMemo(() => (tall.on ? Animated.multiply(Animated.subtract(v.page, 1), room) : 0), [tall.on, room]);
   useEffect(() => {
     const keep = (a: Animated.Value, value: number) => Animated.timing(a, { toValue: value, duration: TOOLBAR_MOTION.settle, useNativeDriver: true });
@@ -103,10 +101,9 @@ export function useToolbarMotion({
       position: "absolute",
       left: 0,
       right: 0,
-      top: (collapsed ? STRIP_HEIGHT : shownTop) - extra,
-      transform: [{ translateY }],
+      top: (collapsed ? 0 : shownTop) - extra,
     },
-    pageHeight: height - (tall.on ? STRIP_HEIGHT : shownTop),
+    pageHeight: height - (tall.on ? 0 : shownTop),
     bottomStyle: { transform: [{ translateY: bottomShift }] },
   };
 }
@@ -192,11 +189,9 @@ export function AutoHideToolbar({
     () =>
       moved && {
         controls: fade.interpolate({ inputRange: [0, 0.2, 0.4, 0.6, 1], outputRange: [1, 0.45, 0.15, 0, 0] }),
-        label: fade.interpolate({ inputRange: [0, 0.5, 1], outputRange: [0, 0, 1] }),
       },
     [moved, bar, fade, H],
   );
-  const host = pageHostLabel(url);
 
   return (
     <View pointerEvents="box-none" style={{ position: "absolute", left: 0, right: 0, top: 0, height: H }}>
@@ -206,10 +201,11 @@ export function AutoHideToolbar({
         onMouseLeave={() => modeNow.current === "peek" && peekLater(false, UNPEEK_DELAY)}
         style={{ position: "absolute", left: 0, right: 0, top: 0, height: H, opacity: anim ? anim.controls : 1 }}
       >
+        <Panel pointerEvents="none" fill={theme.dark ? ADDRESS_BAR.fill.dark : ADDRESS_BAR.fill.light} radius={ADDRESS_BAR.radius} material="hudWindow" border={theme.dark ? ADDRESS_BAR.border.dark : ADDRESS_BAR.border.light} borderWidth={0.5} shadow={ADDRESS_BAR.shadow} style={{ position: "absolute", top: 2, left: 2, right: 2, height: ADDRESS_BAR.height }} />
         <Toolbar tabId={tabId} geometry={geometry} windowId={windowId} inSplit={inSplit} focused={focused} bare />
       </Animated.View>
       {anim && (
-        <Animated.View pointerEvents={collapsed ? "auto" : "none"} style={{ position: "absolute", left: 0, right: 0, top: 0, height: STRIP_HEIGHT, opacity: anim.label }}>
+        <Animated.View pointerEvents={collapsed ? "auto" : "none"} style={{ position: "absolute", left: 0, right: 0, top: 0, height: STRIP_HEIGHT, opacity: 1 }}>
           <Pressable
             onPress={() => {
               clearTimeout(peekTimer.current);
@@ -218,12 +214,8 @@ export function AutoHideToolbar({
             onMouseEnter={() => modeNow.current === "collapsed" && peekLater(true, PEEK_DELAY)}
             onMouseLeave={() => modeNow.current === "collapsed" && clearTimeout(peekTimer.current)}
             tooltip="Show Toolbar"
-            style={{ flex: 1, alignItems: "center", justifyContent: "center", paddingHorizontal: space.l }}
-          >
-            <Text numberOfLines={1} ellipsizeMode="head" size="caption" weight="medium" color={palette.secondary}>
-              {host}
-            </Text>
-          </Pressable>
+            style={{ flex: 1 }}
+          />
         </Animated.View>
       )}
     </View>

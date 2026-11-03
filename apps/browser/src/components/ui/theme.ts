@@ -162,7 +162,7 @@ export function selectedTabGlow(theme: Theme, setting: SelectedTabGlowLevel) {
   return { shadowColor: hex(theme.tabSelectedShadow), shadowOpacity: level.opacity, shadowRadius: theme.tabSelectedShadowRadius * level.spread };
 }
 
-const SIDEBAR_INSET = 6;
+const SIDEBAR_INSET = 4;
 
 export const layout = {
   sidebarWidth: DEFAULT_SIDEBAR_WIDTH,
@@ -173,7 +173,7 @@ export const layout = {
   rowHeight: SIDEBAR_ROW.height,
   rowGap: SIDEBAR_ROW.gap,
   cardInset: CARD_INSET,
-  sidebarCardGap: CARD_INSET - SIDEBAR_INSET,
+  sidebarCardGap: 8,
   cardRadius: radius.chrome,
   toolbarButton: 30,
   toolbarIconCenters: [21, 56, 92, 127],

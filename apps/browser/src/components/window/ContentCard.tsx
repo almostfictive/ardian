@@ -1,12 +1,14 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { startChromeTabs } from "../../state/tabs/chromeTabs";
 import { useIsSmallWindow, useSplitOf } from "../../state/windows/card";
 import { usePeeks } from "../../state/peek/hooks";
 import { useActiveTabId, useSettings, useWindowId } from "../../state/browser/hooks";
 import { useBookmarksBarHeight } from "../bookmarks/barSize";
 import { useBookmarksBarMode } from "../../state/bookmarks/hooks";
-import { POPOVER_MARGIN } from "../ui";
+import { Panel, POPOVER_MARGIN } from "../ui";
+import { layout } from "../ui/theme";
+import { CONTENT_CARD_SHADOW } from "./tokens";
 import { NO_TOOLBAR, toolbarGeometry, type Rect, type ToolbarGeometry } from "./geometry";
 import { startPermissionPrompts } from "../../state/site/permissions";
 import { useFullscreenTab } from "../../state/tabs/pageState";
@@ -114,6 +116,7 @@ export function ContentCard() {
         else measure(width, height);
       }}
     >
+      <Panel pointerEvents="none" fill="transparent" radius={layout.cardRadius} border={null} shadow={CONTENT_CARD_SHADOW} style={StyleSheet.absoluteFill} />
       {size.width > 0 &&
         shown.map((key) => {
           const tabId = key.slice(0, key.indexOf("|"));

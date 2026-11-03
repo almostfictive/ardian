@@ -5,7 +5,7 @@ import { compactLift, toolbarRowOf } from "../../lib/toolbarRow";
 export const LIGHTS_CENTER: readonly [number, number] = [25, CARD_INSET + 21];
 const COMPACT_LIGHTS_CENTER: readonly [number, number] = [LIGHTS_CENTER[0], LIGHTS_CENTER[1] - compactLift(toolbarRowOf(true))];
 export const toolbarLightsCenter = (compact: boolean): readonly [number, number] => (compact ? COMPACT_LIGHTS_CENTER : LIGHTS_CENTER);
-export const ARC_LIGHTS_CENTER: readonly [number, number] = [25, 24];
+export const ARC_LIGHTS_CENTER: readonly [number, number] = [25, 27];
 export const TOP_STRIP_LIGHTS_CENTER: readonly [number, number] = [20.75, 20.75];
 
 export function lightsCenter(offset: number, down = 0, base: readonly [number, number] = LIGHTS_CENTER): [number, number] {

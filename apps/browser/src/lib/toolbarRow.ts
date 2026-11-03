@@ -11,7 +11,7 @@ export type ToolbarRow = {
 };
 
 export const TOOLBAR_ROWS: Record<"regular" | "compact", ToolbarRow> = {
-  regular: { height: 41, center: 21.2, button: 30, buttonRadius: 7, field: 30, fieldRadius: 8, fieldButton: 24, fieldButtonRadius: 5, extensionButton: 28 },
+  regular: { height: 46, center: 22, button: 28, buttonRadius: 8, field: 40, fieldRadius: 8, fieldButton: 24, fieldButtonRadius: 5, extensionButton: 28 },
   compact: { height: 28, center: 14, button: 22, buttonRadius: 4, field: 22, fieldRadius: 4, fieldButton: 18, fieldButtonRadius: 2, extensionButton: 22 },
 };
 
