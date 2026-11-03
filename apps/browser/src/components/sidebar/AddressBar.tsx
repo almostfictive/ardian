@@ -19,11 +19,12 @@ import { SidebarUrlField, useToolbarTab } from "../toolbar/Toolbar";
 import { HistoryButton, ReloadButton } from "../toolbar/NavButtons";
 import type { HeaderButton } from "../window/dockMotion";
 import { ARC_LIGHTS_CENTER } from "../../state/windows/dockMotion";
+import { CHROME_BUTTON } from "../toolbar/tokens";
 
 const TOGGLE_X = 102;
 const LIGHTS_Y = ARC_LIGHTS_CENTER[1];
-const PLATE = 28;
-const PLATE_RADIUS = radius.toolbar;
+const PLATE = CHROME_BUTTON.box;
+const PLATE_RADIUS = CHROME_BUTTON.radius;
 
 export function SidebarHeaderTools({ width }: { width: number }) {
   const windowId = useWindowId();
@@ -46,7 +47,7 @@ export function SidebarHeaderTools({ width }: { width: number }) {
           {...place(at[0]!)}
           palette={palette}
           icon="sidebar.left"
-          glyph={16}
+          glyph={CHROME_BUTTON.glyph}
           onPress={() => toggleSidebar(windowId)}
           tooltip={withShortcut("Auto-Hide Tabs", sidebarHint)}
         />

@@ -19,7 +19,7 @@ import { ACTIVE, ICON_MARKS, LOADING, mutedBy, PLAYING, SELECTED, useRowState } 
 import { registerRow, useSidebarUi } from "../../state/sidebar/sidebarUi";
 import { TabIcon } from "./TabIcon";
 import { TabBadges } from "../media/TabBadges";
-import { TAB_ROW, useSidebarTokens } from "./tokens";
+import { TAB_CLOSE_GLYPH, TAB_ROW, useSidebarTokens } from "./tokens";
 import { useSidebarRowLook } from "./rowLook";
 import { ROW_TITLE_FRAME, SidebarRowLabel, SidebarRowSurface } from "./SidebarRow";
 import { withShortcut } from "../../state/commands/commandShortcuts";
@@ -126,7 +126,7 @@ export const TabRow = memo(function TabRow({ tabId, onto = false, shift = null }
             <HoverSlot
               hovered={(hovered || active) && !renaming}
               reserve="hover"
-              hover={closeControl && <Button variant="icon" icon={closeControl.icon} size="s" weight="semibold" onPress={() => pressTabClose(tab.id)} tooltip={closeControl.tooltip} />}
+              hover={closeControl && <Button variant="icon" icon={closeControl.icon} size="s" glyph={TAB_CLOSE_GLYPH.size} color={theme.dark ? TAB_CLOSE_GLYPH.dark : TAB_CLOSE_GLYPH.light} weight="semibold" onPress={() => pressTabClose(tab.id)} tooltip={closeControl.tooltip} />}
             >
               {loading && <ActivitySpinner style={{ width: 12, height: 12, marginRight: space.xxs }} />}
             </HoverSlot>
