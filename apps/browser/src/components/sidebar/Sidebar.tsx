@@ -97,9 +97,9 @@ export function Sidebar({ width }: { width: number }) {
               </SidebarRowLookContext.Provider>
             </View>
 
-            <View style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: footer, paddingLeft: space.l + space.hair, paddingRight: space.m, flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+            <View style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: footer, paddingLeft: space.m + 1, paddingRight: space.s, flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
                 <ContextMenuArea style={StyleSheet.absoluteFill} onContextMenu={() => void openSidebarMenu(windowId)} />
-                <SidebarSlot name="profile"><View style={{ width: 24, height: 24 }} /></SidebarSlot>
+                <SidebarSlot name="profile"><View style={{ width: 28, height: 28 }} /></SidebarSlot>
                 <SidebarSlot name="workspaces"><WorkspaceSwitcher /></SidebarSlot>
                 <Button variant="icon" icon="gearshape" box={28} glyph={14} style={{ width: 28, height: 28 }} onPress={() => openSettings()} tooltip="Settings" />
               </View>
