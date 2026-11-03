@@ -115,7 +115,7 @@ export function DockedLayout({
   const width = useSidebarUi((u) => u.dragWidth[windowId]) ?? sidebarWidth;
   const arc = addressBar && !topTabs && switchOn("sidebarSlide");
   const toolbarLights = useToolbarLightsCenter();
-  const lights = addressBar && !topTabs ? ARC_LIGHTS_CENTER : toolbarLights;
+  const lights = !topTabs ? ARC_LIGHTS_CENTER : toolbarLights;
   const { dock, away } = useSidebarDock(open, !fullscreen, arc);
   const left = useMemo(
     () =>

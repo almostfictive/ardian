@@ -17,14 +17,12 @@ import { SIDEBAR_FIELD } from "./geometry";
 import { SidebarFieldFill } from "./SidebarField";
 import { SidebarUrlField, useToolbarTab } from "../toolbar/Toolbar";
 import { HistoryButton, ReloadButton } from "../toolbar/NavButtons";
-import { GLYPH } from "../toolbar/tokens";
-import { HEADER_TOOLS, navButtonsFitting, type HeaderButton } from "../window/dockMotion";
+import type { HeaderButton } from "../window/dockMotion";
 import { ARC_LIGHTS_CENTER } from "../../state/windows/dockMotion";
 
-const BUTTON = layout.toolbarButton;
-const { toggleX: TOGGLE_X, edge: EDGE } = HEADER_TOOLS;
+const TOGGLE_X = 102;
 const LIGHTS_Y = ARC_LIGHTS_CENTER[1];
-const PLATE = 32;
+const PLATE = 28;
 const PLATE_RADIUS = radius.toolbar;
 
 export function SidebarHeaderTools({ width }: { width: number }) {
@@ -33,12 +31,10 @@ export function SidebarHeaderTools({ width }: { width: number }) {
   const palette = toolbarPalette(useTheme(), null);
   const toggle = useSettings((st) => st.showSidebarButton !== false);
   const sidebarHint = useShortcutHint("toggleSidebar");
-  const { buttons, step } = navButtonsFitting(width, BUTTON, toggle);
-  const shown = tab ? buttons : [];
-  const last = width - EDGE - BUTTON / 2;
-  const centres = shown.map((_, i) => last - (shown.length - 1 - i) * step);
+  const shown: HeaderButton[] = tab ? ["back", "forward"] : [];
+  const centres = shown.map((_, i) => width - 22 - (shown.length - 1 - i) * 30);
   const at = toggle ? [TOGGLE_X, ...centres] : centres;
-  const plate = Math.min(PLATE, step);
+  const plate = PLATE;
   const place = (center: number) => ({
     style: { position: "absolute" as const, top: LIGHTS_Y - plate / 2, left: center - plate / 2 },
     hit: { width: plate, height: plate, plateX: 0, plateY: 0, box: plate, radius: PLATE_RADIUS },
@@ -50,7 +46,7 @@ export function SidebarHeaderTools({ width }: { width: number }) {
           {...place(at[0]!)}
           palette={palette}
           icon="sidebar.left"
-          glyph={GLYPH}
+          glyph={16}
           onPress={() => toggleSidebar(windowId)}
           tooltip={withShortcut("Auto-Hide Tabs", sidebarHint)}
         />
@@ -89,6 +85,7 @@ function NavigationButtons({
             direction={b === "back" ? -1 : 1}
             disabled={b === "back" ? !history.back : !history.forward}
             palette={palette}
+            glyphSize={16}
             onFocus={alreadyFocused}
           />
         ),
