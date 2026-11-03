@@ -130,11 +130,11 @@ export const SidebarPage = memo(function SidebarPage({ profileId, slot, width, c
               {(controller) => (
                 <>
                   <View onLayout={onFixedLayout} style={{ paddingTop: GLOW_ROOM, zIndex: fixedTiles.length ? 1 : 0 }}>
-                    <View style={{ height: SIDEBAR_SEPARATOR.height, marginHorizontal: SIDEBAR_SEPARATOR.paddingX, marginBottom: layout.rowGap, backgroundColor: theme.dark ? SIDEBAR_SEPARATOR.dark : SIDEBAR_SEPARATOR.light }} />
+                    <View style={{ paddingTop: space.l, paddingBottom: space.xs }}><View style={{ height: SIDEBAR_SEPARATOR.height, marginHorizontal: SIDEBAR_SEPARATOR.paddingX, backgroundColor: theme.dark ? SIDEBAR_SEPARATOR.dark : SIDEBAR_SEPARATOR.light }} /></View>
                     <View style={[{ paddingHorizontal: layout.sidebarInset }, capped ? { maxHeight: topGap + dockRoom, overflow: "hidden" } : null]}>
                       {dockFixed ? <SidebarSlot name="pinnedTabs"><PinnedGrid tabs={fixedTiles} innerWidth={innerWidth} /></SidebarSlot> : null}
                     </View>
-                    <View style={{ height: fixedTiles.length ? SCROLL_EDGE.gap : topGap - SCROLL_EDGE.inset - SCROLL_EDGE.line }} />
+                    <View style={{ height: fixedTiles.length ? space.s : topGap - SCROLL_EDGE.inset - SCROLL_EDGE.line }} />
                     <ScrollEdgeLine opacity={scrollEdge.opacity} />
                   </View>
                   <Animated.View style={{ flex: 1, marginTop: -GLOW_ROOM, overflow: "hidden", transform: [{ translateY: edge }] }}>

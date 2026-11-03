@@ -43,7 +43,7 @@ const LIGHT: typeof DARK = {
   switcherOutline: "rgba(0,0,0,0.1)",
   badge: "rgba(0,0,0,0.75)",
   newTabLabel: "#00000080",
-  newTabIcon: "#00000042",
+  newTabIcon: "#000000B3",
   noGroupIcon: "#00000040",
   folderDropFill: "rgba(0,0,0,0.05)",
   folderMosaic: "rgba(0,0,0,0.06)",
@@ -85,9 +85,12 @@ export const TAB_ROW = { contentLeft: 8, trailing: 8, titleGap: 7, titleHeight: 
 
 export const TILE_RIM = 1;
 
+export const SIDEBAR_FOOTER = { height: 32, inset: 4, bottom: 13, paddingLeft: 9, paddingRight: 6, profileBox: 28, workspaceBox: 30, gearBox: 28, gearGlyph: 14, gearRadius: 8 } as const;
+export const TAB_CLOSE_GLYPH = { size: 12, dark: "rgba(255,255,255,0.6)", light: "rgba(0,0,0,0.6)" } as const;
+
 export const SIDEBAR_TILE = { height: 32, radius: 10, fill: "rgba(255,255,255,0.07)", border: "rgba(255,255,255,0.08)" } as const;
 export const SIDEBAR_TILE_LIGHT = { height: 32, radius: 10, fill: "rgba(0,0,0,0.05)", border: "rgba(0,0,0,0.08)" } as const;
-export const SIDEBAR_SEPARATOR = { height: 1, paddingX: 4, dark: "rgba(255,255,255,0.08)", light: "rgba(0,0,0,0.08)" } as const;
+export const SIDEBAR_SEPARATOR = { height: 1, paddingX: 12, dark: "rgba(255,255,255,0.08)", light: "rgba(0,0,0,0.08)" } as const;
 
 export const TABULAR_NUMS: ("tabular-nums")[] = ["tabular-nums"];
 

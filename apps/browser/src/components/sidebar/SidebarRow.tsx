@@ -12,7 +12,7 @@ export function SidebarRowSurface({
   fill,
   border = 0,
   stroke,
-  cornerRadius = radius.chrome,
+  cornerRadius = radius.tile,
   padLeft = TAB_ROW.contentLeft,
   padRight = TAB_ROW.trailing,
   children,
