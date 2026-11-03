@@ -6,7 +6,7 @@ export const CONFIG_SETTING_KEYS: readonly SettingKey[] = [
   "warnBeforeClosingLastTab", "undoReopensClosedTab", "warnBeforeMovingTabsToProfile", "shareTabsAcrossWindows", "tabReorderHaptics",
   "extendWebsiteColor", "cmdClickCreatesTabGroup", "optShiftClickOpensInGroup", "peekModifier", "peekLinksToOtherSites",
   "splitLinkModifier", "autoGroupMeetingTabs", "cleanUpInactiveTabsAfterMinutes", "mutedSites", "neverTranslateSites",
-  "autoPictureInPicture", "commandScrollZoom", "videoUpscaling", "sidebarMediaControls", "sidebarWidth", "showSidebarButton",
+  "autoPictureInPicture", "commandScrollZoom", "videoUpscaling", "sidebarMediaControls", "sidebarMiniApps", "sidebarWidth", "showSidebarButton",
   "showClearButton", "balancedTopApps", "showAdvancedSettings", "selectedTabGlow", "interfaceStyle", "glassTintWithTheme",
   "glassTintAmount", "pageScrollBars", "fadeUnloadedTabs", "warnBeforeClosingTabGroup", "batterySaverWhen", "memorySaver",
   "memorySaverMode", "keepActiveSites", "extensionSidePanelWidth", "showFullUrl", "bookmarksBar", "bookmarksBarSize",
