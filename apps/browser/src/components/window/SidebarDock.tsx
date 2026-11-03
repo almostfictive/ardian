@@ -5,7 +5,6 @@ import { switchOn } from "../../state/app/switches";
 import { layout, useTheme } from "../ui/theme";
 import { spring, curve } from "../ui/motion";
 import { Panel, reduceMotion, WindowDragRegion } from "../ui";
-import { VisualEffect } from "../ui";
 import { useWindowId } from "../../state/browser/hooks";
 import { useSidebarDockState } from "../../state/windows/hooks";
 import { useToolbarLightsCenter } from "../../state/windows/layout";
@@ -297,7 +296,6 @@ function SidebarDock({
           </Animated.View>
         )}
         <Animated.View style={[{ flex: 1 }, peekStyle, peeking ? { borderRadius: PEEK_RADIUS, overflow: "hidden" } : null]}>
-          <VisualEffect material="sidebar" blendingMode="behindWindow" style={StyleSheet.absoluteFill} />
           {sidebar}
         </Animated.View>
       </Animated.View>

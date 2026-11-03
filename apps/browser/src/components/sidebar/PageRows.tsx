@@ -62,7 +62,7 @@ export function PageRows({ windowId, profileId, current, rows, lazy, offScreen, 
   const tidy = useCanTidyPins(windowId, profileId, offScreen);
   const pinned = usePinnedSequence(windowId, profileId, offScreen);
   const pinnedSection = pinned.length > 0;
-  const divided = clearable || tidy || pinnedSection;
+  const divided = pinnedSection;
   const collapsed = usePinnedCollapsed(profileId);
   const pinnedFold = useFold(collapsed);
   const kept = usePinnedKept(windowId, profileId, pinned);
