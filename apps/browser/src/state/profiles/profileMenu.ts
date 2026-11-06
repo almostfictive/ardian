@@ -27,7 +27,7 @@ export function profileMenuItems({ place, hasIcon, colors, color, isDefault, onl
   return menuSections<ProfileMenuItem>(
     [
       { id: "rename" as const, title: "Rename…", symbol: "pencil" },
-      { id: "icon" as const, title: hasIcon ? "Change Icon…" : "Add Icon…", symbol: "photo" },
+      ...(place === "sidebar" ? [{ id: "icon" as const, title: hasIcon ? "Change Icon…" : "Add Icon…", symbol: "photo" }] : []),
       { id: "color" as const, title: "Color", symbol: "paintpalette", children: colors.map((c) => ({ value: { color: c.id }, title: c.title, swatch: c.swatch, checked: c.id === color })) },
     ],
     place === "sidebar"

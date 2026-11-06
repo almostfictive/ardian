@@ -88,11 +88,12 @@ export const TabPane = memo(function TabPane({
   }, [visible, isNewTab, mounted]);
   const prewarmed = usePrewarm(visible && isNewTab && !emptyCard && !mounted && !small && !inSplit);
   const toolbar = chrome.kind !== "none";
-  const bar = paneBar(chrome, { visible, fullscreen, lingering });
+  const bookmarksBar = bookmarksBarShown(barMode, own.exists ? own : undefined) && !fullscreen && !inSplit && !small;
+  const bookmarksAboveToolbar = isNewTab && bookmarksBar;
+  const bar = paneBar(bookmarksAboveToolbar && chrome.kind !== "none" ? { ...chrome, autoHide: false } : chrome, { visible, fullscreen, lingering });
   const autoLayout = bar.kind === "autoHide";
   const hideBar = autoLayout && bar.bar !== null;
   const mode = useToolbarMode(tabId, windowId, hideBar);
-  const bookmarksBar = bookmarksBarShown(barMode, own.exists ? own : undefined) && !fullscreen && !inSplit && !small;
   const barHeight = useBookmarksBarHeight();
   const doc = withoutFragment(own.url);
   const motion = useToolbarMotion({ enabled: autoLayout, mode, height: frame.height, extra: bookmarksBar ? barHeight : 0, doc });
@@ -119,10 +120,11 @@ export const TabPane = memo(function TabPane({
         backgroundColor: visible && !fullscreen && !seeThrough ? theme.card : undefined,
       }}
     >
+      {bookmarksAboveToolbar && <BookmarksBar tabId={tabId} placeholder={!visible} />}
       {bar.kind === "toolbar" && <Toolbar tabId={tabId} geometry={geometry} windowId={windowId} inSplit={inSplit} focused={focused || !inSplit} />}
       {bar.kind === "backdrop" && <View style={{ height: toolbarHeight }} />}
       {bar.kind === "spacer" && <View style={{ height: toolbarHeight }} />}
-      {!autoLayout && bookmarksBar && <BookmarksBar tabId={tabId} placeholder={!visible} />}
+      {!autoLayout && bookmarksBar && !bookmarksAboveToolbar && <BookmarksBar tabId={tabId} placeholder={!visible} />}
       <Animated.View style={autoLayout ? motion.groupStyle : { flex: 1 }}>
         {autoLayout && bookmarksBar && <BookmarksBar tabId={tabId} placeholder={!visible} />}
         <View style={autoLayout ? { height: motion.pageHeight } : { flex: 1 }}>

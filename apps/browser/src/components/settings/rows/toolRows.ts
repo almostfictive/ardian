@@ -17,69 +17,6 @@ export const toolRows = {
     },
     { section: "Extensions", rows: { extensionShortcuts: { advanced: true, title: "Extension shortcuts", description: "Shortcuts that extensions add, like opening their popup.", keywords: ["hotkeys"] } } },
   ],
-  liveFolders: [
-    {
-      section: "Live folders",
-      rows: {
-        folders: {
-          title: "Live folders",
-          description: "Right-click empty space in the sidebar and choose New Live Folder to add one. Live folders refresh every few minutes; items open as tabs that stay in the folder.",
-          keywords: ["new live folder", "hidden", "refresh"],
-        },
-        groupStacks: { advanced: true, title: "Group stacked pull requests", description: "Pull requests based on each other's branches sit together under one row.", keywords: ["stack", "stacked pull requests"] },
-        showCompleted: { advanced: true, title: "Show completed pull requests", description: "Merged, closed and reviewed pull requests stay listed for a day under Completed.", keywords: ["completed", "merged", "closed"] },
-      },
-    },
-    {
-      section: "Pull Requests",
-      rows: {
-        github: { title: "GitHub", description: "Your open pull requests and the ones waiting for your review, with checks and conflicts.", keywords: ["pull requests", "connect"] },
-        bitbucket: { title: "Bitbucket", description: "Your open pull requests on Bitbucket Cloud, with build status.", keywords: ["pull requests", "connect"] },
-      },
-    },
-    {
-      section: "Documents",
-      rows: {
-        notion: { title: "Notion", description: "Pages recently edited in your workspace.", keywords: ["documents", "connect"] },
-        confluence: { title: "Confluence", description: "Pages you created, edited or watch.", keywords: ["documents", "atlassian", "connect"] },
-        gdrive: { title: "Google Drive", description: "Documents recently changed in your Drive.", keywords: ["documents", "docs", "connect"] },
-      },
-    },
-  ],
-  calendar: [
-    { section: "Live Calendar", rows: { access: { title: "Calendar access", keywords: ["connect calendar", "google calendar", "outlook", "icloud"] } } },
-    {
-      section: "Meeting alerts",
-      rows: {
-        nextAlert: { title: "Show next meeting alert", keywords: ["reminder", "notification", "join"] },
-        alertCondition: { advanced: true, title: "Show alerts", description: "With Always, alerts also appear in Notification Center while you're in another app.", keywords: ["notifications"] },
-      },
-    },
-    {
-      section: "Pinned calendar",
-      rows: {
-        preview: { advanced: true, title: "Show calendar preview", description: "Hover a pinned calendar tab to see the rest of your day.", keywords: ["hover"] },
-        timeToNext: {
-          advanced: true,
-          title: "Show time to next meeting",
-          description: "A countdown badge on the pinned calendar tab before a meeting, and a red Now while it runs. Right-click the tab to hide Now for that meeting.",
-          keywords: ["countdown", "badge", "now", "dismiss"],
-        },
-        countdownLead: { advanced: true, title: "Start countdown", description: "How long before a meeting the badge appears.", keywords: ["countdown", "badge", "minutes", "lead time", "next meeting"] },
-      },
-    },
-    {
-      section: "Meetings",
-      rows: {
-        autoGroup: {
-          advanced: true,
-          title: "Automatically group tabs for meetings",
-          description: "Joining a call makes a tab group for it; links you open from the meeting join the group.",
-          keywords: ["zoom", "meet", "call", "tab groups"],
-        },
-      },
-    },
-  ],
   engines: [
     {
       section: "Default engine",
@@ -207,4 +144,4 @@ export const toolRows = {
       },
     },
   ],
-} satisfies Pick<Record<SettingsPane, SettingSection[]>, "shortcuts" | "liveFolders" | "calendar" | "engines" | "advanced">;
+} satisfies Pick<Record<SettingsPane, SettingSection[]>, "shortcuts" | "engines" | "advanced">;

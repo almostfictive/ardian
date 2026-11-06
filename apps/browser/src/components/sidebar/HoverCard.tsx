@@ -11,8 +11,6 @@ import { useHoverOrphaned, useIsShownTab } from "../../state/sidebar/hooks";
 import { useFolderPanel } from "../../state/sidebar/tileFolderUi";
 import { awayFromPin } from "../../state/pins/organize";
 import { openInSplit } from "../../state/splits/actions";
-import { CalendarPreview, useIsCalendarTab } from "../live/CalendarPreview";
-import { LiveItemCard } from "../live/LiveItemCard";
 import { useIsSleeping } from "../../state/tabs/tabLifecycle";
 import { FadeLabel, font, HoverCard as HoverPanel, space, Symbol, Text } from "../ui";
 import { lineHeight } from "../ui/tokens";
@@ -53,10 +51,8 @@ export function HoverCard({ windowId, width, height }: { windowId: string; width
 }
 
 function HoverContent({ hover, windowId, player, windowHeight }: { hover: Hover; windowId: string; player: boolean; windowHeight: number }) {
-  const calendar = useIsCalendarTab(hover.kind === "tab" ? hover.id : null);
-  if (hover.kind === "live") return <LiveItemCard id={hover.id} windowId={windowId} anchor={hover.anchor} />;
+  if (hover.kind === "live") return null;
   if (hover.kind === "tab" && player) return <HoverPlayer tabId={hover.id} windowId={windowId} anchor={hover.anchor} />;
-  if (hover.kind === "tab" && calendar) return <CalendarPreview tabId={hover.id} windowId={windowId} anchor={hover.anchor} />;
   if (hover.kind === "folder") return <FolderPeek folderId={hover.id} windowId={windowId} anchor={hover.anchor} />;
   return hover.kind === "tab" ? <TabCard tabId={hover.id} windowId={windowId} anchor={hover.anchor} /> : <GroupPanel key={`${windowId}:${hover.id}`} groupId={hover.id} windowId={windowId} anchor={hover.anchor} windowHeight={windowHeight} />;
 }

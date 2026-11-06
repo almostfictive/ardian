@@ -7,7 +7,6 @@ import { listTopGap } from "./geometry";
 import { useIsActiveTab, useSettings, useTab, useTabLive, useWindowId } from "../../state/browser/hooks";
 import { useIsSelected } from "../../state/pins/hooks";
 import { useMuteState } from "../../state/tabs/hooks";
-import { NextMeetingBadge } from "../live/NextMeetingBadge";
 import { returnShownTabToPinnedUrl } from "../../state/sidebar/actions";
 import { cellKey, PIN_SLOT, tailKey } from "./dragModel";
 import { useDragController, useDragging, useDragItem, useDropPins, useFolderTarget, usePinnedCount, usePinSlots } from "./DragProvider";
@@ -163,7 +162,6 @@ const PinnedTile = memo(function PinnedTile({ tabId, width, sliding, x, y }: { t
         <TabPressArea windowId={windowId} tab={tab}>
           {({ pressed }) => <TileFace tabId={tabId} width={width} active={active} selected={selected} hovered={hovered} pressed={pressed} />}
         </TabPressArea>
-        <NextMeetingBadge tabId={tabId} />
         {playing || mute ? (
           <View pointerEvents="none" style={{ position: "absolute", bottom: 3, right: 4 }}>
             <Symbol name={mute ? "speaker.slash.fill" : "speaker.wave.2.fill"} size={8} color={theme.textSecondary} style={{ width: 12, height: 10 }} />

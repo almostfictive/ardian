@@ -9,7 +9,6 @@ import { toggleNewTabBar } from "../omnibox/newTabBar";
 import { newGroupWithSelection } from "./actions";
 import { closeAllTabs } from "./clearTabs";
 import { lastClosedEntry } from "../windows/reopenClosed";
-import { newLiveFolderMenuItem, runNewLiveFolder } from "./liveMenus";
 import { sections } from "./menuParts";
 import { pinnedFoldMenuItem, runPinnedFold } from "./pinnedFold";
 import { addSharedFolder } from "../sharedFolders/actions";
@@ -26,7 +25,6 @@ export function sidebarMenuItems(s: BrowserState, windowId: string): MenuItem[] 
     ],
     [
       { id: "newGroup", title: "New Group", symbol: "folder.badge.plus" },
-      newLiveFolderMenuItem(),
       ...(canAddSharedFolder(w?.profileId) ? [{ id: "addShared", title: "Add Shared Folder…", symbol: "person.2" }] : []),
     ],
     [{ id: "newProfile", title: "New Profile…", symbol: "plus" }],
@@ -42,7 +40,7 @@ export function sidebarMenuItems(s: BrowserState, windowId: string): MenuItem[] 
 
 export async function openSidebarMenu(windowId: string) {
   const choice = await showMenu(sidebarMenuItems(store(), windowId));
-  if (!choice || runNewLiveFolder(windowId, choice) || runPinnedFold(windowId, choice)) return;
+  if (!choice || runPinnedFold(windowId, choice)) return;
   const s = store();
   if (choice === "newTab") {
     if (!toggleNewTabBar(windowId)) s.newTab(windowId, { newTabCommand: true });

@@ -16,7 +16,7 @@ import { openImport } from "../../../state/settings/settingsWindows";
 import { ExportBookmarksRow } from "./ExportBookmarksRow";
 import { SetupCodeRow } from "./SetupCodeRow";
 import { UI_LOCALE } from "../../../lib/uiLocale";
-import { MINI_APPS, type MiniAppId } from "../../../state/mini-apps/store";
+import { MiniAppsSection } from "./MiniAppsSection";
 
 const APP = "Ardian";
 
@@ -93,10 +93,7 @@ export function GeneralPane() {
         </Row>
       </Group>
 
-      <SectionHeader title="Sidebar mini apps" description="Choose which web apps appear in the dock." />
-      <Group>
-        {(Object.keys(MINI_APPS) as MiniAppId[]).map((id) => <MiniAppToggle key={id} id={id} title={MINI_APPS[id].title} />)}
-      </Group>
+      <MiniAppsSection />
 
       <DownloadsSection />
 
@@ -112,12 +109,6 @@ export function GeneralPane() {
       </Group>
     </View>
   );
-}
-
-function MiniAppToggle({ id, title }: { id: MiniAppId; title: string }) {
-  const apps = useSettings((settings) => settings.sidebarMiniApps);
-  const enabled = apps.includes(id);
-  return <Row title={title}><Toggle value={enabled} onChange={(on) => updateSettings({ sidebarMiniApps: on ? [...apps, id] : apps.filter((app) => app !== id) })} /></Row>;
 }
 
 const homeRelative = (path: string) => path.replace(/^\/Users\/[^/]+(?=\/|$)/, "~");

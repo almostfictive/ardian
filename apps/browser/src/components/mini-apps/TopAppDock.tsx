@@ -1,6 +1,6 @@
 import { Image, Pressable, View } from "react-native";
 import { useSettings, useWindow, useWindowId, useWindowProfileId } from "../../state/browser/hooks";
-import { closeMiniApp, MINI_APPS, openMiniApp, useMiniApps, type MiniAppId } from "../../state/mini-apps/store";
+import { closeMiniApp, isMiniAppId, miniAppDefinition, openMiniApp, useMiniApps, type MiniAppId } from "../../state/mini-apps/store";
 import { useFavicon } from "../../state/favicons/favicons";
 import { radius, useTheme } from "../ui";
 import { MINI_APP_TILE, SIDEBAR_TILE, SIDEBAR_TILE_LIGHT } from "../sidebar/tokens";
@@ -15,7 +15,7 @@ export function TopAppDock() {
   const privateWindow = useWindow(windowId, (window) => window?.kind === "private");
   const active = useMiniApps((state) => state.active[windowId]);
   if (privateWindow) return null;
-  const visible = enabled.filter((id): id is MiniAppId => Object.hasOwn(MINI_APPS, id));
+  const visible = enabled.filter(isMiniAppId);
   if (!visible.length) return null;
   const rows = miniAppRows(visible.length);
   return <View style={{ paddingHorizontal: MINI_APP_TILE.padding, gap: MINI_APP_TILE.gap }}>
@@ -27,7 +27,7 @@ export function TopAppDock() {
 
 function MiniAppDockButton({ id, profileId, selected, onPress }: { id: MiniAppId; profileId: string; selected: boolean; onPress: () => void }) {
   const theme = useTheme();
-  const definition = MINI_APPS[id];
+  const definition = miniAppDefinition(id);
   const faviconUrl = `${new URL(definition.url).origin}/favicon.ico`;
   const favicon = useFavicon(definition.url, faviconUrl, profileId);
   const tile = theme.dark ? SIDEBAR_TILE : SIDEBAR_TILE_LIGHT;

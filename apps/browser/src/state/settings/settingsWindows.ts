@@ -21,8 +21,6 @@ export const SETTINGS_PANES = [
   "search",
   "engines",
   "shortcuts",
-  "liveFolders",
-  "calendar",
   "advanced",
 ] as const;
 

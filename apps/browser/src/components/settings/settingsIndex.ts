@@ -19,8 +19,6 @@ const PANE_LOOKS: Record<SettingsPane, { title: string; icon: string }> = {
   search: { title: "Search Engine", icon: "magnifyingglass" },
   engines: { title: "Engines", icon: "safari" },
   shortcuts: { title: "Keyboard Shortcuts", icon: "keyboard" },
-  liveFolders: { title: "Live Folders", icon: "dot.radiowaves.left.and.right" },
-  calendar: { title: "Calendar", icon: "calendar" },
   advanced: { title: "Advanced", icon: "slider.horizontal.3" },
 };
 

@@ -1,7 +1,7 @@
 import { chooseFromMenu } from "../app/menuChoice";
 import { useBrowser } from "../browser/store";
 import { prompt, pickFiles } from "../../platform/dialogs";
-import { workspacesOf } from "./model";
+import { MAX_WORKSPACES, workspacesOf } from "./model";
 import { createWorkspace, updateWorkspace } from "./actions";
 
 export async function showWorkspaceMenu(windowId: string, id: string) {
@@ -16,7 +16,7 @@ export async function showWorkspaceMenu(windowId: string, id: string) {
     { id: "picture", title: "Choose Picture…", symbol: "photo" },
     { id: "none", title: "Show Nothing", checked: workspace.display === "none" },
     { separator: true },
-    { id: "new", title: "New Workspace…", symbol: "plus" },
+    { id: "new", title: "New Workspace…", symbol: "plus", enabled: workspacesOf(window).length < MAX_WORKSPACES },
   ]);
   if (choice === "new") return void createWorkspace(windowId);
   if (choice === "none" || choice === "name") return updateWorkspace(windowId, id, { display: choice });

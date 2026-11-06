@@ -1,4 +1,4 @@
-import { Box, Button, ContextMenuArea, Divider, PopUp, radius, space, Symbol, Text, TextField, Toggle, useHover } from "../../ui";
+import { Box, Button, ContextMenuArea, Divider, PopUp, radius, space, Symbol, Text, TextField, useHover } from "../../ui";
 import { hapticTick } from "../../../state/app/system";
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { Animated, PanResponder, Pressable, StyleSheet, View } from "react-native";
@@ -9,15 +9,12 @@ import { hex, profileAccent, useTheme } from "../../ui/theme";
 import { useProfileDataStats, useProfileOrder, useProfileRecords } from "../../../state/profiles/hooks";
 import { currentProfileOrder, currentProfiles } from "../../../state/browser/current";
 import { commitProfileName, reorderProfiles, setDefaultProfile } from "../../../state/profiles/actions";
-import { openProfileIconPicker } from "../../../state/profiles/iconPicker";
-import { updateSettings } from "../../../state/settings/actions";
 import { useProfile, useProfiles, useSettings } from "../../../state/browser/hooks";
 import { sharingProfiles } from "../../../state/profiles/profiles";
 import { ClearDataDialog } from "../../pages/ClearDataDialog";
 import { Group, PaneIntro, Row, SectionHeader } from "../Form";
 import { ColorStack } from "../../profiles/CreateProfile";
-import { PROFILE_SYMBOLS, ProfileBadge } from "../../profiles/ProfileIcons";
-import { iconSymbol } from "../../../lib/customIcon";
+import { ProfileBadge } from "../../profiles/ProfileIcons";
 import { closeSettingsSheet, showSettingsSheet } from "../../../state/settings/sheet";
 import { ThemeSection } from "../ThemeEditor";
 import { goToSettingsPane, SETTINGS_WINDOW_ID } from "../../../state/settings/settingsWindows";
@@ -39,7 +36,6 @@ function useSharedWith(profileId: string): string[] {
 export function ProfilesPane() {
   const profiles = useProfiles();
   const defaultId = useSettings((s) => s.defaultProfileId);
-  const switcherIcons = useSettings((s) => s.profileSwitcherIcons);
 
   return (
     <View>
@@ -60,12 +56,6 @@ export function ProfilesPane() {
         </Row>
       </Group>
 
-      <SectionHeader title="Profile switcher" />
-      <Group>
-        <Row anchor="profiles.switcherIcons">
-          <Toggle value={switcherIcons} onChange={(profileSwitcherIcons) => updateSettings({ profileSwitcherIcons })} />
-        </Row>
-      </Group>
 
       <SectionHeader
         anchor="profiles.list"
@@ -228,12 +218,6 @@ function ProfileRow({
   );
 }
 
-function iconTitle(icon: string | null): string {
-  const symbol = iconSymbol(icon);
-  if (symbol) return PROFILE_SYMBOLS.find((s) => s.name === symbol)?.title ?? "Symbol";
-  return icon ?? "Initial";
-}
-
 export function ProfileDetailsPane({ profileId }: { profileId: string }) {
   const profile = useProfile(profileId, (p) => p);
   const isDefault = useSettings((s) => s.defaultProfileId === profileId);
@@ -256,8 +240,6 @@ export function ProfileDetailsPane({ profileId }: { profileId: string }) {
     },
     [profileId],
   );
-  const badge = useRef<View>(null);
-  const changeButton = useRef<View>(null);
   if (!profile) return null;
   const editName = (text: string) => {
     edited.current = true;
@@ -268,16 +250,11 @@ export function ProfileDetailsPane({ profileId }: { profileId: string }) {
     setName(commitProfileName(profileId, name) ? name.trim() : profile.name);
   };
   const sharing = shared.length > 1;
-  const pickIcon = (anchor: View | null) => void openProfileIconPicker(profileId, SETTINGS_WINDOW_ID, "settings", anchor);
 
   return (
     <View>
       <Box gap="ml" style={DETAILS_HEAD}>
-        <Pressable onPress={() => pickIcon(badge.current)} tooltip="Change Icon">
-          <View ref={badge} collapsable={false}>
-            <ProfileBadge profile={profile} size={64} />
-          </View>
-        </Pressable>
+        <ProfileBadge profile={profile} size={64} />
         <Text size="small" tone="textSecondary">
           {stats}
         </Text>
@@ -287,11 +264,6 @@ export function ProfileDetailsPane({ profileId }: { profileId: string }) {
       <Group>
         <Row title="Name">
           <TextField value={name} onChangeText={editName} onSubmit={commitName} onBlur={commitName} width={220} />
-        </Row>
-        <Row title="Icon" description={iconTitle(profile.icon)}>
-          <View ref={changeButton} collapsable={false}>
-            <Button title="Change…" onPress={() => pickIcon(changeButton.current)} />
-          </View>
         </Row>
       </Group>
 

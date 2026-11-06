@@ -128,7 +128,6 @@ export function TabsPane() {
         <SettingToggle anchor="tabs.warnBeforeClosingTabGroup" />
         <SettingToggle anchor="tabs.cmdClickCreatesTabGroup" />
         <SettingToggle anchor="tabs.optShiftClickOpensInGroup" />
-        <SettingToggle anchor="tabs.autoGroupMeetingTabs" />
       </Group>
 
       <SectionHeader

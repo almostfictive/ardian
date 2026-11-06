@@ -49,7 +49,8 @@ fill_cache() {
   local copy=(bash -c '
     set -e
     "$3" --key "$1" >"$2/.key"
-    cp -cR "$1" "$2/"' _ "$src" "$tmp" "$here/${0##*/}")
+    cp -cR "$1" "$2/"
+    xattr -d -r com.apple.FinderInfo "$2/$4.framework" 2>/dev/null || true' _ "$src" "$tmp" "$here/${0##*/}" "$name")
   if [[ "$src" == "$chromium_src/"* ]]; then
     "$repo/scripts/agent/locked" chromium --wait 500 -- "${copy[@]}" >&2 || return 1
   else

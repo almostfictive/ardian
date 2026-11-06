@@ -15,12 +15,7 @@ enum AppIcons {
 
   static let variants: [Variant] = [
     Variant(id: "default", name: "Default", plate: nil, mono: false),
-    Variant(id: "midnight", name: "Midnight", plate: (NSColor(srgbRed: 0.20, green: 0.19, blue: 0.22, alpha: 1), NSColor(srgbRed: 0.07, green: 0.07, blue: 0.08, alpha: 1)), mono: false, tint: "neutral"),
-    Variant(id: "daylight", name: "Daylight", plate: (NSColor(srgbRed: 1, green: 1, blue: 1, alpha: 1), NSColor(srgbRed: 0.90, green: 0.90, blue: 0.91, alpha: 1)), mono: false, tint: "neutral"),
-    Variant(id: "plum", name: "Plum", plate: (NSColor(srgbRed: 0.83, green: 0.56, blue: 0.68, alpha: 1), NSColor(srgbRed: 0.52, green: 0.28, blue: 0.40, alpha: 1)), mono: false, tint: "plum"),
-    Variant(id: "ocean", name: "Ocean", plate: (NSColor(srgbRed: 0.45, green: 0.70, blue: 0.93, alpha: 1), NSColor(srgbRed: 0.16, green: 0.36, blue: 0.70, alpha: 1)), mono: false, tint: "blue"),
     Variant(id: "mono", name: "Mono", plate: nil, mono: true),
-    Variant(id: "noir", name: "Noir", plate: (NSColor(srgbRed: 0.16, green: 0.16, blue: 0.16, alpha: 1), NSColor(srgbRed: 0.03, green: 0.03, blue: 0.03, alpha: 1)), mono: true),
   ]
 
   static var current: String {

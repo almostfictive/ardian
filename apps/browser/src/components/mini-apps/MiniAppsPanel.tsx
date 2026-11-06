@@ -1,11 +1,12 @@
 import { useEffect, useRef } from "react";
-import { Pressable, StyleSheet, View } from "react-native";
-import { WebView, Button, Symbol, Text, type WebViewHandle } from "../ui";
+import { Image, Pressable, StyleSheet, View } from "react-native";
+import { WebView, Button, Text, type WebViewHandle } from "../ui";
 import { useTheme } from "../ui/theme";
 import { useSettings, useWindow, useWindowId, useWindowProfileId } from "../../state/browser/hooks";
 import { openFromPage, pageProfileId } from "../../state/tabs/openFromPage";
-import { closeMiniApp, MINI_APPS, miniAppProfile, useMiniApps, type MiniAppId } from "../../state/mini-apps/store";
+import { closeMiniApp, miniAppDefinition, miniAppProfile, useMiniApps, type MiniAppId } from "../../state/mini-apps/store";
 import { space, radius } from "../ui";
+import { useFavicon } from "../../state/favicons/favicons";
 
 const NONE: MiniAppId[] = [];
 export function MiniAppsPanel() {
@@ -26,12 +27,13 @@ function MiniAppCard({ windowId, app, visible }: { windowId: string; app: MiniAp
   const theme = useTheme();
   const profileId = useWindowProfileId();
   const profile = miniAppProfile(profileId);
-  const definition = MINI_APPS[app];
+  const definition = miniAppDefinition(app);
+  const favicon = useFavicon(definition.url, `${new URL(definition.url).origin}/favicon.ico`, profileId);
   const web = useRef<WebViewHandle>(null);
   const keys = useRef<View>(null);
   useEffect(() => { if (visible) keys.current?.focus(); }, [visible]);
   return <View ref={keys} focusable enableFocusRing={false} keyDownEvents={[{ key: "Escape" }]} onKeyDown={(event) => { if (visible && event.nativeEvent.key === "Escape") closeMiniApp(windowId); }} style={{ flex: 1, borderRadius: radius.panel, overflow: "hidden", borderWidth: 1, borderColor: theme.popoverBorder, backgroundColor: theme.panel }}>
-    <View style={{ height: 40, flexDirection: "row", gap: space.s, alignItems: "center", paddingLeft: space.m, paddingRight: space.xs }}><Symbol name={definition.icon} size={15} color={theme.textPrimary} style={{ width: 18, height: 18 }} /><Text numberOfLines={1} weight="medium" style={{ flex: 1 }}>{definition.title}</Text><Button variant="icon" icon="arrow.clockwise" tooltip="Reload App" onPress={() => void web.current?.reload()} /><Button variant="icon" icon="xmark" tooltip="Close App" onPress={() => closeMiniApp(windowId)} /></View>
+    <View style={{ height: 40, flexDirection: "row", gap: space.s, alignItems: "center", paddingLeft: space.m, paddingRight: space.xs }}>{favicon ? <Image source={{ uri: favicon.uri }} style={{ width: 18, height: 18, borderRadius: radius.hair }} /> : <View style={{ width: 18, height: 18 }} />}<Text numberOfLines={1} weight="medium" style={{ flex: 1 }}>{definition.title}</Text><Button variant="icon" icon="arrow.clockwise" tooltip="Reload App" onPress={() => void web.current?.reload()} /><Button variant="icon" icon="xmark" tooltip="Close App" onPress={() => closeMiniApp(windowId)} /></View>
     <View style={{ flex: 1 }}><WebView ref={web} style={StyleSheet.absoluteFill} url={definition.url} profile={profile} visible={visible} standalone pageBackgroundColor={theme.panel} contentsBackgroundColor={theme.panel} onCommand={({ command }) => { if (visible && command === "escape") closeMiniApp(windowId); }} onWindowClose={() => closeMiniApp(windowId)} onOpenWindow={(request) => openFromPage(request, { windowId, profileId: pageProfileId(windowId, profile) })} /></View>
   </View>;
 }

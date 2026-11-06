@@ -334,9 +334,17 @@ const BODIES: readonly string[] = [
   "<path d=\"M165.66,101.66,139.31,128l26.35,26.34a8,8,0,0,1-11.32,11.32L128,139.31l-26.34,26.35a8,8,0,0,1-11.32-11.32L116.69,128,90.34,101.66a8,8,0,0,1,11.32-11.32L128,116.69l26.34-26.35a8,8,0,0,1,11.32,11.32ZM232,128A104,104,0,1,1,128,24,104.11,104.11,0,0,1,232,128Zm-16,0a88,88,0,1,0-88,88A88.1,88.1,0,0,0,216,128Z\"/>",
   "<path d=\"M12,2C17.53,2 22,6.47 22,12C22,17.53 17.53,22 12,22C6.47,22 2,17.53 2,12C2,6.47 6.47,2 12,2M15.59,7L12,10.59L8.41,7L7,8.41L10.59,12L7,15.59L8.41,17L12,13.41L15.59,17L17,15.59L13.41,12L17,8.41L15.59,7Z\" />",
   "<rect x=\"6.14\" y=\"6.14\" width=\"19.73\" height=\"19.73\" rx=\"2.38\"/><path d=\"M12.01 12.01L19.99 19.99\"/><path d=\"M19.99 12.01L12.01 19.99\"/>",
+  "<path d=\"M5 22h14\" /><path d=\"M5 2h14\" /><path d=\"M17 22v-4.172a2 2 0 0 0-.586-1.414L12 12l-4.414 4.414A2 2 0 0 0 7 17.828V22\" /><path d=\"M7 2v4.172a2 2 0 0 0 .586 1.414L12 12l4.414-4.414A2 2 0 0 0 17 6.172V2\" />",
+  "<path d=\"M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z\" /><path d=\"m21.854 2.147-10.94 10.939\" />",
+  "<path d=\"M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2\" /><circle cx=\"9\" cy=\"7\" r=\"4\" /><line x1=\"19\" x2=\"19\" y1=\"8\" y2=\"14\" /><line x1=\"22\" x2=\"16\" y1=\"11\" y2=\"11\" />",
+  "<rect width=\"7\" height=\"7\" x=\"3\" y=\"3\" rx=\"1\" /><rect width=\"7\" height=\"7\" x=\"14\" y=\"3\" rx=\"1\" /><rect width=\"7\" height=\"7\" x=\"14\" y=\"14\" rx=\"1\" /><rect width=\"7\" height=\"7\" x=\"3\" y=\"14\" rx=\"1\" />",
 ];
 
 const ENCODED: Record<string, readonly EncodedLayer[]> = {
+  "hourglass": [[330,24,0,1,0,[[0.7989,0.9375,0.0164,-0.0063,0.1422,0,1],[0.8289,0.94,0.0155,0.0246,0.143,0,1],[0.8439,0.94,-0.0126,0.0171,0.143,0,1],[0.8589,0.94,-0.0145,0.0059,0.1498,0,1],[0.8589,0.95,-0.007,0.0077,0.149,0,1]]]],
+  "paperplane": [[331,24,0,1,0,[[1.1083,1,-0.0551,0.0129,0.0657,0,1],[1.1158,1,-0.0438,0.0054,0.0807,0,1],[1.1065,1,-0.0382,-0.0002,0.0995,0,1],[1.0877,1.0025,-0.0326,0.0316,0.107,0,1],[1.0783,0.9975,-0.0251,0.0241,0.1243,0,1]]]],
+  "person.badge.plus": [[332,24,0,1,0,[[1.0754,0.995,0.0443,-0.1242,0.1168,0,1],[1.1092,1.025,0.0218,-0.1092,0.1085,0,1],[1.1017,1.02,0.0256,-0.1092,0.1085,0,1],[1.0942,1.015,0.0293,-0.112,0.113,0,1],[1.0792,0.985,0.0218,-0.1167,0.1205,0,1]]]],
+  "square.grid.2x2": [[333,24,0,1,0,[[1.0874,1,0.0148,-0.0241,0.0725,0,1],[1.0874,1,-0.0152,0.0134,0.0845,0,1],[1.0968,1.01,-0.0059,0.0134,0.086,0,1],[1.0911,1,-0.0002,0.0002,0.101,0,1],[1.0986,1,0.0035,-0.0035,0.1093,0,1]]]],
   "1.magnifyingglass": [[0,256,1,1,0,[[1.1103,1,-0.0099,-0.0188,0.0007,0,1],[1.114,1,-0.0024,-0.0226,0.015,0,1],[1.1103,1,-0.0324,-0.0244,0.0322,0,1],[1.1065,1,-0.0268,-0.0263,0.0465,0,1],[1.1028,0.9975,-0.0193,-0.0282,0.0645,0,1]]],[1,24,0,1,0,[[0.5531,1.0525,-0.0863,-0.105,0.0425,0,1],[0.4781,0.9525,-0.0713,-0.1125,0.0673,0,1],[0.4969,1.0325,-0.1013,-0.1087,0.0643,0,1],[0.4631,1.0175,-0.0937,-0.1087,0.0688,0,1],[0.4481,1.0325,-0.0863,-0.1125,0.0733,0,1]]]],
   "airplane": [[2,24,1,1,0,[[0.9793,1.1775,0.0258,0.007,0,0,1],[1.0131,1.1775,-0.0014,-0.0192,0,0,1],[1.0431,1.1775,0.0127,0.0183,0,0,1],[1.0506,1.1725,0.0155,0.0145,0,0,1],[1.0731,1.18,-0.0126,0.0108,0,0,1]]]],
   "alarm": [[3,24,0,1,0,[[1.4732,1,0.0194,-0.0044,0.065,0,1],[1.4563,1,-0.0134,-0.0101,0.0837,0,1],[1.4451,1,-0.0106,-0.0204,0.0972,0,1],[1.4357,1,-0.0087,-0.0269,0.1085,0,1],[1.4245,1,-0.0049,-0.0382,0.122,0,1]]]],
@@ -669,6 +677,10 @@ const NUDGE_STEP = 8;
 const NUDGE_ZERO = 12;
 
 const NUDGES: Record<string, string> = {
+  "hourglass": "da76a2b8c6e186a3d77396b271c281c29250faa6cbe8f7h3c7e3h7b2d6g2d2h2e2b3g2d2gbb7dbe9f8acc8f4h8c3e8h3e4b4g4c5i4e4gba7dbeaf7acc7fb97b3e7g3d3a4f3c3h3e3",
+  "paperplane": "fbbfgbi9cfhbdf9befabefbbcbcadaeaeafafcbfgbi9cfgbdf9befabefbbbbcbdaeaeafif9bdg8i6ccg8db97dba6eab5b5c4d3ebea79f9bdg9aeccg8dc97dba6eaa6bdccdcdbea79",
+  "person.badge.plus": "jofokofohomojonokooomoooloooooooooooioeojodogolohomoionokoooiooooonooooohodoiocoeobogokohomoiofogooojokolomohodniocoeobogokoholoiofogoooiokokolo",
+  "square.grid.2x2": "aedbh7bddbh7cbg8ccg9bdf9eaebdbdccck5aeda9fbddah7cbg8cbf8bcf8e9d9cacbcbbcaedb9fbddb8gccg8bdf9bdfaeadbccccbdbdaedb9fbddb9fcc8gccf9bdf9eaeadbccccbd",
   "1.magnifyingglass": "bbfbbgdefcfhbdfhbibefjafageleliiijekebicegheicjhfdjififekjgfgfkkllhiojmjebibeggeicjhedjhfifejigfgfkkllhihimjebibeggeicigedjhfifejiffgfkkklhhhimj",
   "airplane": "c9gaceaccagecagegfcbgfcbgbggcgcdgdgdcf8fcaa8cegace8a8abd79bd7d79b8bc7c7bcf8fcba8ce8ace8a8acd89cd8d89c8cc8c8befbf7ad8gecagecadahdd9adedf9b8cchc9b",
   "alarm": "egegaccadg9cdg9c9ccggccgbgfcfcagag9gegehadcbeh9cdg9c9dchgdchchfdfdahah9hehehadcjeh9ddh9d9dch8dchchflfmaiai9iehehadcjeh9ddh9e9mci8mcicifnfnajaj9o",

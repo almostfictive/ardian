@@ -42,5 +42,5 @@ test("a profile's menu in the sidebar: Rename…, the icon picker and its colour
 
 test("in Settings the same verbs, with the details and default choices in place of Profile Settings…", () => {
   const items = render(profileMenuItems({ ...base, place: "settings" }));
-  assert.deepEqual(items.slice(5), ["---", "Show Profile Details [info.circle]", "Make Default Profile [star] (off)", "---", "Delete Profile… [trash]"]);
+  assert.deepEqual(items.slice(4), ["---", "Show Profile Details [info.circle]", "Make Default Profile [star] (off)", "---", "Delete Profile… [trash]"]);
 });

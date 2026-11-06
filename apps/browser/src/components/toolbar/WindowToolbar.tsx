@@ -25,12 +25,12 @@ export function publishPaneChrome(windowId: string, chrome: PaneChrome) {
   for (const listener of listeners) listener();
 }
 
-export function WindowToolbar({ windowId, tabId, geometry, autoHide }: { windowId: string; tabId: string; geometry: ToolbarGeometry; autoHide: boolean }) {
+export function WindowToolbar({ windowId, tabId, geometry, autoHide, top = 0 }: { windowId: string; tabId: string; geometry: ToolbarGeometry; autoHide: boolean; top?: number }) {
   const theme = useTheme();
   const chrome = useSyncExternalStore(subscribe, () => chromes.get(windowId));
   useEffect(() => () => void chromes.delete(windowId), [windowId]);
   const height = useToolbarRow().height;
-  const frame = useMemo(() => ({ position: "absolute" as const, left: 0, top: 0, right: 0, height }), [height]);
+  const frame = useMemo(() => ({ position: "absolute" as const, left: 0, top, right: 0, height }), [height, top]);
   if (!autoHide) {
     return (
       <View pointerEvents="box-none" style={frame}>

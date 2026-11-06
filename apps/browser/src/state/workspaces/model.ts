@@ -13,6 +13,10 @@ export function workspacesOf(window: BrowserWindow, profileId = window.profileId
   const saved = window.workspaces?.filter((workspace) => workspace.profileId === profileId) ?? [];
   const initial: Workspace = { id: defaultWorkspaceId(profileId), profileId, name: "Home", icon: "house", display: "icon" };
   const result = (saved.some((workspace) => workspace.id === initial.id) ? saved : [initial, ...saved]).slice(0, MAX_WORKSPACES);
+  for (let slot = 2; result.length < MAX_WORKSPACES; slot++) {
+    const id = `${initial.id}:${slot}`;
+    if (!result.some((workspace) => workspace.id === id)) result.push({ id, profileId, name: `Workspace ${slot}`, icon: "briefcase", display: "icon" });
+  }
   profiles.set(profileId, result);
   return result;
 }

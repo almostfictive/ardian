@@ -23,8 +23,6 @@ import { withNewTab } from "../tabs/tabs";
 import type { ProfileColor } from "../browser/types";
 import { setProfileTheme } from "../profiles/themeActions";
 import { parseArcTheme } from "./arcTheme";
-import { newProfileLiveFolder } from "../live/engine";
-import { live } from "../live/store";
 import type { LiveSourceId } from "../live/types";
 import { isWebPageUrl, withoutFragment } from "../../lib/url";
 import { focusedWindowOf } from "../windows/ui";
@@ -51,17 +49,8 @@ const LIVE_SOURCES: Partial<Record<NonNullable<ImportedNode["role"]>, LiveSource
   liveBitbucketPullRequests: "bitbucket",
 };
 const liveSourceOf = (n: ImportedNode) => (n.role ? LIVE_SOURCES[n.role] : undefined);
-const liveSources = (nodes: ImportedNode[]): LiveSourceId[] =>
-  nodes.flatMap((n) => [...(liveSourceOf(n) ? [liveSourceOf(n)!] : []), ...liveSources(n.children ?? [])]);
 const withoutLiveFolders = (nodes: ImportedNode[]): ImportedNode[] =>
   nodes.filter((n) => !liveSourceOf(n)).map((n) => (n.children ? { ...n, children: withoutLiveFolders(n.children) } : n));
-
-function importPullRequestsFolders(profileId: string, nodes: ImportedNode[]) {
-  for (const source of new Set(liveSources(nodes))) {
-    const have = Object.values(live().folders).some((f) => f.profileId === profileId && f.kind === "pullRequests" && f.sources.includes(source));
-    if (!have) newProfileLiveFolder(profileId, "pullRequests", [source]);
-  }
-}
 
 const linksOf = (nodes: ImportedNode[]): string[] => nodes.flatMap((n) => (n.type === "url" ? (n.url ? [n.url] : []) : linksOf(n.children ?? [])));
 
@@ -186,7 +175,6 @@ export function importTabs(
 export function importArcSpace(profileId: string, space: SpaceSuggestion, favicons?: ImportedFavicon[]): { tabs: number; bookmarks: number; skipped: number } {
   importFavicons(profileId, favicons, [...linksOf(space.pinned), ...space.tabs.map((t) => t.url)]);
   const links = space.pinned.filter((n) => n.type === "url" && n.url);
-  importPullRequestsFolders(profileId, space.pinned);
   const folders = withoutLiveFolders(space.pinned.filter((n) => n.type === "folder"));
   let tabs = importTabs(
     profileId,

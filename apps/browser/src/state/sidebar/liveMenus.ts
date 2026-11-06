@@ -4,36 +4,17 @@ import { prompt } from "../../platform/dialogs";
 import { showMenu, type MenuItem } from "../../platform/menus";
 import { closeTab } from "../browser/actions";
 import { calendarConnected, connectCalendar, setCalendarHidden, useCalendar } from "../live/calendar";
-import { deleteLiveFolder, manualRefresh, newLiveFolder, openLiveItem, refreshFolder, statusText } from "../live/engine";
+import { deleteLiveFolder, manualRefresh, openLiveItem, refreshFolder, statusText } from "../live/engine";
 import { ALERT_LEADS, nowBadgeEvent } from "../live/meetings";
 import { SOURCES } from "../live/sources";
 import { dismissNowBadge, hideItems, live, markRead, markUnread, updateCalendarSettings, updateFolder } from "../live/store";
 import type { LiveItem, LiveSourceId } from "../live/types";
 import { useBrowser } from "../browser/store";
-import { openSettings } from "../settings/settingsWindows";
 import { openIconPicker } from "../sidebar/actions";
 import { moveLiveFolder, pinnedSequence } from "./pinnedOrder";
 import { entryKey } from "./entryKey";
 import { activeTabId } from "../browser/model";
 import { hintWhen, sections, sep, withAlternate } from "./menuParts";
-
-export function newLiveFolderMenuItem(): MenuItem {
-  return {
-    id: "live",
-    title: "New Live Folder",
-    children: [
-      { id: "live:pullRequests", title: "Pull Requests", symbol: "arrow.triangle.pull" },
-      { id: "live:documents", title: "Documents", symbol: "doc.text" },
-    ],
-  };
-}
-
-export function runNewLiveFolder(windowId: string, choice: string): boolean {
-  if (choice === "live:pullRequests") newLiveFolder(windowId, "pullRequests");
-  else if (choice === "live:documents") newLiveFolder(windowId, "documents");
-  else return false;
-  return true;
-}
 
 const FOLDER_OPTIONS = ["groupStacks", "showCompleted"] as const;
 
@@ -85,7 +66,6 @@ export function liveFolderMenuItems(windowId: string, folderId: string): MenuIte
           checked: folder.sources.includes(id),
         })),
       },
-      { id: "settings", title: "Live Folder Settings…", symbol: "gearshape" },
     ],
     [
       { id: "up", title: "Move Up", symbol: "arrow.up", enabled: canMoveUp },
@@ -113,7 +93,7 @@ export async function openLiveFolderMenu(windowId: string, folderId: string) {
     void refreshFolder(folderId);
   } else if (choice.startsWith("source:")) {
     const id = choice.slice(7) as LiveSourceId;
-    if (!live().accounts[id]) return openSettings("liveFolders");
+    if (!live().accounts[id]) return;
     const sources = folder.sources.includes(id) ? folder.sources.filter((x) => x !== id) : [...folder.sources, id];
     updateFolder(folderId, { sources: sources.length ? sources : folder.sources });
     void refreshFolder(folderId);
@@ -124,7 +104,6 @@ export async function openLiveFolderMenu(windowId: string, folderId: string) {
   else if (choice === "read") markRead(folderId);
   else if (choice === "up") moveLiveFolder(windowId, folderId, -1);
   else if (choice === "down") moveLiveFolder(windowId, folderId, 1);
-  else if (choice === "settings") openSettings("liveFolders");
   else if (choice === "delete") deleteLiveFolder(folderId);
 }
 
@@ -203,7 +182,6 @@ export function calendarMenuItem(): MenuItem {
         ],
       },
       sep,
-      { id: "cal:settings", title: "Calendar Settings…", symbol: "gearshape" },
     ],
   };
 }
@@ -221,6 +199,6 @@ export function runCalendarMenu(choice: string): boolean {
   else if (choice.startsWith("cal:toggle:")) {
     const id = choice.slice(11);
     setCalendarHidden(id, !settings.hiddenCalendarIds.includes(id));
-  } else if (choice === "cal:settings") openSettings("calendar");
+  }
   return true;
 }

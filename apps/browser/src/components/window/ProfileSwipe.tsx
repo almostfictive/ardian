@@ -1,3 +1,4 @@
+import { WorkspaceSwipe } from "../workspaces/WorkspaceSwipe";
 import { devRegister } from "../dev/devRegister";
 import { SwipeArea, type SwipeAreaHandle, type SwipeEvent, WindowBackdrop } from "../ui";
 import { useEffect, useMemo, useRef, type ReactNode } from "react";
@@ -15,7 +16,7 @@ export function ProfileSwipe({ children }: { children: ReactNode }) {
   return (
     <View style={{ height: "100%" }}>
       {children}
-      <ProfileSwipeArea surface="sidebar" style={StyleSheet.absoluteFill} />
+      <WorkspaceSwipe />
     </View>
   );
 }

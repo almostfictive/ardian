@@ -10,9 +10,7 @@ import { splitOf, splitRowPanes } from "../splits/splits";
 import { openSplitPane } from "../splits/actions";
 import type { Tab } from "../browser/types";
 import { bookmarkTabs, copyUrls, editPinnedPage, newGroupWithSelection, openIconPicker, startRename } from "./actions";
-import { isCalendarUrl } from "../live/meetings";
 import { bookmarkTab } from "../bookmarks/actions";
-import { calendarMenuItem, dismissNowMenuItems, runCalendarMenu } from "./liveMenus";
 import { newFolderWithTab, removeFromFolder } from "./tileFolderUi";
 import { togglePageEngine } from "../engines/actions";
 import { canSwitchEngine, ENGINE_NAMES, otherEngine, tabEngine } from "../engines/engines";
@@ -88,10 +86,6 @@ function openItems(s: BrowserState, tab: Tab, f: Facts): MenuItem[] {
   ];
 }
 
-function calendarItems(tab: Tab): MenuItem[] {
-  if (!tab.pin || !isCalendarUrl(tab.pinnedUrl ?? tab.url)) return [];
-  return [...(pinSection(tab) === "tile" ? dismissNowMenuItems() : []), calendarMenuItem()];
-}
 
 type TabMenuItem = ChoiceItem<Destination>;
 
@@ -140,7 +134,6 @@ export function tabMenuItems(s: BrowserState, windowId: string, tab: Tab, f: Fac
   return sections<TabMenuItem>(
     pinItems(s, tab, f),
     openItems(s, tab, f),
-    calendarItems(tab),
     organiseItems(s, windowId, tab, f),
     [
       { id: "bookmark", title: "Add to Bookmarks…", symbol: "bookmark", enabled: !!tab.url, ...hintWhen(f.active, "bookmarkPage", s) },
@@ -193,7 +186,6 @@ function runTabChoice(windowId: string, tab: Tab, f: Facts, choice: string | Des
   if (typeof choice !== "string") return sendTab(windowId, tab.id, choice);
   const s = store();
   const t = { kind: "tab" as const, id: tab.id };
-  if (runCalendarMenu(choice)) return;
   if (choice === "backToPin") s.returnToPinnedUrl(tab.id);
   else if (choice === "replacePin") s.setPinnedUrl(tab.id);
   else if (choice === "editPin") void editPinnedPage(windowId, tab.id);

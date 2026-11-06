@@ -1,4 +1,8 @@
 export const CURATED = {
+  hourglass: "L:hourglass",
+  paperplane: "L:send",
+  "person.badge.plus": "L:user-plus",
+  "square.grid.2x2": "L:layout-grid",
   "globe.americas.fill": "PF:globe-hemisphere-west-fill M:earth TF:world L:earth P:globe-hemisphere-west",
   "minus.circle": "L:circle-minus T:circle-minus P:minus-circle I:minus-circle M:minus-circle-outline",
   "pause": "L:pause T:player-pause P:pause I:pause M:pause",
